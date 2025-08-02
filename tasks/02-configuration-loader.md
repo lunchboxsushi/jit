@@ -1,6 +1,6 @@
 # Task 02: Configuration Loader
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Implement the configuration subsystem that loads `~/.jit/config.yml`, applies defaults, supports environment variable overrides, and validates required fields.
@@ -13,10 +13,10 @@ Implement the configuration subsystem that loads `~/.jit/config.yml`, applies de
 - Provide package-level accessor to obtain a singleton Config instance
 
 ## Deliverables
-- [ready] `internal/config/config.go` with `Load()` and `Get()` functions
-- [ready] `internal/config/defaults.go` with default constants
-- [ready] `internal/config/validation.go` with validation logic
-- [ready] Unit tests covering success, missing fields, bad YAML
+- [completed] `internal/config/config.go` with `Load()` and `Get()` functions
+- [completed] `internal/config/defaults.go` with path resolution functions
+- [completed] `internal/config/validation.go` with validation logic
+- [completed] Unit tests covering success, missing fields, bad YAML, environment variables
 
 ## Dependencies
 - gopkg.in/yaml.v3 for YAML parsing
@@ -26,10 +26,16 @@ Implement the configuration subsystem that loads `~/.jit/config.yml`, applies de
 - Respect `XDG_CONFIG_HOME`; default to `~/.jit/config.yml`
 - Use `sync.Once` to cache the loaded config
 - Fail fast with descriptive errors on invalid config
+- No default values applied - all values must be explicitly set in config
+- Environment variable expansion for sensitive data
+- Comprehensive validation with detailed error messages
 
 ## Acceptance Criteria
-- `go test ./internal/config/...` passes
-- Running `jit` without config prompts user to run `jit init`
+- [completed] `go test ./internal/config/...` passes
+- [completed] Running `jit` without config prompts user to run `jit init`
+- [completed] Environment variable expansion works correctly
+- [completed] Validation catches all required field errors
+- [completed] Singleton pattern ensures config is loaded only once
 
 ## Next Tasks
 - 03-storage-layer.md 
