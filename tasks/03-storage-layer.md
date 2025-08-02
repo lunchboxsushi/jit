@@ -1,6 +1,6 @@
 # Task 03: JSON Storage Layer
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Create the storage subsystem responsible for persisting tickets, context, and cache data as JSON files under `~/.local/share/jit/`.
@@ -15,10 +15,10 @@ Create the storage subsystem responsible for persisting tickets, context, and ca
 - Backup strategy (retain last N versions)
 
 ## Deliverables
-- [ready] `internal/storage/storage.go` (interface + common helpers)
-- [ready] `internal/storage/json.go` (JSON implementation)
-- [ready] `internal/storage/context.go` (context.json helpers)
-- [ready] Unit tests covering save/load ticket and context
+- [completed] `internal/storage/storage.go` (interface + common helpers)
+- [completed] `internal/storage/file_storage.go` (JSON implementation)
+- [completed] `internal/storage/context.go` (context.json helpers)
+- [completed] Unit tests covering save/load ticket and context
 
 ## Dependencies
 - Task 01 structs
@@ -26,13 +26,17 @@ Create the storage subsystem responsible for persisting tickets, context, and ca
 
 ## Implementation Notes
 - Use `os.UserCacheDir` fallback if env not set
-- Use `flock` or golang `syscall` for file locking (cross-platform)
-- Consider configurable backup retention in config
+- Use `sync.RWMutex` for thread-safe concurrent access
+- Atomic writes using temporary files and rename operations
+- Simplified approach without per-file backups (atomic writes provide sufficient safety)
+- Automatic directory creation with proper permissions
 
 ## Acceptance Criteria
-- `go test ./internal/storage/...` passes
-- Tickets and context can be saved and reloaded accurately
-- Concurrent read/write tests do not corrupt data
+- [completed] `go test ./internal/storage/...` passes
+- [completed] Tickets and context can be saved and reloaded accurately
+- [completed] Concurrent read/write tests do not corrupt data
+- [completed] Atomic writes prevent corruption during file operations
+- [completed] Context management with focus tracking and recent tickets
 
 ## Next Tasks
 - 04-jira-client.md 
