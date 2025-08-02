@@ -1,6 +1,6 @@
 package main
 
-import "jit/cmd"
+import "github.com/lunchboxsushi/jit/cmd"
 
 func main() {
 	cmd.Execute()

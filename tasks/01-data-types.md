@@ -1,6 +1,6 @@
 # Task 01: Core Data Types
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Define the foundational Go structs that represent tickets, relationships, context, and configuration. These types will be used across the entire application.
@@ -14,10 +14,12 @@ Define the foundational Go structs that represent tickets, relationships, contex
   - Configuration (parsed YAML)
 
 ## Deliverables
-- [ready] `pkg/types/ticket.go` with `Ticket` struct and related sub-structs
-- [ready] `pkg/types/context.go` with `Context` struct
-- [ready] `pkg/types/config.go` with `Config` struct mirroring `~/.jit/config.yml`
-- [ready] Unit tests validating JSON (un)marshal for Ticket and Context
+- [completed] `pkg/types/ticket.go` with `Ticket` struct and related sub-structs
+- [completed] `pkg/types/context.go` with `Context` struct
+- [completed] `pkg/types/config.go` with `Config` struct mirroring `~/.jit/config.yml`
+- [completed] Unit tests validating JSON (un)marshal for Ticket and Context
+- [completed] Ticket type constants (Epic, Task, Subtask)
+- [completed] Helper methods for ticket type checking
 
 ## Dependencies
 - None (pure Go)
@@ -26,11 +28,15 @@ Define the foundational Go structs that represent tickets, relationships, contex
 - Keep structs JSON-tagged for storage; YAML tags for config where needed
 - Use `omitempty` wisely to reduce file size
 - Add helper constructors for ticket creation
+- Use constants for ticket types to prevent typos
+- Simplified relationships to use ParentKey and Children only
 
 ## Acceptance Criteria
-- `go test ./pkg/types/...` passes
-- Tickets can round-trip JSON marshal/unmarshal without data loss
-- Config can be unmarshaled from sample YAML
+- [completed] `go test ./pkg/types/...` passes
+- [completed] Tickets can round-trip JSON marshal/unmarshal without data loss
+- [completed] Config can be unmarshaled from sample YAML
+- [completed] Ticket type constants work correctly
+- [completed] Helper methods (IsEpic, IsTask, IsSubtask, IsOrphanTask) work correctly
 
 ## Next Tasks
 - 02-configuration.md 
