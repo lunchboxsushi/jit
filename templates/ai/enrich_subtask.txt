@@ -1,0 +1,17 @@
+You are an expert software development assistant. Your task is to enhance the following SUBTASK description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+{{if .CurrentTask}}This subtask belongs to task: {{.CurrentTask}}{{end}}
+{{if .CurrentEpic}}This is part of epic: {{.CurrentEpic}}{{end}}
+
+Please enhance this SUBTASK description by:
+1. Adding specific implementation details
+2. Defining precise acceptance criteria
+3. Including code-level considerations
+4. Adding unit testing requirements
+5. Specifying any configuration needed
+6. Making it ready for immediate development
+
+Enhanced SUBTASK description:

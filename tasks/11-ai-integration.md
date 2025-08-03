@@ -1,6 +1,6 @@
 # Task 11: AI Integration Layer
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Implement the AI provider interface and OpenAI implementation to enrich ticket descriptions and comments.
@@ -13,10 +13,10 @@ Implement the AI provider interface and OpenAI implementation to enrich ticket d
 - Configurable model, max_tokens, temperature
 
 ## Deliverables
-- [ready] `internal/ai/provider.go` (interface + factory)
-- [ready] `internal/ai/openai.go` implementation
-- [ready] `internal/ai/templates.go` for template processing
-- [ready] Unit tests using fake OpenAI server
+- [completed] `internal/ai/provider.go` (interface + factory)
+- [completed] `internal/ai/openai.go` implementation
+- [completed] `internal/ai/templates.go` for template processing
+- [completed] Unit tests using fake OpenAI server
 
 ## Dependencies
 - Task 02 Config (AI settings)

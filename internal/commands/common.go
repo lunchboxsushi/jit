@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/lunchboxsushi/jit/internal/ai"
 	"github.com/lunchboxsushi/jit/internal/config"
 	"github.com/lunchboxsushi/jit/internal/jira"
 	"github.com/lunchboxsushi/jit/internal/storage"
@@ -18,6 +19,7 @@ type CommandContext struct {
 	JiraClient     *jira.Client
 	TicketService  *jira.TicketService
 	ContextManager *storage.ContextManager
+	AIProvider     ai.Provider
 }
 
 // InitializeCommand sets up the common context for commands
@@ -39,12 +41,32 @@ func InitializeCommand() (*CommandContext, error) {
 	ticketService := jira.NewTicketService(jiraClient)
 	contextManager := storage.NewContextManager(storageInstance)
 
+	// Initialize AI provider
+	var aiProvider ai.Provider
+	if cfg.AI.Provider != "" && cfg.AI.APIKey != "" {
+		aiConfig := &ai.Config{
+			Provider:    cfg.AI.Provider,
+			Model:       cfg.AI.Model,
+			MaxTokens:   cfg.AI.MaxTokens,
+			Temperature: 0.7, // Default temperature
+			APIKey:      cfg.AI.APIKey,
+			BaseURL:     "", // Use default OpenAI URL
+		}
+
+		aiProvider, err = ai.NewProvider(aiConfig)
+		if err != nil {
+			// Non-fatal error - log warning but continue
+			PrintWarning(fmt.Sprintf("Failed to initialize AI provider: %v", err))
+		}
+	}
+
 	return &CommandContext{
 		Config:         cfg,
 		Storage:        storageInstance,
 		JiraClient:     jiraClient,
 		TicketService:  ticketService,
 		ContextManager: contextManager,
+		AIProvider:     aiProvider,
 	}, nil
 }
 
@@ -234,4 +256,69 @@ func (ctx *CommandContext) trackTaskSubtasks(taskKey string) error {
 	}
 
 	return nil
+}
+
+// EnrichTicketWithAI enriches a ticket's description using AI
+func (ctx *CommandContext) EnrichTicketWithAI(ticket *types.Ticket) error {
+	if ctx.AIProvider == nil {
+		return fmt.Errorf("no AI provider configured")
+	}
+
+	// Get current context
+	currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+	currentTask, _ := ctx.ContextManager.GetCurrentTask()
+
+	// Create enrichment context
+	context := &ai.EnrichmentContext{
+		TicketType:   ticket.Type,
+		Project:      ctx.Config.Jira.Project,
+		CurrentEpic:  currentEpic,
+		CurrentTask:  currentTask,
+		UserEmail:    ctx.Config.Jira.Username,
+		CustomFields: make(map[string]interface{}),
+	}
+
+	// Enrich the ticket
+	if err := ai.EnrichTicket(ctx.AIProvider, ticket, context); err != nil {
+		return fmt.Errorf("failed to enrich ticket: %v", err)
+	}
+
+	PrintInfo("Ticket enriched with AI assistance")
+	return nil
+}
+
+// EnrichCommentWithAI enriches a comment using AI
+func (ctx *CommandContext) EnrichCommentWithAI(comment string, ticketKey string) (string, error) {
+	if ctx.AIProvider == nil {
+		return comment, nil // Return original comment if no AI provider
+	}
+
+	// Load ticket for context
+	ticket, err := ctx.Storage.LoadTicket(ticketKey)
+	if err != nil {
+		return comment, fmt.Errorf("failed to load ticket for context: %v", err)
+	}
+
+	// Get current context
+	currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+	currentTask, _ := ctx.ContextManager.GetCurrentTask()
+
+	// Create enrichment context
+	context := &ai.EnrichmentContext{
+		TicketType:   ticket.Type,
+		Project:      ctx.Config.Jira.Project,
+		CurrentEpic:  currentEpic,
+		CurrentTask:  currentTask,
+		UserEmail:    ctx.Config.Jira.Username,
+		CustomFields: make(map[string]interface{}),
+	}
+
+	// Enrich the comment
+	enrichedComment, err := ai.EnrichComment(ctx.AIProvider, comment, context)
+	if err != nil {
+		return comment, fmt.Errorf("failed to enrich comment: %v", err)
+	}
+
+	PrintInfo("Comment enriched with AI assistance")
+	return enrichedComment, nil
 }

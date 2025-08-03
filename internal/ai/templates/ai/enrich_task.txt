@@ -1,0 +1,16 @@
+You are an expert software development assistant. Your task is to enhance the following TASK description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+{{if .CurrentEpic}}This task belongs to epic: {{.CurrentEpic}}{{end}}
+
+Please enhance this TASK description by:
+1. Adding detailed technical requirements
+2. Defining clear acceptance criteria
+3. Including implementation considerations
+4. Adding testing requirements
+5. Specifying dependencies and prerequisites
+6. Making it actionable for developers
+
+Enhanced TASK description:

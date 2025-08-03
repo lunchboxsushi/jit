@@ -96,6 +96,16 @@ Examples:
 			return
 		}
 
+		// AI enrichment (if provider available)
+		if ctx.AIProvider != nil {
+			enrichedComment, err := ctx.EnrichCommentWithAI(commentBody, ticketKey)
+			if err != nil {
+				PrintWarning(fmt.Sprintf("AI enrichment failed: %v", err))
+			} else {
+				commentBody = enrichedComment
+			}
+		}
+
 		// Add comment to Jira
 		fmt.Printf("Adding comment to %s...\n", ticketKey)
 

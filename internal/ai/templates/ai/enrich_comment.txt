@@ -1,0 +1,16 @@
+You are an expert software development assistant. Your task is to enhance the following comment for a {{.TicketType}} in the {{.Project}} project.
+
+Original comment:
+{{.Comment}}
+
+{{if .CurrentEpic}}This is for a ticket in epic: {{.CurrentEpic}}{{end}}
+{{if .CurrentTask}}This is for a subtask in task: {{.CurrentTask}}{{end}}
+
+Please enhance this comment by:
+1. Making it more professional and clear
+2. Adding relevant technical context
+3. Including actionable insights
+4. Maintaining the original intent
+5. Making it helpful for other team members
+
+Enhanced comment:

@@ -3,6 +3,7 @@ package commands
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/lunchboxsushi/jit/internal/storage"
@@ -44,7 +45,8 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 
 	// Open editor with template
 	editor := ui.NewEditor()
-	if err := editor.EditTemplate(options.TemplateName, tempFile.Name()); err != nil {
+	templatePath := filepath.Join("templates", options.TemplateName)
+	if err := editor.EditTemplate(templatePath, tempFile.Name()); err != nil {
 		return fmt.Errorf("failed to open editor: %v", err)
 	}
 
@@ -58,6 +60,23 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 	title, description, err := editor.ParseMarkdownTicket(content)
 	if err != nil {
 		return fmt.Errorf("failed to parse markdown: %v", err)
+	}
+
+	// AI enrichment (if enabled and provider available)
+	if !flags.NoEnrich && ctx.AIProvider != nil {
+		// Create temporary ticket for enrichment
+		tempTicket := &types.Ticket{
+			Title:       title,
+			Description: description,
+			Type:        options.TicketType,
+		}
+
+		if err := ctx.EnrichTicketWithAI(tempTicket); err != nil {
+			PrintWarning(fmt.Sprintf("AI enrichment failed: %v", err))
+		} else {
+			// Use enriched description
+			description = tempTicket.Description
+		}
 	}
 
 	// Create ticket object

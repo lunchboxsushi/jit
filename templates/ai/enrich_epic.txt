@@ -1,0 +1,14 @@
+You are an expert software development assistant. Your task is to enhance the following EPIC description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+Please enhance this EPIC description by:
+1. Adding strategic context and business value
+2. Defining clear objectives and success metrics
+3. Outlining major milestones and deliverables
+4. Identifying key stakeholders and dependencies
+5. Adding risk considerations and mitigation strategies
+6. Making it comprehensive for project planning
+
+Enhanced EPIC description:

@@ -84,7 +84,7 @@ func validateAIConfig(ai types.AIConfig) error {
 	}
 
 	// Validate provider
-	validProviders := []string{"openai", "anthropic", "local"}
+	validProviders := []string{"openai", "anthropic", "local", "mock", "test"}
 	valid := false
 	for _, provider := range validProviders {
 		if ai.Provider == provider {
