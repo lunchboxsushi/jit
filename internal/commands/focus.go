@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/lunchboxsushi/jit/internal/storage"
 	"github.com/lunchboxsushi/jit/internal/utils"
 	"github.com/spf13/cobra"
 )
@@ -38,7 +37,7 @@ Examples:
 		}
 
 		// Search for tickets
-		results, err := searchTickets(query, ctx.Storage, typeFlag)
+		results, err := searchTickets(query, ctx, typeFlag)
 		if err != nil {
 			HandleError(err, "Search failed")
 			return
@@ -62,16 +61,10 @@ Examples:
 			return
 		}
 
-		// Update context
-		contextManager := storage.NewContextManager(ctx.Storage)
-		if err := contextManager.SetFocus(selectedTicket.Key, selectedTicket.Type); err != nil {
-			HandleError(err, "Failed to set focus")
+		// Update context and recent tickets
+		if err := ctx.UpdateContextAndRecent(selectedTicket.Key, selectedTicket.Type); err != nil {
+			HandleError(err, "Failed to update context")
 			return
-		}
-
-		// Add to recent tickets
-		if err := contextManager.AddToRecent(selectedTicket.Key); err != nil {
-			PrintWarning("Failed to add to recent tickets")
 		}
 
 		fmt.Printf("Focused on %s (%s)\n", selectedTicket.Key, selectedTicket.Title)
@@ -84,9 +77,9 @@ func init() {
 }
 
 // searchTickets searches for tickets matching the query
-func searchTickets(query string, storageInstance storage.Storage, ticketType string) ([]utils.SearchResult, error) {
+func searchTickets(query string, ctx *CommandContext, ticketType string) ([]utils.SearchResult, error) {
 	// Get all ticket keys
-	ticketKeys, err := storageInstance.ListTickets()
+	ticketKeys, err := ctx.Storage.ListTickets()
 	if err != nil {
 		return nil, fmt.Errorf("failed to list tickets: %v", err)
 	}
@@ -94,7 +87,7 @@ func searchTickets(query string, storageInstance storage.Storage, ticketType str
 	// Load ticket information
 	var tickets []utils.TicketInfo
 	for _, key := range ticketKeys {
-		ticket, err := storageInstance.LoadTicket(key)
+		ticket, err := ctx.Storage.LoadTicket(key)
 		if err != nil {
 			// Skip tickets that can't be loaded
 			continue

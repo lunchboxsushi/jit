@@ -3,11 +3,8 @@ package commands
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 	"time"
 
-	"github.com/lunchboxsushi/jit/internal/config"
-	"github.com/lunchboxsushi/jit/internal/jira"
 	"github.com/lunchboxsushi/jit/internal/storage"
 	"github.com/lunchboxsushi/jit/internal/ui"
 	"github.com/lunchboxsushi/jit/pkg/types"
@@ -18,76 +15,79 @@ import (
 type CreateOptions struct {
 	TicketType       string
 	TemplateName     string
-	ValidateContext  func(contextManager *storage.ContextManager) (string, error)
+	ValidateContext  func(contextManager *storage.ContextManager, flags CreateFlags) (string, error)
 	SetRelationships func(ticket *types.Ticket, context string)
 	SuccessMessage   string
 	ParentInfo       string
 }
 
-// CreateTicket is the shared pipeline for creating tickets
+// CreateTicket creates a new ticket using the shared pipeline
 func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) error {
-	// Load configuration
-	cfg, err := config.Load()
+	// Initialize command context
+	ctx, err := InitializeCommand()
 	if err != nil {
-		return fmt.Errorf("configuration error: %v\n💡 Run 'jit init' to create a configuration file", err)
+		return fmt.Errorf("failed to initialize: %v", err)
 	}
 
-	// Initialize storage
-	storageInstance, err := storage.NewJSONStorage(cfg.App.DataDir)
+	// Validate context
+	contextInfo, err := options.ValidateContext(ctx.ContextManager, flags)
 	if err != nil {
-		return fmt.Errorf("storage error: %v", err)
+		return fmt.Errorf("context validation failed: %v", err)
 	}
-
-	// Validate context if required
-	contextManager := storage.NewContextManager(storageInstance)
-	contextInfo := ""
-	if options.ValidateContext != nil {
-		contextInfo, err = options.ValidateContext(contextManager)
-		if err != nil {
-			return err
-		}
-	}
-
-	// Initialize editor
-	editor := ui.NewEditor()
 
 	// Create temporary file for editing
-	tempDir := filepath.Join(cfg.App.DataDir, "temp")
-	if err := os.MkdirAll(tempDir, 0755); err != nil {
-		return fmt.Errorf("failed to create temp directory: %v", err)
+	tempFile, err := os.CreateTemp("", "jit-*.md")
+	if err != nil {
+		return fmt.Errorf("failed to create temp file: %v", err)
 	}
+	defer os.Remove(tempFile.Name())
 
-	tempFile := filepath.Join(tempDir, fmt.Sprintf("%s_%d.md", options.TicketType, time.Now().Unix()))
-
-	// Open template in editor
-	templatePath := filepath.Join("templates", options.TemplateName)
-	if err := editor.EditTemplate(templatePath, tempFile); err != nil {
+	// Open editor with template
+	editor := ui.NewEditor()
+	if err := editor.EditTemplate(options.TemplateName, tempFile.Name()); err != nil {
 		return fmt.Errorf("failed to open editor: %v", err)
 	}
 
-	// Read the edited content
-	content, err := editor.ReadFile(tempFile)
+	// Read and parse the content
+	content, err := editor.ReadFile(tempFile.Name())
 	if err != nil {
-		return fmt.Errorf("failed to read edited content: %v", err)
+		return fmt.Errorf("failed to read file: %v", err)
 	}
 
-	// Parse the markdown content
+	// Parse markdown content
 	title, description, err := editor.ParseMarkdownTicket(content)
 	if err != nil {
-		return fmt.Errorf("failed to parse content: %v\n💡 Please ensure you have a title and description", err)
-	}
-
-	// AI enrichment (placeholder for now)
-	if !flags.NoEnrich {
-		fmt.Println("AI enrichment would happen here (Task 11)")
-		// TODO: Implement AI enrichment in Task 11
+		return fmt.Errorf("failed to parse markdown: %v", err)
 	}
 
 	// Create ticket object
-	ticket := types.NewTicket("", title, options.TicketType)
-	ticket.Description = description
-	ticket.Metadata.Project = cfg.Jira.Project
-	ticket.Metadata.Assignee = cfg.Jira.Username
+	ticket := &types.Ticket{
+		Title:       title,
+		Description: description,
+		Type:        options.TicketType,
+		Status:      "To Do",
+		Priority:    "Medium",
+		Metadata: types.TicketMetadata{
+			Project: ctx.Config.Jira.Project,
+			Created: time.Now(),
+			Updated: time.Now(),
+			Labels:  []string{},
+		},
+		Relationships: types.TicketRelationships{
+			Children: []string{},
+		},
+		JiraData: types.JiraData{
+			CustomFields: make(map[string]interface{}),
+		},
+		LocalData: types.LocalData{
+			LastSync:     time.Now(),
+			LocalChanges: false,
+			AIEnhanced:   false,
+		},
+	}
+
+	// Set assignee
+	ticket.Metadata.Assignee = ctx.Config.Jira.Username
 
 	// Set relationships
 	if options.SetRelationships != nil {
@@ -96,45 +96,22 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 
 	// Create in Jira if requested
 	if !flags.NoCreate {
-		fmt.Printf("Creating %s in Jira...\n", options.TicketType)
-
-		// Initialize Jira client
-		jiraClient := jira.NewClient(&cfg.Jira)
-		ticketService := jira.NewTicketService(jiraClient)
-
-		// Create the ticket
-		createdTicket, err := ticketService.CreateTicket(cmd.Context(), ticket)
-		if err != nil {
-			return fmt.Errorf("failed to create %s in Jira: %v\n💡 Use --no-create to save locally only", options.TicketType, err)
+		if err := ctx.CreateTicketInJira(ticket, options.TicketType); err != nil {
+			return err
 		}
-		ticket = createdTicket
-		fmt.Printf("Created %s %s in Jira\n", options.TicketType, ticket.Key)
 	} else {
-		// Generate a temporary key for local-only tickets
-		ticket.Key = fmt.Sprintf("LOCAL-%s-%d", options.TicketType, time.Now().Unix())
-		fmt.Println("Saving locally only")
+		if err := ctx.SaveTicketLocally(ticket, options.TicketType); err != nil {
+			return err
+		}
 	}
 
-	// Save locally
-	if err := storageInstance.SaveTicket(ticket); err != nil {
-		return fmt.Errorf("failed to save %s locally: %v", options.TicketType, err)
+	// Update context and recent tickets
+	if err := ctx.UpdateContextAndRecent(ticket.Key, ticket.Type); err != nil {
+		// Context update errors are non-fatal
 	}
-
-	// Update context
-	if err := contextManager.SetFocus(ticket.Key, ticket.Type); err != nil {
-		fmt.Printf("Warning: Failed to set focus: %v\n", err)
-	}
-
-	// Add to recent tickets
-	if err := contextManager.AddToRecent(ticket.Key); err != nil {
-		fmt.Printf("Warning: Failed to add to recent tickets: %v\n", err)
-	}
-
-	// Clean up temp file
-	os.Remove(tempFile)
 
 	// Success message
-	fmt.Printf("Success: %s\n", options.SuccessMessage)
+	PrintSuccess(options.SuccessMessage)
 	fmt.Printf("Focused on: %s\n", ticket.Key)
 	if options.ParentInfo != "" {
 		fmt.Printf("%s\n", options.ParentInfo)
@@ -151,33 +128,38 @@ type CreateFlags struct {
 }
 
 // ValidateEpicContext validates context for epic creation (no validation needed)
-func ValidateEpicContext(contextManager *storage.ContextManager) (string, error) {
+func ValidateEpicContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) {
 	return "", nil // Epics don't need context validation
 }
 
 // ValidateTaskContext validates context for task creation
-func ValidateTaskContext(contextManager *storage.ContextManager) (string, error) {
+func ValidateTaskContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) {
+	// If orphan flag is set, skip context validation
+	if flags.Orphan {
+		return "", nil
+	}
+
 	currentEpic, err := contextManager.GetCurrentEpic()
 	if err != nil {
 		return "", fmt.Errorf("failed to get current context: %v", err)
 	}
 
 	if currentEpic == "" {
-		return "", fmt.Errorf("no epic context found\n💡 Use 'jit track <epic>' to set an epic context, or use --orphan to create an orphan task")
+		return "", fmt.Errorf("no epic context found\nTip: Use 'jit focus <epic>' to set an epic context, or use --orphan to create an orphan task")
 	}
 
 	return currentEpic, nil
 }
 
 // ValidateSubtaskContext validates context for subtask creation
-func ValidateSubtaskContext(contextManager *storage.ContextManager) (string, error) {
+func ValidateSubtaskContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) {
 	currentTask, err := contextManager.GetCurrentTask()
 	if err != nil {
 		return "", fmt.Errorf("failed to get current context: %v", err)
 	}
 
 	if currentTask == "" {
-		return "", fmt.Errorf("no task context found\n💡 Use 'jit focus <task>' to set a task context")
+		return "", fmt.Errorf("no task context found\nTip: Use 'jit focus <task>' to set a task context")
 	}
 
 	return currentTask, nil
