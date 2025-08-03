@@ -16,21 +16,21 @@ var initCmd = &cobra.Command{
 
 		// Check if config already exists
 		if !config.IsConfigMissing() {
-			fmt.Println("⚠️  Configuration file already exists!")
-			fmt.Println("💡 If you want to recreate it, delete the existing file first.")
+			fmt.Println("Warning: Configuration file already exists!")
+			fmt.Println("Tip: If you want to recreate it, delete the existing file first.")
 			return
 		}
 
 		// Create default configuration
 		err := config.CreateDefaultConfig()
 		if err != nil {
-			fmt.Printf("❌ Failed to create configuration: %v\n", err)
+			fmt.Printf("Error: Failed to create configuration: %v\n", err)
 			return
 		}
 
-		fmt.Println("✅ Configuration file created successfully!")
-		fmt.Printf("📁 Location: %s\n", config.GetDefaultConfigPath())
-		fmt.Println("\n📝 Next steps:")
+		fmt.Println("Success: Configuration file created successfully!")
+		fmt.Printf("Location: %s\n", config.GetDefaultConfigPath())
+		fmt.Println("\nNext steps:")
 		fmt.Println("1. Edit the configuration file with your Jira and AI settings")
 		fmt.Println("2. Set the required environment variables:")
 		fmt.Println("   - JIRA_API_TOKEN")

@@ -11,7 +11,7 @@ var versionCmd = &cobra.Command{
 	Short: "Print the version number of jit",
 	Long:  `Display the current version of the jit CLI tool`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("jit version 0.0.1")
+		fmt.Printf("jit version %s\n", cmd.Root().Version)
 	},
 }
 

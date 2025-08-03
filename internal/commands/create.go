@@ -79,7 +79,7 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 
 	// AI enrichment (placeholder for now)
 	if !flags.NoEnrich {
-		fmt.Println("🤖 AI enrichment would happen here (Task 11)")
+		fmt.Println("AI enrichment would happen here (Task 11)")
 		// TODO: Implement AI enrichment in Task 11
 	}
 
@@ -96,7 +96,7 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 
 	// Create in Jira if requested
 	if !flags.NoCreate {
-		fmt.Printf("🚀 Creating %s in Jira...\n", options.TicketType)
+		fmt.Printf("Creating %s in Jira...\n", options.TicketType)
 
 		// Initialize Jira client
 		jiraClient := jira.NewClient(&cfg.Jira)
@@ -108,11 +108,11 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 			return fmt.Errorf("failed to create %s in Jira: %v\n💡 Use --no-create to save locally only", options.TicketType, err)
 		}
 		ticket = createdTicket
-		fmt.Printf("✅ Created %s %s in Jira\n", options.TicketType, ticket.Key)
+		fmt.Printf("Created %s %s in Jira\n", options.TicketType, ticket.Key)
 	} else {
 		// Generate a temporary key for local-only tickets
 		ticket.Key = fmt.Sprintf("LOCAL-%s-%d", options.TicketType, time.Now().Unix())
-		fmt.Println("💾 Saving locally only")
+		fmt.Println("Saving locally only")
 	}
 
 	// Save locally
@@ -122,20 +122,20 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 
 	// Update context
 	if err := contextManager.SetFocus(ticket.Key, ticket.Type); err != nil {
-		fmt.Printf("⚠️  Warning: Failed to set focus: %v\n", err)
+		fmt.Printf("Warning: Failed to set focus: %v\n", err)
 	}
 
 	// Add to recent tickets
 	if err := contextManager.AddToRecent(ticket.Key); err != nil {
-		fmt.Printf("⚠️  Warning: Failed to add to recent tickets: %v\n", err)
+		fmt.Printf("Warning: Failed to add to recent tickets: %v\n", err)
 	}
 
 	// Clean up temp file
 	os.Remove(tempFile)
 
 	// Success message
-	fmt.Printf("✅ %s\n", options.SuccessMessage)
-	fmt.Printf("🎯 Focused on: %s\n", ticket.Key)
+	fmt.Printf("Success: %s\n", options.SuccessMessage)
+	fmt.Printf("Focused on: %s\n", ticket.Key)
 	if options.ParentInfo != "" {
 		fmt.Printf("%s\n", options.ParentInfo)
 	}

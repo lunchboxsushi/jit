@@ -7,7 +7,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/lunchboxsushi/jit/internal/config"
 	"github.com/lunchboxsushi/jit/internal/jira"
 	"github.com/lunchboxsushi/jit/internal/storage"
 	"github.com/lunchboxsushi/jit/pkg/types"
@@ -33,38 +32,29 @@ Examples:
 
 		// Validate ticket key format
 		if err := validateTicketKey(ticketKey); err != nil {
-			fmt.Printf("❌ Invalid ticket key: %v\n", err)
+			fmt.Printf("Invalid ticket key: %v\n", err)
 			return
 		}
 
-		// Load configuration
-		cfg, err := config.Load()
+		// Initialize command context
+		ctx, err := InitializeCommand()
 		if err != nil {
-			fmt.Printf("❌ Configuration error: %v\n", err)
-			fmt.Println("💡 Run 'jit init' to create a configuration file")
-			return
-		}
-
-		// Initialize storage
-		storageInstance, err := storage.NewJSONStorage(cfg.App.DataDir)
-		if err != nil {
-			fmt.Printf("❌ Storage error: %v\n", err)
+			HandleError(err, "Failed to initialize")
 			return
 		}
 
 		// Initialize Jira client
-		jiraClient := jira.NewClient(&cfg.Jira)
-
+		jiraClient := jira.NewClient(&ctx.Config.Jira)
 		ticketService := jira.NewTicketService(jiraClient)
-		contextManager := storage.NewContextManager(storageInstance)
+		contextManager := storage.NewContextManager(ctx.Storage)
 
 		// Track the ticket
-		if err := trackTicket(context.Background(), ticketKey, ticketService, storageInstance, contextManager, !noChildrenFlag); err != nil {
-			fmt.Printf("❌ Failed to track ticket: %v\n", err)
+		if err := trackTicket(context.Background(), ticketKey, ticketService, ctx.Storage, contextManager, !noChildrenFlag); err != nil {
+			HandleError(err, "Failed to track ticket")
 			return
 		}
 
-		fmt.Printf("✅ Successfully tracked %s\n", ticketKey)
+		PrintSuccess(fmt.Sprintf("Successfully tracked %s", ticketKey))
 	},
 }
 
@@ -91,11 +81,11 @@ func validateTicketKey(key string) error {
 
 // trackTicket tracks a ticket and optionally its children
 func trackTicket(ctx context.Context, ticketKey string, ticketService *jira.TicketService, storage storage.Storage, contextManager *storage.ContextManager, fetchChildren bool) error {
-	fmt.Printf("🔍 Fetching ticket %s...\n", ticketKey)
+	fmt.Printf("Fetching ticket %s...\n", ticketKey)
 
 	// Check if ticket already exists
 	if storage.Exists(ticketKey) {
-		fmt.Printf("📝 Ticket %s already exists, updating...\n", ticketKey)
+		fmt.Printf("Ticket %s already exists, updating...\n", ticketKey)
 	}
 
 	// Fetch the main ticket
@@ -109,7 +99,7 @@ func trackTicket(ctx context.Context, ticketKey string, ticketService *jira.Tick
 		return fmt.Errorf("failed to save ticket %s: %v", ticketKey, err)
 	}
 
-	fmt.Printf("✅ Saved %s (%s)\n", ticketKey, ticket.Title)
+	fmt.Printf("Saved %s (%s)\n", ticketKey, ticket.Title)
 
 	// Set focus to the tracked ticket
 	if err := contextManager.SetFocus(ticketKey, ticket.Type); err != nil {
@@ -140,7 +130,7 @@ func trackTicket(ctx context.Context, ticketKey string, ticketService *jira.Tick
 
 // trackEpicChildren tracks all children of an epic
 func trackEpicChildren(ctx context.Context, epicKey string, ticketService *jira.TicketService, storage storage.Storage) error {
-	fmt.Printf("🌳 Fetching children of epic %s...\n", epicKey)
+	fmt.Printf("Fetching children of epic %s...\n", epicKey)
 
 	children, err := ticketService.GetEpicChildren(ctx, epicKey)
 	if err != nil {
@@ -178,7 +168,7 @@ func trackEpicChildren(ctx context.Context, epicKey string, ticketService *jira.
 
 // trackTaskSubtasks tracks all subtasks of a task
 func trackTaskSubtasks(ctx context.Context, taskKey string, ticketService *jira.TicketService, storage storage.Storage) error {
-	fmt.Printf("   📋 Fetching subtasks of task %s...\n", taskKey)
+	fmt.Printf("   Fetching subtasks of task %s...\n", taskKey)
 
 	subtasks, err := ticketService.GetTaskSubtasks(ctx, taskKey)
 	if err != nil {

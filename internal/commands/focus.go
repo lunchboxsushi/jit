@@ -6,7 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"github.com/lunchboxsushi/jit/internal/config"
 	"github.com/lunchboxsushi/jit/internal/storage"
 	"github.com/lunchboxsushi/jit/internal/utils"
 	"github.com/spf13/cobra"
@@ -31,25 +30,17 @@ Examples:
 	Run: func(cmd *cobra.Command, args []string) {
 		query := args[0]
 
-		// Load configuration
-		cfg, err := config.Load()
+		// Initialize command context
+		ctx, err := InitializeCommand()
 		if err != nil {
-			fmt.Printf("Configuration error: %v\n", err)
-			fmt.Println("Run 'jit init' to create a configuration file")
-			return
-		}
-
-		// Initialize storage
-		storageInstance, err := storage.NewJSONStorage(cfg.App.DataDir)
-		if err != nil {
-			fmt.Printf("Storage error: %v\n", err)
+			HandleError(err, "Failed to initialize")
 			return
 		}
 
 		// Search for tickets
-		results, err := searchTickets(query, storageInstance, typeFlag)
+		results, err := searchTickets(query, ctx.Storage, typeFlag)
 		if err != nil {
-			fmt.Printf("Search error: %v\n", err)
+			HandleError(err, "Search failed")
 			return
 		}
 
@@ -67,23 +58,23 @@ Examples:
 		// Select ticket to focus on
 		selectedTicket, err := selectTicket(results)
 		if err != nil {
-			fmt.Printf("❌ Selection error: %v\n", err)
+			HandleError(err, "Selection failed")
 			return
 		}
 
 		// Update context
-		contextManager := storage.NewContextManager(storageInstance)
+		contextManager := storage.NewContextManager(ctx.Storage)
 		if err := contextManager.SetFocus(selectedTicket.Key, selectedTicket.Type); err != nil {
-			fmt.Printf("❌ Failed to set focus: %v\n", err)
+			HandleError(err, "Failed to set focus")
 			return
 		}
 
 		// Add to recent tickets
 		if err := contextManager.AddToRecent(selectedTicket.Key); err != nil {
-			fmt.Printf("⚠️  Warning: Failed to add to recent tickets: %v\n", err)
+			PrintWarning("Failed to add to recent tickets")
 		}
 
-		fmt.Printf("🎯 Focused on %s (%s)\n", selectedTicket.Key, selectedTicket.Title)
+		fmt.Printf("Focused on %s (%s)\n", selectedTicket.Key, selectedTicket.Title)
 	},
 }
 
@@ -129,7 +120,7 @@ func searchTickets(query string, storageInstance storage.Storage, ticketType str
 
 // displaySearchResults displays search results
 func displaySearchResults(results []utils.SearchResult) {
-	fmt.Printf("🔍 Found %d matching tickets:\n\n", len(results))
+	fmt.Printf("Found %d matching tickets:\n\n", len(results))
 
 	for i, result := range results {
 		fmt.Printf("%d. %s (%s) - %s\n", i+1, result.Key, result.Type, result.Title)
