@@ -35,6 +35,7 @@ The command will:
 			ValidateContext:  ValidateEpicContext,
 			SetRelationships: SetEpicRelationships,
 			SuccessMessage:   "Epic created successfully",
+			ParentInfo:       "Epics are top-level tickets that contain tasks and subtasks.",
 		}
 
 		if err := CreateTicket(cmd, options, flags); err != nil {
