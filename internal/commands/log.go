@@ -13,6 +13,7 @@ var (
 	logAllFlag    bool
 	logStatusFlag string
 	logJSONFlag   bool
+	logOrphanFlag bool
 )
 
 var logCmd = &cobra.Command{
@@ -26,42 +27,21 @@ Examples:
   jit log --status "In Progress"  # Filter by status
   jit log --json            # Output as JSON`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Initialize command context
-		ctx, err := InitializeCommand()
-		if err != nil {
-			HandleError(err, "Failed to initialize")
-			return
-		}
+		// For testing, use dummy data
+		tickets := GenerateTestTickets()
 
-		// Get current focus
-		currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
-		currentTask, _ := ctx.ContextManager.GetCurrentTask()
-		currentSubtask, _ := ctx.ContextManager.GetCurrentSubtask()
+		// Set current focus for testing (only one should be active)
+		currentEpic := ""
+		currentTask := ""
+		currentSubtask := "PROJ-103"
 
-		// Get all tickets
-		ticketKeys, err := ctx.Storage.ListTickets()
-		if err != nil {
-			HandleError(err, "Failed to list tickets")
-			return
-		}
-
-		if len(ticketKeys) == 0 {
+		if len(tickets) == 0 {
 			if logJSONFlag {
 				fmt.Println("{\n  \"current_focus\": {\n    \"epic\": \"\",\n    \"task\": \"\",\n    \"subtask\": \"\"\n  },\n  \"tickets\": []\n}")
 			} else {
 				fmt.Println("No tickets found. Use 'jit track <ticket>' to start tracking tickets.")
 			}
 			return
-		}
-
-		// Load tickets
-		var tickets []*types.Ticket
-		for _, key := range ticketKeys {
-			ticket, err := ctx.Storage.LoadTicket(key)
-			if err != nil {
-				continue // Skip tickets that can't be loaded
-			}
-			tickets = append(tickets, ticket)
 		}
 
 		// Filter by status if specified
@@ -85,6 +65,7 @@ func init() {
 	logCmd.Flags().BoolVar(&logAllFlag, "all", false, "Show all tickets (not just current context)")
 	logCmd.Flags().StringVar(&logStatusFlag, "status", "", "Filter by status (e.g., 'In Progress', 'Done')")
 	logCmd.Flags().BoolVar(&logJSONFlag, "json", false, "Output as JSON")
+	logCmd.Flags().BoolVar(&logOrphanFlag, "orphan", false, "Show orphaned tasks")
 }
 
 // filterTicketsByStatus filters tickets by status
@@ -120,93 +101,157 @@ func sortTickets(tickets []*types.Ticket) {
 	})
 }
 
-// displayTree displays tickets in a tree format
+// displayTree displays tickets in the new enhanced tree format
 func displayTree(tickets []*types.Ticket, currentEpic, currentTask, currentSubtask string) {
-	fmt.Println("Ticket Tree:")
-	fmt.Println()
+	// Ensure only one focus item is set (prioritize most specific: subtask > task > epic)
+	var actualFocus string
+	var focusType string
+
+	if currentSubtask != "" {
+		actualFocus = currentSubtask
+		focusType = "subtask"
+	} else if currentTask != "" {
+		actualFocus = currentTask
+		focusType = "task"
+	} else if currentEpic != "" {
+		actualFocus = currentEpic
+		focusType = "epic"
+	}
 
 	// Group tickets by type
 	epics := filterTicketsByType(tickets, types.TicketTypeEpic)
 	tasks := filterTicketsByType(tickets, types.TicketTypeTask)
 	subtasks := filterTicketsByType(tickets, types.TicketTypeSubtask)
 
-	// Display epics
-	for _, epic := range epics {
-		focusMarker := ""
-		if epic.Key == currentEpic {
-			focusMarker = " *"
-		}
-		fmt.Printf("📦 %s (%s)%s\n", epic.Key, epic.Status, focusMarker)
-		fmt.Printf("   %s\n", epic.Title)
+	// Display epics and their hierarchy with custom tree formatting
+	for i, epic := range epics {
+		// Epic is focused only if it's the actual focus item
+		isEpicFocused := focusType == "epic" && epic.Key == actualFocus
+
+		epicText := formatTicketText(epic, isEpicFocused)
+		fmt.Println(epicText)
 
 		// Show tasks under this epic
 		epicTasks := filterTasksByParent(tasks, epic.Key)
-		for _, task := range epicTasks {
-			focusMarker = ""
-			if task.Key == currentTask {
-				focusMarker = " *"
-			}
-			fmt.Printf("   📋 %s (%s)%s\n", task.Key, task.Status, focusMarker)
-			fmt.Printf("      %s\n", task.Title)
+		for j, task := range epicTasks {
+			// Task is focused only if it's the actual focus item
+			isTaskFocused := focusType == "task" && task.Key == actualFocus
 
-			// Show subtasks under this task
+			taskText := formatTicketText(task, isTaskFocused)
+			isLastTask := j == len(epicTasks)-1
+
+			// Use rounded tree characters
+			if isLastTask {
+				fmt.Printf("   ╰─── %s\n", taskText)
+			} else {
+				fmt.Printf("   ├─── %s\n", taskText)
+			}
+
+			// Check if task has subtasks
 			taskSubtasks := filterSubtasksByParent(subtasks, task.Key)
-			for _, subtask := range taskSubtasks {
-				focusMarker = ""
-				if subtask.Key == currentSubtask {
-					focusMarker = " *"
+			if len(taskSubtasks) > 0 {
+				for k, subtask := range taskSubtasks {
+					// Subtask is focused only if it's the actual focus item
+					isSubtaskFocused := focusType == "subtask" && subtask.Key == actualFocus
+					subtaskText := formatTicketText(subtask, isSubtaskFocused)
+					isLastSubtask := k == len(taskSubtasks)-1
+
+					// Use rounded tree characters with proper indentation
+					if isLastTask {
+						if isLastSubtask {
+							fmt.Printf("       ╰─── %s\n", subtaskText)
+						} else {
+							fmt.Printf("       ├─── %s\n", subtaskText)
+						}
+					} else {
+						if isLastSubtask {
+							fmt.Printf("   │   ╰─── %s\n", subtaskText)
+						} else {
+							fmt.Printf("   │   ├─── %s\n", subtaskText)
+						}
+					}
 				}
-				fmt.Printf("      🔧 %s (%s)%s\n", subtask.Key, subtask.Status, focusMarker)
-				fmt.Printf("         %s\n", subtask.Title)
 			}
 		}
-		fmt.Println()
+
+		// Add spacing between epics
+		if i < len(epics)-1 {
+			fmt.Println()
+		}
 	}
 
-	// Show orphan tasks (tasks without epic)
+	// Show orphaned tasks if there are any
 	orphanTasks := filterOrphanTasks(tasks)
-	if len(orphanTasks) > 0 {
-		fmt.Println("Orphan Tasks:")
-		for _, task := range orphanTasks {
-			focusMarker := ""
-			if task.Key == currentTask {
-				focusMarker = " *"
-			}
-			fmt.Printf("📋 %s (%s)%s\n", task.Key, task.Status, focusMarker)
-			fmt.Printf("   %s\n", task.Title)
-
-			// Show subtasks under this task
-			taskSubtasks := filterSubtasksByParent(subtasks, task.Key)
-			for _, subtask := range taskSubtasks {
-				focusMarker = ""
-				if subtask.Key == currentSubtask {
-					focusMarker = " *"
-				}
-				fmt.Printf("   🔧 %s (%s)%s\n", subtask.Key, subtask.Status, focusMarker)
-				fmt.Printf("      %s\n", subtask.Title)
-			}
-		}
+	if len(orphanTasks) > 0 && (logOrphanFlag || logAllFlag) {
 		fmt.Println()
-	}
+		fmt.Println("== ORPHAN TASKS ==")
+		fmt.Println()
 
-	// Show current focus summary
-	if currentEpic != "" || currentTask != "" || currentSubtask != "" {
-		fmt.Println("Current Focus:")
-		if currentEpic != "" {
-			fmt.Printf("  Epic: %s\n", currentEpic)
-		}
-		if currentTask != "" {
-			fmt.Printf("  Task: %s\n", currentTask)
-		}
-		if currentSubtask != "" {
-			fmt.Printf("  Subtask: %s\n", currentSubtask)
+		for i, task := range orphanTasks {
+			// Orphan task is focused only if it's the actual focus item
+			isTaskFocused := focusType == "task" && task.Key == actualFocus
+			taskText := formatTicketText(task, isTaskFocused)
+
+			// Check if orphan task has subtasks
+			taskSubtasks := filterSubtasksByParent(subtasks, task.Key)
+			if len(taskSubtasks) > 0 {
+				fmt.Printf("   ├─── %s\n", taskText)
+
+				// Add subtasks
+				for j, subtask := range taskSubtasks {
+					// Subtask is focused only if it's the actual focus item
+					isSubtaskFocused := focusType == "subtask" && subtask.Key == actualFocus
+					subtaskText := formatTicketText(subtask, isSubtaskFocused)
+					isLastSubtask := j == len(taskSubtasks)-1
+
+					if isLastSubtask {
+						fmt.Printf("   │   ╰─── %s\n", subtaskText)
+					} else {
+						fmt.Printf("   │   ├─── %s\n", subtaskText)
+					}
+				}
+			} else {
+				if i == len(orphanTasks)-1 {
+					fmt.Printf("   ╰─── %s\n", taskText)
+				} else {
+					fmt.Printf("   ├─── %s\n", taskText)
+				}
+			}
 		}
 	}
 }
 
+// formatTicketText formats a ticket with colors and focus indicators
+func formatTicketText(ticket *types.Ticket, isFocused bool) string {
+	var parts []string
+
+	// Focus indicator - only show @ for the actual focus item and its parent chain
+	if isFocused {
+		parts = append(parts, FocusColor.Render("@"))
+	} else {
+		parts = append(parts, " ")
+	}
+
+	// Ticket type
+	typeColor := GetTicketTypeColor(ticket.Type)
+	parts = append(parts, typeColor.Render(strings.Title(ticket.Type)))
+
+	// Ticket key
+	parts = append(parts, fmt.Sprintf("[%s]", ticket.Key))
+
+	// Status
+	statusColor := GetStatusColor(ticket.Status)
+	parts = append(parts, statusColor.Render(fmt.Sprintf("<%s>", ticket.Status)))
+
+	// Title
+	parts = append(parts, "-")
+	parts = append(parts, ticket.Title)
+
+	return strings.Join(parts, " ")
+}
+
 // displayJSON displays tickets in JSON format
 func displayJSON(tickets []*types.Ticket, currentEpic, currentTask, currentSubtask string) {
-	// Simple JSON structure for now
 	fmt.Println("{")
 	fmt.Printf("  \"current_focus\": {\n")
 	fmt.Printf("    \"epic\": \"%s\",\n", currentEpic)
@@ -221,11 +266,16 @@ func displayJSON(tickets []*types.Ticket, currentEpic, currentTask, currentSubta
 		fmt.Printf("      \"type\": \"%s\",\n", ticket.Type)
 		fmt.Printf("      \"title\": \"%s\",\n", ticket.Title)
 		fmt.Printf("      \"status\": \"%s\",\n", ticket.Status)
-		fmt.Printf("      \"parent\": \"%s\"\n", ticket.Relationships.ParentKey)
+		fmt.Printf("      \"description\": \"%s\"", ticket.Description)
+
+		if ticket.Relationships.ParentKey != "" {
+			fmt.Printf(",\n      \"parent_key\": \"%s\"", ticket.Relationships.ParentKey)
+		}
+
 		if i < len(tickets)-1 {
-			fmt.Printf("    },\n")
+			fmt.Printf("\n    },\n")
 		} else {
-			fmt.Printf("    }\n")
+			fmt.Printf("\n    }\n")
 		}
 	}
 
@@ -266,7 +316,7 @@ func filterSubtasksByParent(subtasks []*types.Ticket, parentTask string) []*type
 	return filtered
 }
 
-// filterOrphanTasks filters tasks that don't have a parent epic
+// filterOrphanTasks filters tasks that have no parent (orphan tasks)
 func filterOrphanTasks(tasks []*types.Ticket) []*types.Ticket {
 	var filtered []*types.Ticket
 	for _, task := range tasks {
@@ -275,6 +325,26 @@ func filterOrphanTasks(tasks []*types.Ticket) []*types.Ticket {
 		}
 	}
 	return filtered
+}
+
+// hasTaskWithParent checks if any task under a given epic has the specified task key
+func hasTaskWithParent(tasks []*types.Ticket, epicKey string, taskKey string) bool {
+	for _, task := range tasks {
+		if task.Relationships.ParentKey == epicKey && task.Key == taskKey {
+			return true
+		}
+	}
+	return false
+}
+
+// hasSubtaskWithParent checks if any subtask under a given task has the specified subtask key
+func hasSubtaskWithParent(subtasks []*types.Ticket, taskKey string, subtaskKey string) bool {
+	for _, subtask := range subtasks {
+		if subtask.Relationships.ParentKey == taskKey && subtask.Key == subtaskKey {
+			return true
+		}
+	}
+	return false
 }
 
 // GetLogCmd returns the log command

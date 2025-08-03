@@ -20,12 +20,13 @@ A CLI-first, markdown-native workflow tool for managing Jira tickets with speed,
 
 ```bash
 # Install directly from source
-go install github.com/lunchboxsushi/jit/cmd/jit@latest
+go install -buildvcs=false github.com/lunchboxsushi/jit/cmd/jit@latest
 
 # Or clone and build
 git clone https://github.com/lunchboxsushi/jit.git
 cd jit
-go install ./cmd/jit
+./build.sh  # Uses build script to handle VCS issues
+# Or manually: go install -buildvcs=false ./cmd/jit
 ```
 > **Note:** Ensure your Go binary path (`$GOPATH/bin` or `$HOME/go/bin`) is in your system's `PATH`.
 
