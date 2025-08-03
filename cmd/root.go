@@ -15,11 +15,10 @@ to reflect status, updates, and structure.`,
 }
 
 func init() {
-	// Add version command
 	rootCmd.AddCommand(commands.GetVersionCmd())
-
-	// Add init command
 	rootCmd.AddCommand(commands.GetInitCmd())
+	rootCmd.AddCommand(commands.GetTrackCmd())
+	rootCmd.AddCommand(commands.GetFocusCmd())
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
