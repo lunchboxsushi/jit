@@ -1,6 +1,6 @@
 # Task 10: Auxiliary Commands (`jit log`, `jit link`, `jit open`, `jit comment`)
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Implement miscellaneous but essential commands for daily workflow: view ticket tree, copy links, open browser, and add comments.
@@ -25,11 +25,11 @@ Implement miscellaneous but essential commands for daily workflow: view ticket t
 - Post comment via Jira client
 
 ## Deliverables
-- [ready] `internal/commands/log.go`
-- [ready] `internal/commands/link.go`
-- [ready] `internal/commands/open.go`
-- [ready] `internal/commands/comment.go`
-- [ready] Unit tests for each command (mocked Jira where applicable)
+- [completed] `internal/commands/log.go`
+- [completed] `internal/commands/link.go`
+- [completed] `internal/commands/open.go`
+- [completed] `internal/commands/comment.go`
+- [completed] Unit tests for each command (mocked Jira where applicable)
 
 ## Dependencies
 - Task 03 Storage layer (log)
