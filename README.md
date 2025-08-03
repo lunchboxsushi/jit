@@ -29,6 +29,47 @@ go install ./cmd/jit
 ```
 > **Note:** Ensure your Go binary path (`$GOPATH/bin` or `$HOME/go/bin`) is in your system's `PATH`.
 
+### Shell Completion
+
+Enable tab completion for faster command entry:
+
+**Bash:**
+```bash
+# Temporary (current session only)
+source <(jit completion bash)
+
+# Permanent (add to ~/.bashrc)
+echo 'source <(jit completion bash)' >> ~/.bashrc
+```
+
+**Zsh:**
+```bash
+# Temporary (current session only)
+source <(jit completion zsh)
+
+# Permanent (add to ~/.zshrc)
+echo 'source <(jit completion zsh)' >> ~/.zshrc
+```
+
+**Fish:**
+```bash
+# Temporary (current session only)
+jit completion fish | source
+
+# Permanent
+jit completion fish > ~/.config/fish/completions/jit.fish
+```
+
+**PowerShell:**
+```powershell
+# Temporary (current session only)
+jit completion powershell | Out-String | Invoke-Expression
+
+# Permanent
+jit completion powershell > jit.ps1
+# Add to your PowerShell profile
+```
+
 ### Initial Setup
 
 ```bash

@@ -47,4 +47,10 @@ test-pkg:
 coverage-badge:
 	go test -coverprofile=coverage.out ./...
 	go tool cover -func=coverage.out | grep total | awk '{print $$3}' | sed 's/%//' > coverage.txt
-	@echo "Coverage percentage saved to coverage.txt" 
+	@echo "Coverage percentage saved to coverage.txt"
+
+# Generate documentation
+docs:
+	@echo "Documentation already exists in docs/commands.md"
+	@echo "This is a comprehensive manual documentation file."
+	@echo "To regenerate basic help output, use: ./jit --help" 

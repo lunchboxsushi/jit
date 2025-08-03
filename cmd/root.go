@@ -26,6 +26,7 @@ func init() {
 	rootCmd.AddCommand(commands.GetLinkCmd())
 	rootCmd.AddCommand(commands.GetOpenCmd())
 	rootCmd.AddCommand(commands.GetCommentCmd())
+	rootCmd.AddCommand(commands.GetCompletionCmd())
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
