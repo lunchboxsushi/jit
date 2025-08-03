@@ -26,6 +26,8 @@ func init() {
 	rootCmd.AddCommand(commands.GetLinkCmd())
 	rootCmd.AddCommand(commands.GetOpenCmd())
 	rootCmd.AddCommand(commands.GetCommentCmd())
+	rootCmd.AddCommand(commands.GetStatusCmd())
+	rootCmd.AddCommand(commands.GetCleanupCmd())
 	rootCmd.AddCommand(commands.GetCompletionCmd())
 }
 

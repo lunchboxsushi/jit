@@ -87,10 +87,11 @@ func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) 
 		Status:      "To Do",
 		Priority:    "Medium",
 		Metadata: types.TicketMetadata{
-			Project: ctx.Config.Jira.Project,
-			Created: time.Now(),
-			Updated: time.Now(),
-			Labels:  []string{},
+			Project:  ctx.Config.Jira.Project,
+			Assignee: ctx.Config.Jira.Username, // Set default assignee to current user
+			Created:  time.Now(),
+			Updated:  time.Now(),
+			Labels:   []string{},
 		},
 		Relationships: types.TicketRelationships{
 			Children: []string{},
