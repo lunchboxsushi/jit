@@ -19,6 +19,9 @@ func init() {
 	rootCmd.AddCommand(commands.GetInitCmd())
 	rootCmd.AddCommand(commands.GetTrackCmd())
 	rootCmd.AddCommand(commands.GetFocusCmd())
+	rootCmd.AddCommand(commands.GetEpicCmd())
+	rootCmd.AddCommand(commands.GetTaskCmd())
+	rootCmd.AddCommand(commands.GetSubtaskCmd())
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
