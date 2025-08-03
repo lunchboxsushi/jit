@@ -1,6 +1,6 @@
 # Task 12: Test Harness & Continuous Integration
 
-**Status:** [ready]
+**Status:** [completed]
 
 ## Overview
 Establish a robust automated testing workflow and continuous integration (CI) pipeline to run linting, unit tests, and build checks on every commit and pull request.
@@ -15,9 +15,9 @@ Establish a robust automated testing workflow and continuous integration (CI) pi
 - Fail build on linter or test errors
 
 ## Deliverables
-- [ready] `.github/workflows/ci.yml` GitHub Actions config
-- [ready] `Makefile` or `go run` scripts for local lint/test
-- [ready] `golangci.yml` configuration
+- [completed] `.github/workflows/ci.yml` GitHub Actions config
+- [completed] `Makefile` or `go run` scripts for local lint/test
+- [completed] `golangci.yml` configuration
 
 ## Dependencies
 - All prior code tasks (compilable project)

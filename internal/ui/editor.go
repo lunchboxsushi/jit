@@ -85,37 +85,37 @@ func (e *Editor) ReadFile(filePath string) (string, error) {
 // ParseMarkdownTicket parses markdown content into ticket fields
 func (e *Editor) ParseMarkdownTicket(content string) (string, string, error) {
 	lines := strings.Split(content, "\n")
-	
+
 	var title string
 	var description strings.Builder
-	
+
 	inDescription := false
 	skipNext := false
-	
+
 	for i, line := range lines {
 		if skipNext {
 			skipNext = false
 			continue
 		}
-		
+
 		line = strings.TrimSpace(line)
-		
+
 		// Skip empty lines at the beginning
 		if title == "" && line == "" {
 			continue
 		}
-		
+
 		// Extract title (first non-empty line after #)
 		if title == "" && strings.HasPrefix(line, "# ") {
 			title = strings.TrimPrefix(line, "# ")
 			continue
 		}
-		
+
 		// Start description after title
 		if title != "" && !inDescription {
 			inDescription = true
 		}
-		
+
 		// Add to description
 		if inDescription {
 			// Skip section headers
@@ -125,15 +125,15 @@ func (e *Editor) ParseMarkdownTicket(content string) (string, string, error) {
 				description.WriteString("\n")
 				continue
 			}
-			
+
 			// Skip template placeholders
-			if strings.Contains(line, "[Enter") || strings.Contains(line, "[Describe") || 
-			   strings.Contains(line, "[List") || strings.Contains(line, "[Additional") ||
-			   strings.Contains(line, "[Criterion") || strings.Contains(line, "[Technical") ||
-			   strings.Contains(line, "[Testing") || strings.Contains(line, "[Specific") {
+			if strings.Contains(line, "[Enter") || strings.Contains(line, "[Describe") ||
+				strings.Contains(line, "[List") || strings.Contains(line, "[Additional") ||
+				strings.Contains(line, "[Criterion") || strings.Contains(line, "[Technical") ||
+				strings.Contains(line, "[Testing") || strings.Contains(line, "[Specific") {
 				continue
 			}
-			
+
 			// Add the line to description
 			if line != "" || (i < len(lines)-1 && strings.TrimSpace(lines[i+1]) != "") {
 				description.WriteString(line)
@@ -141,18 +141,18 @@ func (e *Editor) ParseMarkdownTicket(content string) (string, string, error) {
 			}
 		}
 	}
-	
+
 	// Clean up description
 	desc := strings.TrimSpace(description.String())
-	
+
 	// Validate
 	if title == "" {
 		return "", "", fmt.Errorf("title is required")
 	}
-	
+
 	if desc == "" {
 		return "", "", fmt.Errorf("description is required")
 	}
-	
+
 	return title, desc, nil
 }

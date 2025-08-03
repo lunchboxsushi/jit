@@ -1,0 +1,4337 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>jit: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/lunchboxsushi/jit/cmd/jit/main.go (0.0%)</option>
+				
+				<option value="file1">github.com/lunchboxsushi/jit/cmd/root.go (0.0%)</option>
+				
+				<option value="file2">github.com/lunchboxsushi/jit/internal/ai/openai.go (0.0%)</option>
+				
+				<option value="file3">github.com/lunchboxsushi/jit/internal/ai/provider.go (29.2%)</option>
+				
+				<option value="file4">github.com/lunchboxsushi/jit/internal/ai/templates.go (72.2%)</option>
+				
+				<option value="file5">github.com/lunchboxsushi/jit/internal/commands/comment.go (0.0%)</option>
+				
+				<option value="file6">github.com/lunchboxsushi/jit/internal/commands/common.go (0.0%)</option>
+				
+				<option value="file7">github.com/lunchboxsushi/jit/internal/commands/create.go (0.0%)</option>
+				
+				<option value="file8">github.com/lunchboxsushi/jit/internal/commands/epic.go (0.0%)</option>
+				
+				<option value="file9">github.com/lunchboxsushi/jit/internal/commands/focus.go (0.0%)</option>
+				
+				<option value="file10">github.com/lunchboxsushi/jit/internal/commands/init.go (0.0%)</option>
+				
+				<option value="file11">github.com/lunchboxsushi/jit/internal/commands/link.go (0.0%)</option>
+				
+				<option value="file12">github.com/lunchboxsushi/jit/internal/commands/log.go (0.0%)</option>
+				
+				<option value="file13">github.com/lunchboxsushi/jit/internal/commands/open.go (0.0%)</option>
+				
+				<option value="file14">github.com/lunchboxsushi/jit/internal/commands/subtask.go (0.0%)</option>
+				
+				<option value="file15">github.com/lunchboxsushi/jit/internal/commands/task.go (0.0%)</option>
+				
+				<option value="file16">github.com/lunchboxsushi/jit/internal/commands/test_config.go (0.0%)</option>
+				
+				<option value="file17">github.com/lunchboxsushi/jit/internal/commands/track.go (0.0%)</option>
+				
+				<option value="file18">github.com/lunchboxsushi/jit/internal/commands/version.go (0.0%)</option>
+				
+				<option value="file19">github.com/lunchboxsushi/jit/internal/config/config.go (12.2%)</option>
+				
+				<option value="file20">github.com/lunchboxsushi/jit/internal/config/defaults.go (66.7%)</option>
+				
+				<option value="file21">github.com/lunchboxsushi/jit/internal/config/validation.go (72.3%)</option>
+				
+				<option value="file22">github.com/lunchboxsushi/jit/internal/jira/client.go (70.5%)</option>
+				
+				<option value="file23">github.com/lunchboxsushi/jit/internal/jira/tickets.go (50.0%)</option>
+				
+				<option value="file24">github.com/lunchboxsushi/jit/internal/storage/context.go (39.3%)</option>
+				
+				<option value="file25">github.com/lunchboxsushi/jit/internal/storage/file_storage.go (77.0%)</option>
+				
+				<option value="file26">github.com/lunchboxsushi/jit/internal/storage/storage.go (69.0%)</option>
+				
+				<option value="file27">github.com/lunchboxsushi/jit/internal/ui/editor.go (0.0%)</option>
+				
+				<option value="file28">github.com/lunchboxsushi/jit/internal/utils/fuzzy.go (0.0%)</option>
+				
+				<option value="file29">github.com/lunchboxsushi/jit/pkg/types/config.go (0.0%)</option>
+				
+				<option value="file30">github.com/lunchboxsushi/jit/pkg/types/context.go (86.4%)</option>
+				
+				<option value="file31">github.com/lunchboxsushi/jit/pkg/types/ticket.go (100.0%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">no coverage</span>
+				<span class="cov1">low coverage</span>
+				<span class="cov2">*</span>
+				<span class="cov3">*</span>
+				<span class="cov4">*</span>
+				<span class="cov5">*</span>
+				<span class="cov6">*</span>
+				<span class="cov7">*</span>
+				<span class="cov8">*</span>
+				<span class="cov9">*</span>
+				<span class="cov10">high coverage</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package main
+
+import "github.com/lunchboxsushi/jit/cmd"
+
+func main() <span class="cov0" title="0">{
+        cmd.Execute()
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package cmd
+
+import (
+        "github.com/lunchboxsushi/jit/internal/commands"
+        "github.com/spf13/cobra"
+)
+
+var rootCmd = &amp;cobra.Command{
+        Use:   "jit",
+        Short: "JIT - A jira experience like git, focus ticket work like branches",
+        Long: `jit is a local-first CLI tool that lets developers write tasks and sub-tasks in markdown,
+auto-enriches raw task descriptions into manager-optimized Jira tickets, and syncs with Jira
+to reflect status, updates, and structure.`,
+        Version: "0.0.1",
+}
+
+func init() <span class="cov0" title="0">{
+        rootCmd.AddCommand(commands.GetVersionCmd())
+        rootCmd.AddCommand(commands.GetInitCmd())
+        rootCmd.AddCommand(commands.GetTrackCmd())
+        rootCmd.AddCommand(commands.GetFocusCmd())
+        rootCmd.AddCommand(commands.GetEpicCmd())
+        rootCmd.AddCommand(commands.GetTaskCmd())
+        rootCmd.AddCommand(commands.GetSubtaskCmd())
+        rootCmd.AddCommand(commands.GetLogCmd())
+        rootCmd.AddCommand(commands.GetLinkCmd())
+        rootCmd.AddCommand(commands.GetOpenCmd())
+        rootCmd.AddCommand(commands.GetCommentCmd())
+}</span>
+
+// Execute adds all child commands to the root command and sets flags appropriately.
+func Execute() error <span class="cov0" title="0">{
+        return rootCmd.Execute()
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package ai
+
+import (
+        "bytes"
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+        "time"
+)
+
+// OpenAIProvider implements the Provider interface for OpenAI
+type OpenAIProvider struct {
+        config      *Config
+        client      *http.Client
+        templateMgr *TemplateManager
+}
+
+// OpenAIRequest represents the request structure for OpenAI API
+type OpenAIRequest struct {
+        Model       string    `json:"model"`
+        Messages    []Message `json:"messages"`
+        MaxTokens   int       `json:"max_tokens,omitempty"`
+        Temperature float64   `json:"temperature,omitempty"`
+}
+
+// OpenAIResponse represents the response structure from OpenAI API
+type OpenAIResponse struct {
+        Choices []Choice `json:"choices"`
+        Error   *Error   `json:"error,omitempty"`
+}
+
+// Message represents a message in the OpenAI conversation
+type Message struct {
+        Role    string `json:"role"`
+        Content string `json:"content"`
+}
+
+// Choice represents a choice in the OpenAI response
+type Choice struct {
+        Message Message `json:"message"`
+}
+
+// Error represents an error from OpenAI API
+type Error struct {
+        Message string `json:"message"`
+        Type    string `json:"type"`
+}
+
+// NewOpenAIProvider creates a new OpenAI provider
+func NewOpenAIProvider(config *Config) (Provider, error) <span class="cov0" title="0">{
+        if config.APIKey == "" </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("OpenAI API key is required")
+        }</span>
+
+        // Set defaults if not provided
+        <span class="cov0" title="0">if config.Model == "" </span><span class="cov0" title="0">{
+                config.Model = "gpt-3.5-turbo"
+        }</span>
+        <span class="cov0" title="0">if config.MaxTokens == 0 </span><span class="cov0" title="0">{
+                config.MaxTokens = 1000
+        }</span>
+        <span class="cov0" title="0">if config.Temperature == 0 </span><span class="cov0" title="0">{
+                config.Temperature = 0.7
+        }</span>
+
+        // Determine base URL
+        <span class="cov0" title="0">baseURL := config.BaseURL
+        if baseURL == "" </span><span class="cov0" title="0">{
+                baseURL = "https://api.openai.com/v1"
+        }</span>
+
+        // Create HTTP client with timeout
+        <span class="cov0" title="0">client := &amp;http.Client{
+                Timeout: 30 * time.Second,
+        }
+
+        // Create template manager
+        templateMgr := NewTemplateManager("./templates/ai")
+
+        // Create default templates
+        if err := templateMgr.CreateDefaultTemplates(); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create default templates: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return &amp;OpenAIProvider{
+                config:      config,
+                client:      client,
+                templateMgr: templateMgr,
+        }, nil</span>
+}
+
+// Name returns the provider name
+func (o *OpenAIProvider) Name() string <span class="cov0" title="0">{
+        return "openai"
+}</span>
+
+// Enrich enriches content using OpenAI API
+func (o *OpenAIProvider) Enrich(content string, context *EnrichmentContext) (string, error) <span class="cov0" title="0">{
+        // Generate prompt using template
+        prompt, err := o.templateMgr.GetEnrichmentPrompt(content, context)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to generate prompt: %v", err)
+        }</span>
+
+        // Create request
+        <span class="cov0" title="0">request := OpenAIRequest{
+                Model:       o.config.Model,
+                MaxTokens:   o.config.MaxTokens,
+                Temperature: o.config.Temperature,
+                Messages: []Message{
+                        {
+                                Role:    "system",
+                                Content: "You are an expert software development assistant. Provide clear, professional, and actionable responses.",
+                        },
+                        {
+                                Role:    "user",
+                                Content: prompt,
+                        },
+                },
+        }
+
+        // Make API request
+        response, err := o.makeRequest(request)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("OpenAI API request failed: %v", err)
+        }</span>
+
+        // Extract response content
+        <span class="cov0" title="0">if len(response.Choices) == 0 </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("no response choices from OpenAI")
+        }</span>
+
+        <span class="cov0" title="0">return response.Choices[0].Message.Content, nil</span>
+}
+
+// makeRequest makes a request to the OpenAI API
+func (o *OpenAIProvider) makeRequest(request OpenAIRequest) (*OpenAIResponse, error) <span class="cov0" title="0">{
+        // Determine endpoint
+        endpoint := "/chat/completions"
+        if o.config.BaseURL != "" </span><span class="cov0" title="0">{
+                endpoint = o.config.BaseURL + endpoint
+        }</span> else<span class="cov0" title="0"> {
+                endpoint = "https://api.openai.com/v1" + endpoint
+        }</span>
+
+        // Marshal request
+        <span class="cov0" title="0">requestBody, err := json.Marshal(request)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to marshal request: %v", err)
+        }</span>
+
+        // Create HTTP request
+        <span class="cov0" title="0">req, err := http.NewRequest("POST", endpoint, bytes.NewBuffer(requestBody))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create request: %v", err)
+        }</span>
+
+        // Set headers
+        <span class="cov0" title="0">req.Header.Set("Content-Type", "application/json")
+        req.Header.Set("Authorization", "Bearer "+o.config.APIKey)
+
+        // Make request
+        resp, err := o.client.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("HTTP request failed: %v", err)
+        }</span>
+        <span class="cov0" title="0">defer resp.Body.Close()
+
+        // Read response body
+        body, err := io.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read response body: %v", err)
+        }</span>
+
+        // Check for HTTP errors
+        <span class="cov0" title="0">if resp.StatusCode != http.StatusOK </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("OpenAI API error: %s - %s", resp.Status, string(body))
+        }</span>
+
+        // Parse response
+        <span class="cov0" title="0">var response OpenAIResponse
+        if err := json.Unmarshal(body, &amp;response); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to parse response: %v", err)
+        }</span>
+
+        // Check for API errors
+        <span class="cov0" title="0">if response.Error != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("OpenAI API error: %s", response.Error.Message)
+        }</span>
+
+        <span class="cov0" title="0">return &amp;response, nil</span>
+}
+
+// EnrichComment enriches a comment using OpenAI
+func (o *OpenAIProvider) EnrichComment(comment string, context *EnrichmentContext) (string, error) <span class="cov0" title="0">{
+        // Generate comment prompt
+        prompt, err := o.templateMgr.GetCommentPrompt(comment, context)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to generate comment prompt: %v", err)
+        }</span>
+
+        // Create request
+        <span class="cov0" title="0">request := OpenAIRequest{
+                Model:       o.config.Model,
+                MaxTokens:   o.config.MaxTokens,
+                Temperature: o.config.Temperature,
+                Messages: []Message{
+                        {
+                                Role:    "system",
+                                Content: "You are an expert software development assistant. Provide clear, professional, and helpful comments.",
+                        },
+                        {
+                                Role:    "user",
+                                Content: prompt,
+                        },
+                },
+        }
+
+        // Make API request
+        response, err := o.makeRequest(request)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("OpenAI API request failed: %v", err)
+        }</span>
+
+        // Extract response content
+        <span class="cov0" title="0">if len(response.Choices) == 0 </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("no response choices from OpenAI")
+        }</span>
+
+        <span class="cov0" title="0">return response.Choices[0].Message.Content, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file3" style="display: none">package ai
+
+import (
+        "fmt"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// Provider defines the interface for AI enrichment services
+type Provider interface {
+        // Enrich takes raw content and context, returns enriched content
+        Enrich(content string, context *EnrichmentContext) (string, error)
+
+        // Name returns the provider name
+        Name() string
+}
+
+// EnrichmentContext provides context for AI enrichment
+type EnrichmentContext struct {
+        TicketType   string
+        Project      string
+        CurrentEpic  string
+        CurrentTask  string
+        UserEmail    string
+        CustomFields map[string]interface{}
+}
+
+// Config holds AI provider configuration
+type Config struct {
+        Provider    string
+        Model       string
+        MaxTokens   int
+        Temperature float64
+        APIKey      string
+        BaseURL     string
+}
+
+// NewProvider creates a new AI provider based on configuration
+func NewProvider(config *Config) (Provider, error) <span class="cov8" title="1">{
+        switch strings.ToLower(config.Provider) </span>{
+        case "openai":<span class="cov0" title="0">
+                return NewOpenAIProvider(config)</span>
+        case "mock", "test":<span class="cov8" title="1">
+                return NewMockProvider(config)</span>
+        default:<span class="cov0" title="0">
+                return nil, fmt.Errorf("unsupported AI provider: %s", config.Provider)</span>
+        }
+}
+
+// MockProvider is a test provider that returns predictable responses
+type MockProvider struct {
+        config *Config
+}
+
+// NewMockProvider creates a new mock provider for testing
+func NewMockProvider(config *Config) (Provider, error) <span class="cov8" title="1">{
+        return &amp;MockProvider{
+                config: config,
+        }, nil
+}</span>
+
+// Name returns the provider name
+func (m *MockProvider) Name() string <span class="cov8" title="1">{
+        return "mock"
+}</span>
+
+// Enrich returns a mock enriched response
+func (m *MockProvider) Enrich(content string, context *EnrichmentContext) (string, error) <span class="cov8" title="1">{
+        // Return a predictable mock response for testing
+        enriched := fmt.Sprintf("[AI ENRICHED] %s\n\nEnhanced with AI assistance for %s ticket in project %s.",
+                content, context.TicketType, context.Project)
+
+        if context.CurrentEpic != "" </span><span class="cov0" title="0">{
+                enriched += fmt.Sprintf("\n\nRelated to epic: %s", context.CurrentEpic)
+        }</span>
+
+        <span class="cov8" title="1">return enriched, nil</span>
+}
+
+// EnrichTicket enriches a ticket's description using the provided AI provider
+func EnrichTicket(provider Provider, ticket *types.Ticket, context *EnrichmentContext) error <span class="cov0" title="0">{
+        if provider == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("no AI provider configured")
+        }</span>
+
+        // Enrich the description
+        <span class="cov0" title="0">enrichedDescription, err := provider.Enrich(ticket.Description, context)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to enrich ticket description: %v", err)
+        }</span>
+
+        // Update the ticket
+        <span class="cov0" title="0">ticket.Description = enrichedDescription
+        ticket.LocalData.AIEnhanced = true
+
+        return nil</span>
+}
+
+// EnrichComment enriches a comment using the provided AI provider
+func EnrichComment(provider Provider, comment string, context *EnrichmentContext) (string, error) <span class="cov0" title="0">{
+        if provider == nil </span><span class="cov0" title="0">{
+                return comment, nil // Return original comment if no provider
+        }</span>
+
+        <span class="cov0" title="0">enrichedComment, err := provider.Enrich(comment, context)
+        if err != nil </span><span class="cov0" title="0">{
+                return comment, fmt.Errorf("failed to enrich comment: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return enrichedComment, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file4" style="display: none">package ai
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+        "strings"
+        "text/template"
+)
+
+// TemplateManager handles AI prompt templates
+type TemplateManager struct {
+        templateDir string
+        cache       map[string]*template.Template
+}
+
+// NewTemplateManager creates a new template manager
+func NewTemplateManager(templateDir string) *TemplateManager <span class="cov1" title="1">{
+        return &amp;TemplateManager{
+                templateDir: templateDir,
+                cache:       make(map[string]*template.Template),
+        }
+}</span>
+
+// LoadTemplate loads a template by name
+func (tm *TemplateManager) LoadTemplate(name string) (*template.Template, error) <span class="cov4" title="2">{
+        // Check cache first
+        if cached, exists := tm.cache[name]; exists </span><span class="cov1" title="1">{
+                return cached, nil
+        }</span>
+
+        // Load from file
+        <span class="cov1" title="1">templatePath := filepath.Join(tm.templateDir, name+".txt")
+        content, err := os.ReadFile(templatePath)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read template %s: %v", name, err)
+        }</span>
+
+        // Parse template
+        <span class="cov1" title="1">tmpl, err := template.New(name).Parse(string(content))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to parse template %s: %v", name, err)
+        }</span>
+
+        // Cache the template
+        <span class="cov1" title="1">tm.cache[name] = tmpl
+        return tmpl, nil</span>
+}
+
+// ProcessTemplate processes a template with given data
+func (tm *TemplateManager) ProcessTemplate(name string, data interface{}) (string, error) <span class="cov1" title="1">{
+        tmpl, err := tm.LoadTemplate(name)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov1" title="1">var result strings.Builder
+        if err := tmpl.Execute(&amp;result, data); err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to execute template %s: %v", name, err)
+        }</span>
+
+        <span class="cov1" title="1">return result.String(), nil</span>
+}
+
+// GetEnrichmentPrompt generates an enrichment prompt for the given context
+func (tm *TemplateManager) GetEnrichmentPrompt(content string, context *EnrichmentContext) (string, error) <span class="cov1" title="1">{
+        // Create template data
+        data := map[string]interface{}{
+                "Content":      content,
+                "TicketType":   context.TicketType,
+                "Project":      context.Project,
+                "CurrentEpic":  context.CurrentEpic,
+                "CurrentTask":  context.CurrentTask,
+                "UserEmail":    context.UserEmail,
+                "CustomFields": context.CustomFields,
+        }
+
+        // Try to load specific template for ticket type
+        templateName := fmt.Sprintf("enrich_%s", strings.ToLower(context.TicketType))
+
+        // Fall back to generic template if specific one doesn't exist
+        if _, err := tm.LoadTemplate(templateName); err != nil </span><span class="cov0" title="0">{
+                templateName = "enrich_generic"
+        }</span>
+
+        <span class="cov1" title="1">return tm.ProcessTemplate(templateName, data)</span>
+}
+
+// GetCommentPrompt generates a comment enrichment prompt
+func (tm *TemplateManager) GetCommentPrompt(comment string, context *EnrichmentContext) (string, error) <span class="cov0" title="0">{
+        data := map[string]interface{}{
+                "Comment":      comment,
+                "TicketType":   context.TicketType,
+                "Project":      context.Project,
+                "CurrentEpic":  context.CurrentEpic,
+                "CurrentTask":  context.CurrentTask,
+                "UserEmail":    context.UserEmail,
+                "CustomFields": context.CustomFields,
+        }
+
+        return tm.ProcessTemplate("enrich_comment", data)
+}</span>
+
+// CreateDefaultTemplates creates default template files if they don't exist
+func (tm *TemplateManager) CreateDefaultTemplates() error <span class="cov1" title="1">{
+        templates := map[string]string{
+                "enrich_generic.txt": `You are an expert software development assistant. Your task is to enhance the following {{.TicketType}} description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+Please enhance this description by:
+1. Adding more technical details and context
+2. Improving clarity and structure
+3. Adding acceptance criteria if missing
+4. Including relevant technical considerations
+5. Making it more professional and comprehensive
+
+Enhanced description:`,
+
+                "enrich_epic.txt": `You are an expert software development assistant. Your task is to enhance the following EPIC description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+Please enhance this EPIC description by:
+1. Adding strategic context and business value
+2. Defining clear objectives and success metrics
+3. Outlining major milestones and deliverables
+4. Identifying key stakeholders and dependencies
+5. Adding risk considerations and mitigation strategies
+6. Making it comprehensive for project planning
+
+Enhanced EPIC description:`,
+
+                "enrich_task.txt": `You are an expert software development assistant. Your task is to enhance the following TASK description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+{{if .CurrentEpic}}This task belongs to epic: {{.CurrentEpic}}{{end}}
+
+Please enhance this TASK description by:
+1. Adding detailed technical requirements
+2. Defining clear acceptance criteria
+3. Including implementation considerations
+4. Adding testing requirements
+5. Specifying dependencies and prerequisites
+6. Making it actionable for developers
+
+Enhanced TASK description:`,
+
+                "enrich_subtask.txt": `You are an expert software development assistant. Your task is to enhance the following SUBTASK description for a {{.Project}} project.
+
+Original content:
+{{.Content}}
+
+{{if .CurrentTask}}This subtask belongs to task: {{.CurrentTask}}{{end}}
+{{if .CurrentEpic}}This is part of epic: {{.CurrentEpic}}{{end}}
+
+Please enhance this SUBTASK description by:
+1. Adding specific implementation details
+2. Defining precise acceptance criteria
+3. Including code-level considerations
+4. Adding unit testing requirements
+5. Specifying any configuration needed
+6. Making it ready for immediate development
+
+Enhanced SUBTASK description:`,
+
+                "enrich_comment.txt": `You are an expert software development assistant. Your task is to enhance the following comment for a {{.TicketType}} in the {{.Project}} project.
+
+Original comment:
+{{.Comment}}
+
+{{if .CurrentEpic}}This is for a ticket in epic: {{.CurrentEpic}}{{end}}
+{{if .CurrentTask}}This is for a subtask in task: {{.CurrentTask}}{{end}}
+
+Please enhance this comment by:
+1. Making it more professional and clear
+2. Adding relevant technical context
+3. Including actionable insights
+4. Maintaining the original intent
+5. Making it helpful for other team members
+
+Enhanced comment:`,
+        }
+
+        // Create template directory if it doesn't exist
+        if err := os.MkdirAll(tm.templateDir, 0755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create template directory: %v", err)
+        }</span>
+
+        // Create each template file
+        <span class="cov1" title="1">for name, content := range templates </span><span class="cov10" title="5">{
+                path := filepath.Join(tm.templateDir, name)
+
+                // Skip if file already exists
+                if _, err := os.Stat(path); err == nil </span><span class="cov10" title="5">{
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">if err := os.WriteFile(path, []byte(content), 0644); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to create template %s: %v", name, err)
+                }</span>
+        }
+
+        <span class="cov1" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file5" style="display: none">package commands
+
+import (
+        "fmt"
+        "os"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/internal/ui"
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+var (
+        commentMessageFlag bool
+)
+
+var commentCmd = &amp;cobra.Command{
+        Use:   "comment [ticket-key]",
+        Short: "Add comment to Jira ticket",
+        Long: `Add a comment to a Jira ticket. If no ticket is specified, uses current focus.
+        
+Examples:
+  jit comment                    # Add comment to current focus
+  jit comment SRE-1234          # Add comment to specific ticket
+  jit comment -m "Quick note"   # Inline comment`,
+        Args: cobra.MaximumNArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                // Initialize command context
+                ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">var ticketKey string
+
+                // Get ticket key from args or current focus
+                if len(args) &gt; 0 </span><span class="cov0" title="0">{
+                        ticketKey = args[0]
+                }</span> else<span class="cov0" title="0"> {
+                        // Try to get from current focus
+                        currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+                        currentTask, _ := ctx.ContextManager.GetCurrentTask()
+                        currentSubtask, _ := ctx.ContextManager.GetCurrentSubtask()
+
+                        // Prefer subtask &gt; task &gt; epic
+                        if currentSubtask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentSubtask
+                        }</span> else<span class="cov0" title="0"> if currentTask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentTask
+                        }</span> else<span class="cov0" title="0"> if currentEpic != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentEpic
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Println("No ticket specified and no current focus.")
+                                fmt.Println("Use 'jit focus &lt;ticket&gt;' to set focus or specify a ticket key.")
+                                return
+                        }</span>
+                }
+
+                // Validate ticket exists
+                <span class="cov0" title="0">if !ctx.Storage.Exists(ticketKey) </span><span class="cov0" title="0">{
+                        fmt.Printf("Ticket %s not found in local storage.\n", ticketKey)
+                        fmt.Printf("Use 'jit track %s' to track it first.\n", ticketKey)
+                        return
+                }</span>
+
+                // Load ticket for display
+                <span class="cov0" title="0">ticket, err := ctx.Storage.LoadTicket(ticketKey)
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to load ticket")
+                        return
+                }</span>
+
+                // Get comment content
+                <span class="cov0" title="0">var commentBody string
+                if commentMessageFlag </span><span class="cov0" title="0">{
+                        // Get comment from remaining args
+                        if len(args) &lt; 2 </span><span class="cov0" title="0">{
+                                fmt.Println("Error: Inline comment requires comment text.")
+                                fmt.Println("Usage: jit comment -m \"Your comment text\"")
+                                return
+                        }</span>
+                        <span class="cov0" title="0">commentBody = strings.Join(args[1:], " ")</span>
+                } else<span class="cov0" title="0"> {
+                        // Open editor for comment
+                        commentBody, err = getCommentFromEditor(ticket)
+                        if err != nil </span><span class="cov0" title="0">{
+                                HandleError(err, "Failed to get comment from editor")
+                                return
+                        }</span>
+                }
+
+                // Validate comment is not empty
+                <span class="cov0" title="0">if strings.TrimSpace(commentBody) == "" </span><span class="cov0" title="0">{
+                        fmt.Println("Comment is empty. Aborting.")
+                        return
+                }</span>
+
+                // AI enrichment (if provider available)
+                <span class="cov0" title="0">if ctx.AIProvider != nil </span><span class="cov0" title="0">{
+                        enrichedComment, err := ctx.EnrichCommentWithAI(commentBody, ticketKey)
+                        if err != nil </span><span class="cov0" title="0">{
+                                PrintWarning(fmt.Sprintf("AI enrichment failed: %v", err))
+                        }</span> else<span class="cov0" title="0"> {
+                                commentBody = enrichedComment
+                        }</span>
+                }
+
+                // Add comment to Jira
+                <span class="cov0" title="0">fmt.Printf("Adding comment to %s...\n", ticketKey)
+
+                if err := ctx.TicketService.AddComment(cmd.Context(), ticketKey, commentBody); err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to add comment to Jira")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">PrintSuccess(fmt.Sprintf("Comment added to %s", ticketKey))</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        commentCmd.Flags().BoolVarP(&amp;commentMessageFlag, "message", "m", false, "Add inline comment (requires comment text)")
+}</span>
+
+// getCommentFromEditor opens an editor to get comment content
+func getCommentFromEditor(ticket *types.Ticket) (string, error) <span class="cov0" title="0">{
+        // Create temporary file for editing
+        tempFile, err := os.CreateTemp("", "jit-comment-*.md")
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to create temp file: %v", err)
+        }</span>
+        <span class="cov0" title="0">defer os.Remove(tempFile.Name())
+
+        // Create comment template
+        template := fmt.Sprintf(`# Comment for %s: %s
+
+Add your comment below this line:
+---
+
+`, ticket.Key, ticket.Title)
+
+        // Write template to temp file
+        if err := os.WriteFile(tempFile.Name(), []byte(template), 0644); err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to write template: %v", err)
+        }</span>
+
+        // Open editor
+        <span class="cov0" title="0">editor := ui.NewEditor()
+        if err := editor.EditFile(tempFile.Name()); err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to open editor: %v", err)
+        }</span>
+
+        // Read the edited content
+        <span class="cov0" title="0">content, err := editor.ReadFile(tempFile.Name())
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to read file: %v", err)
+        }</span>
+
+        // Extract comment from content (everything after the separator)
+        <span class="cov0" title="0">lines := strings.Split(content, "\n")
+        var commentLines []string
+        foundSeparator := false
+
+        for _, line := range lines </span><span class="cov0" title="0">{
+                if strings.TrimSpace(line) == "---" </span><span class="cov0" title="0">{
+                        foundSeparator = true
+                        continue</span>
+                }
+                <span class="cov0" title="0">if foundSeparator </span><span class="cov0" title="0">{
+                        commentLines = append(commentLines, line)
+                }</span>
+        }
+
+        <span class="cov0" title="0">comment := strings.Join(commentLines, "\n")
+        return strings.TrimSpace(comment), nil</span>
+}
+
+// GetCommentCmd returns the comment command
+func GetCommentCmd() *cobra.Command <span class="cov0" title="0">{
+        return commentCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file6" style="display: none">package commands
+
+import (
+        "context"
+        "fmt"
+        "time"
+
+        "github.com/lunchboxsushi/jit/internal/ai"
+        "github.com/lunchboxsushi/jit/internal/config"
+        "github.com/lunchboxsushi/jit/internal/jira"
+        "github.com/lunchboxsushi/jit/internal/storage"
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// CommandContext holds the common context for commands
+type CommandContext struct {
+        Config         *types.Config
+        Storage        storage.Storage
+        JiraClient     *jira.Client
+        TicketService  *jira.TicketService
+        ContextManager *storage.ContextManager
+        AIProvider     ai.Provider
+}
+
+// InitializeCommand sets up the common context for commands
+func InitializeCommand() (*CommandContext, error) <span class="cov0" title="0">{
+        // Load configuration
+        cfg, err := config.Load()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("configuration error: %v\nRun 'jit init' to create a configuration file", err)
+        }</span>
+
+        // Initialize storage
+        <span class="cov0" title="0">storageInstance, err := storage.NewJSONStorage(cfg.App.DataDir)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("storage error: %v", err)
+        }</span>
+
+        // Initialize Jira services
+        <span class="cov0" title="0">jiraClient := jira.NewClient(&amp;cfg.Jira)
+        ticketService := jira.NewTicketService(jiraClient)
+        contextManager := storage.NewContextManager(storageInstance)
+
+        // Initialize AI provider
+        var aiProvider ai.Provider
+        if cfg.AI.Provider != "" &amp;&amp; cfg.AI.APIKey != "" </span><span class="cov0" title="0">{
+                aiConfig := &amp;ai.Config{
+                        Provider:    cfg.AI.Provider,
+                        Model:       cfg.AI.Model,
+                        MaxTokens:   cfg.AI.MaxTokens,
+                        Temperature: 0.7, // Default temperature
+                        APIKey:      cfg.AI.APIKey,
+                        BaseURL:     "", // Use default OpenAI URL
+                }
+
+                aiProvider, err = ai.NewProvider(aiConfig)
+                if err != nil </span><span class="cov0" title="0">{
+                        // Non-fatal error - log warning but continue
+                        PrintWarning(fmt.Sprintf("Failed to initialize AI provider: %v", err))
+                }</span>
+        }
+
+        <span class="cov0" title="0">return &amp;CommandContext{
+                Config:         cfg,
+                Storage:        storageInstance,
+                JiraClient:     jiraClient,
+                TicketService:  ticketService,
+                ContextManager: contextManager,
+                AIProvider:     aiProvider,
+        }, nil</span>
+}
+
+// HandleError provides consistent error handling across commands
+func HandleError(err error, message string) <span class="cov0" title="0">{
+        if err != nil </span><span class="cov0" title="0">{
+                fmt.Printf("Error: %s: %v\n", message, err)
+        }</span>
+}
+
+// PrintSuccess provides consistent success messaging
+func PrintSuccess(message string) <span class="cov0" title="0">{
+        fmt.Printf("Success: %s\n", message)
+}</span>
+
+// PrintInfo provides consistent info messaging
+func PrintInfo(message string) <span class="cov0" title="0">{
+        fmt.Printf("Info: %s\n", message)
+}</span>
+
+// PrintWarning provides consistent warning messaging
+func PrintWarning(message string) <span class="cov0" title="0">{
+        fmt.Printf("Warning: %s\n", message)
+}</span>
+
+// Common Jira Operations
+
+// CreateTicketInJira creates a ticket in Jira and saves it locally
+func (ctx *CommandContext) CreateTicketInJira(ticket *types.Ticket, ticketType string) error <span class="cov0" title="0">{
+        fmt.Printf("Creating %s in Jira...\n", ticketType)
+
+        createdTicket, err := ctx.TicketService.CreateTicket(context.Background(), ticket)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create %s in Jira: %v\nTip: Use --no-create to save locally only", ticketType, err)
+        }</span>
+
+        // Save the created ticket locally
+        <span class="cov0" title="0">if err := ctx.Storage.SaveTicket(createdTicket); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to save %s locally: %v", ticketType, err)
+        }</span>
+
+        <span class="cov0" title="0">fmt.Printf("Created %s %s in Jira\n", ticketType, createdTicket.Key)
+        return nil</span>
+}
+
+// SaveTicketLocally saves a ticket locally with a temporary key
+func (ctx *CommandContext) SaveTicketLocally(ticket *types.Ticket, ticketType string) error <span class="cov0" title="0">{
+        // Generate a temporary key for local-only tickets
+        ticket.Key = fmt.Sprintf("LOCAL-%s-%d", ticketType, time.Now().Unix())
+        fmt.Println("Saving locally only")
+
+        if err := ctx.Storage.SaveTicket(ticket); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to save %s locally: %v", ticketType, err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// UpdateContextAndRecent updates the working context and adds to recent tickets
+func (ctx *CommandContext) UpdateContextAndRecent(ticketKey, ticketType string) error <span class="cov0" title="0">{
+        // Update context
+        if err := ctx.ContextManager.SetFocus(ticketKey, ticketType); err != nil </span><span class="cov0" title="0">{
+                PrintWarning(fmt.Sprintf("Failed to set focus: %v", err))
+        }</span>
+
+        // Add to recent tickets
+        <span class="cov0" title="0">if err := ctx.ContextManager.AddToRecent(ticketKey); err != nil </span><span class="cov0" title="0">{
+                PrintWarning(fmt.Sprintf("Failed to add to recent tickets: %v", err))
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// TrackTicketWithChildren tracks a ticket and optionally its children
+func (ctx *CommandContext) TrackTicketWithChildren(ticketKey string, fetchChildren bool) error <span class="cov0" title="0">{
+        fmt.Printf("Fetching ticket %s...\n", ticketKey)
+
+        // Check if ticket already exists
+        if ctx.Storage.Exists(ticketKey) </span><span class="cov0" title="0">{
+                fmt.Printf("Ticket %s already exists, updating...\n", ticketKey)
+        }</span>
+
+        // Fetch the main ticket
+        <span class="cov0" title="0">ticket, err := ctx.TicketService.GetTicket(context.Background(), ticketKey)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to fetch ticket %s: %v", ticketKey, err)
+        }</span>
+
+        // Save the main ticket
+        <span class="cov0" title="0">if err := ctx.Storage.SaveTicket(ticket); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to save ticket %s: %v", ticketKey, err)
+        }</span>
+
+        <span class="cov0" title="0">fmt.Printf("Saved %s (%s)\n", ticketKey, ticket.Title)
+
+        // Set focus to the tracked ticket
+        if err := ctx.ContextManager.SetFocus(ticketKey, ticket.Type); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to set focus: %v", err)
+        }</span>
+
+        // Add to recent tickets
+        <span class="cov0" title="0">if err := ctx.ContextManager.AddToRecent(ticketKey); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to add to recent tickets: %v", err)
+        }</span>
+
+        // Fetch children if requested and ticket is an epic
+        <span class="cov0" title="0">if fetchChildren &amp;&amp; ticket.Type == types.TicketTypeEpic </span><span class="cov0" title="0">{
+                if err := ctx.trackEpicChildren(ticketKey); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to track epic children: %v", err)
+                }</span>
+        }
+
+        // Fetch subtasks if requested and ticket is a task
+        <span class="cov0" title="0">if fetchChildren &amp;&amp; ticket.Type == types.TicketTypeTask </span><span class="cov0" title="0">{
+                if err := ctx.trackTaskSubtasks(ticketKey); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to track task subtasks: %v", err)
+                }</span>
+        }
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// trackEpicChildren tracks all children of an epic
+func (ctx *CommandContext) trackEpicChildren(epicKey string) error <span class="cov0" title="0">{
+        fmt.Printf("Fetching children of epic %s...\n", epicKey)
+
+        children, err := ctx.TicketService.GetEpicChildren(context.Background(), epicKey)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to fetch epic children: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if len(children) == 0 </span><span class="cov0" title="0">{
+                fmt.Println("   No children found")
+                return nil
+        }</span>
+
+        <span class="cov0" title="0">fmt.Printf("   Found %d children\n", len(children))
+
+        // Save each child
+        for i, child := range children </span><span class="cov0" title="0">{
+                fmt.Printf("   [%d/%d] Saving %s (%s)...\n", i+1, len(children), child.Key, child.Title)
+
+                if err := ctx.Storage.SaveTicket(child); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to save child ticket %s: %v", child.Key, err)
+                }</span>
+
+                // If this child is a task, fetch its subtasks too
+                <span class="cov0" title="0">if child.Type == types.TicketTypeTask </span><span class="cov0" title="0">{
+                        if err := ctx.trackTaskSubtasks(child.Key); err != nil </span><span class="cov0" title="0">{
+                                return fmt.Errorf("failed to track subtasks of %s: %v", child.Key, err)
+                        }</span>
+                }
+
+                // Small delay to be respectful to the API
+                <span class="cov0" title="0">time.Sleep(100 * time.Millisecond)</span>
+        }
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// trackTaskSubtasks tracks all subtasks of a task
+func (ctx *CommandContext) trackTaskSubtasks(taskKey string) error <span class="cov0" title="0">{
+        fmt.Printf("   Fetching subtasks of task %s...\n", taskKey)
+
+        subtasks, err := ctx.TicketService.GetTaskSubtasks(context.Background(), taskKey)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to fetch task subtasks: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if len(subtasks) == 0 </span><span class="cov0" title="0">{
+                fmt.Println("      No subtasks found")
+                return nil
+        }</span>
+
+        <span class="cov0" title="0">fmt.Printf("      Found %d subtasks\n", len(subtasks))
+
+        // Save each subtask
+        for i, subtask := range subtasks </span><span class="cov0" title="0">{
+                fmt.Printf("      [%d/%d] Saving %s (%s)...\n", i+1, len(subtasks), subtask.Key, subtask.Title)
+
+                if err := ctx.Storage.SaveTicket(subtask); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to save subtask %s: %v", subtask.Key, err)
+                }</span>
+
+                // Small delay to be respectful to the API
+                <span class="cov0" title="0">time.Sleep(100 * time.Millisecond)</span>
+        }
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// EnrichTicketWithAI enriches a ticket's description using AI
+func (ctx *CommandContext) EnrichTicketWithAI(ticket *types.Ticket) error <span class="cov0" title="0">{
+        if ctx.AIProvider == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("no AI provider configured")
+        }</span>
+
+        // Get current context
+        <span class="cov0" title="0">currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+        currentTask, _ := ctx.ContextManager.GetCurrentTask()
+
+        // Create enrichment context
+        context := &amp;ai.EnrichmentContext{
+                TicketType:   ticket.Type,
+                Project:      ctx.Config.Jira.Project,
+                CurrentEpic:  currentEpic,
+                CurrentTask:  currentTask,
+                UserEmail:    ctx.Config.Jira.Username,
+                CustomFields: make(map[string]interface{}),
+        }
+
+        // Enrich the ticket
+        if err := ai.EnrichTicket(ctx.AIProvider, ticket, context); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to enrich ticket: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">PrintInfo("Ticket enriched with AI assistance")
+        return nil</span>
+}
+
+// EnrichCommentWithAI enriches a comment using AI
+func (ctx *CommandContext) EnrichCommentWithAI(comment string, ticketKey string) (string, error) <span class="cov0" title="0">{
+        if ctx.AIProvider == nil </span><span class="cov0" title="0">{
+                return comment, nil // Return original comment if no AI provider
+        }</span>
+
+        // Load ticket for context
+        <span class="cov0" title="0">ticket, err := ctx.Storage.LoadTicket(ticketKey)
+        if err != nil </span><span class="cov0" title="0">{
+                return comment, fmt.Errorf("failed to load ticket for context: %v", err)
+        }</span>
+
+        // Get current context
+        <span class="cov0" title="0">currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+        currentTask, _ := ctx.ContextManager.GetCurrentTask()
+
+        // Create enrichment context
+        context := &amp;ai.EnrichmentContext{
+                TicketType:   ticket.Type,
+                Project:      ctx.Config.Jira.Project,
+                CurrentEpic:  currentEpic,
+                CurrentTask:  currentTask,
+                UserEmail:    ctx.Config.Jira.Username,
+                CustomFields: make(map[string]interface{}),
+        }
+
+        // Enrich the comment
+        enrichedComment, err := ai.EnrichComment(ctx.AIProvider, comment, context)
+        if err != nil </span><span class="cov0" title="0">{
+                return comment, fmt.Errorf("failed to enrich comment: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">PrintInfo("Comment enriched with AI assistance")
+        return enrichedComment, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file7" style="display: none">package commands
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+        "time"
+
+        "github.com/lunchboxsushi/jit/internal/storage"
+        "github.com/lunchboxsushi/jit/internal/ui"
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+// CreateOptions defines the configuration for ticket creation
+type CreateOptions struct {
+        TicketType       string
+        TemplateName     string
+        ValidateContext  func(contextManager *storage.ContextManager, flags CreateFlags) (string, error)
+        SetRelationships func(ticket *types.Ticket, context string)
+        SuccessMessage   string
+        ParentInfo       string
+}
+
+// CreateTicket creates a new ticket using the shared pipeline
+func CreateTicket(cmd *cobra.Command, options CreateOptions, flags CreateFlags) error <span class="cov0" title="0">{
+        // Initialize command context
+        ctx, err := InitializeCommand()
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to initialize: %v", err)
+        }</span>
+
+        // Validate context
+        <span class="cov0" title="0">contextInfo, err := options.ValidateContext(ctx.ContextManager, flags)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("context validation failed: %v", err)
+        }</span>
+
+        // Create temporary file for editing
+        <span class="cov0" title="0">tempFile, err := os.CreateTemp("", "jit-*.md")
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create temp file: %v", err)
+        }</span>
+        <span class="cov0" title="0">defer os.Remove(tempFile.Name())
+
+        // Open editor with template
+        editor := ui.NewEditor()
+        templatePath := filepath.Join("templates", options.TemplateName)
+        if err := editor.EditTemplate(templatePath, tempFile.Name()); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to open editor: %v", err)
+        }</span>
+
+        // Read and parse the content
+        <span class="cov0" title="0">content, err := editor.ReadFile(tempFile.Name())
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to read file: %v", err)
+        }</span>
+
+        // Parse markdown content
+        <span class="cov0" title="0">title, description, err := editor.ParseMarkdownTicket(content)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to parse markdown: %v", err)
+        }</span>
+
+        // AI enrichment (if enabled and provider available)
+        <span class="cov0" title="0">if !flags.NoEnrich &amp;&amp; ctx.AIProvider != nil </span><span class="cov0" title="0">{
+                // Create temporary ticket for enrichment
+                tempTicket := &amp;types.Ticket{
+                        Title:       title,
+                        Description: description,
+                        Type:        options.TicketType,
+                }
+
+                if err := ctx.EnrichTicketWithAI(tempTicket); err != nil </span><span class="cov0" title="0">{
+                        PrintWarning(fmt.Sprintf("AI enrichment failed: %v", err))
+                }</span> else<span class="cov0" title="0"> {
+                        // Use enriched description
+                        description = tempTicket.Description
+                }</span>
+        }
+
+        // Create ticket object
+        <span class="cov0" title="0">ticket := &amp;types.Ticket{
+                Title:       title,
+                Description: description,
+                Type:        options.TicketType,
+                Status:      "To Do",
+                Priority:    "Medium",
+                Metadata: types.TicketMetadata{
+                        Project: ctx.Config.Jira.Project,
+                        Created: time.Now(),
+                        Updated: time.Now(),
+                        Labels:  []string{},
+                },
+                Relationships: types.TicketRelationships{
+                        Children: []string{},
+                },
+                JiraData: types.JiraData{
+                        CustomFields: make(map[string]interface{}),
+                },
+                LocalData: types.LocalData{
+                        LastSync:     time.Now(),
+                        LocalChanges: false,
+                        AIEnhanced:   false,
+                },
+        }
+
+        // Set assignee
+        ticket.Metadata.Assignee = ctx.Config.Jira.Username
+
+        // Set relationships
+        if options.SetRelationships != nil </span><span class="cov0" title="0">{
+                options.SetRelationships(ticket, contextInfo)
+        }</span>
+
+        // Create in Jira if requested
+        <span class="cov0" title="0">if !flags.NoCreate </span><span class="cov0" title="0">{
+                if err := ctx.CreateTicketInJira(ticket, options.TicketType); err != nil </span><span class="cov0" title="0">{
+                        return err
+                }</span>
+        } else<span class="cov0" title="0"> {
+                if err := ctx.SaveTicketLocally(ticket, options.TicketType); err != nil </span><span class="cov0" title="0">{
+                        return err
+                }</span>
+        }
+
+        // Update context and recent tickets
+        <span class="cov0" title="0">if err := ctx.UpdateContextAndRecent(ticket.Key, ticket.Type); err != nil </span>{<span class="cov0" title="0">
+                // Context update errors are non-fatal
+        }</span>
+
+        // Success message
+        <span class="cov0" title="0">PrintSuccess(options.SuccessMessage)
+        fmt.Printf("Focused on: %s\n", ticket.Key)
+        if options.ParentInfo != "" </span><span class="cov0" title="0">{
+                fmt.Printf("%s\n", options.ParentInfo)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// CreateFlags holds the common flags for ticket creation
+type CreateFlags struct {
+        NoEnrich bool
+        NoCreate bool
+        Orphan   bool
+}
+
+// ValidateEpicContext validates context for epic creation (no validation needed)
+func ValidateEpicContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) <span class="cov0" title="0">{
+        return "", nil // Epics don't need context validation
+}</span>
+
+// ValidateTaskContext validates context for task creation
+func ValidateTaskContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) <span class="cov0" title="0">{
+        // If orphan flag is set, skip context validation
+        if flags.Orphan </span><span class="cov0" title="0">{
+                return "", nil
+        }</span>
+
+        <span class="cov0" title="0">currentEpic, err := contextManager.GetCurrentEpic()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to get current context: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if currentEpic == "" </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("no epic context found\nTip: Use 'jit focus &lt;epic&gt;' to set an epic context, or use --orphan to create an orphan task")
+        }</span>
+
+        <span class="cov0" title="0">return currentEpic, nil</span>
+}
+
+// ValidateSubtaskContext validates context for subtask creation
+func ValidateSubtaskContext(contextManager *storage.ContextManager, flags CreateFlags) (string, error) <span class="cov0" title="0">{
+        currentTask, err := contextManager.GetCurrentTask()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to get current context: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if currentTask == "" </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("no task context found\nTip: Use 'jit focus &lt;task&gt;' to set a task context")
+        }</span>
+
+        <span class="cov0" title="0">return currentTask, nil</span>
+}
+
+// SetEpicRelationships sets relationships for epics (no parent)
+func SetEpicRelationships(ticket *types.Ticket, context string) {<span class="cov0" title="0">
+        // Epics have no parent relationships
+}</span>
+
+// SetTaskRelationships sets relationships for tasks
+func SetTaskRelationships(ticket *types.Ticket, context string) <span class="cov0" title="0">{
+        if context != "" </span><span class="cov0" title="0">{
+                ticket.Relationships.ParentKey = context
+        }</span>
+}
+
+// SetSubtaskRelationships sets relationships for subtasks
+func SetSubtaskRelationships(ticket *types.Ticket, context string) <span class="cov0" title="0">{
+        if context != "" </span><span class="cov0" title="0">{
+                ticket.Relationships.ParentKey = context
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file8" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+var (
+        epicNoEnrichFlag bool
+        epicNoCreateFlag bool
+)
+
+var epicCmd = &amp;cobra.Command{
+        Use:   "epic",
+        Short: "Create a new epic",
+        Long: `Create a new epic by opening an editor with a template.
+        
+The command will:
+1. Open an editor with an epic template
+2. Optionally enhance the content with AI (unless --no-enrich is used)
+3. Create the epic in Jira (unless --no-create is used)
+4. Save the epic locally
+5. Set focus to the new epic`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                flags := CreateFlags{
+                        NoEnrich: epicNoEnrichFlag,
+                        NoCreate: epicNoCreateFlag,
+                }
+
+                options := CreateOptions{
+                        TicketType:       types.TicketTypeEpic,
+                        TemplateName:     "epic.md",
+                        ValidateContext:  ValidateEpicContext,
+                        SetRelationships: SetEpicRelationships,
+                        SuccessMessage:   "Epic created successfully",
+                }
+
+                if err := CreateTicket(cmd, options, flags); err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("❌ %v\n", err)
+                        return
+                }</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        epicCmd.Flags().BoolVar(&amp;epicNoEnrichFlag, "no-enrich", false, "Skip AI enrichment")
+        epicCmd.Flags().BoolVar(&amp;epicNoCreateFlag, "no-create", false, "Save locally only, don't create in Jira")
+}</span>
+
+// GetEpicCmd returns the epic command
+func GetEpicCmd() *cobra.Command <span class="cov0" title="0">{
+        return epicCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file9" style="display: none">package commands
+
+import (
+        "bufio"
+        "fmt"
+        "os"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/internal/utils"
+        "github.com/spf13/cobra"
+)
+
+var (
+        typeFlag string
+        listFlag bool
+)
+
+var focusCmd = &amp;cobra.Command{
+        Use:   "focus &lt;query&gt;",
+        Short: "Focus on a ticket using fuzzy search",
+        Long: `Switch your working context to a ticket using fuzzy search on keys and titles.
+        
+Examples:
+  jit focus "5344"              # Focus on SRE-5344
+  jit focus "bug"               # Search for tickets with "bug" in title
+  jit focus "SRE" --type epic   # Search only epics
+  jit focus "task" --list       # List matches without switching`,
+        Args: cobra.ExactArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                query := args[0]
+
+                // Initialize command context
+                ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                // Search for tickets
+                <span class="cov0" title="0">results, err := searchTickets(query, ctx, typeFlag)
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Search failed")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">if len(results) == 0 </span><span class="cov0" title="0">{
+                        fmt.Printf("No tickets found matching '%s'\n", query)
+                        return
+                }</span>
+
+                // If just listing, show results and exit
+                <span class="cov0" title="0">if listFlag </span><span class="cov0" title="0">{
+                        displaySearchResults(results)
+                        return
+                }</span>
+
+                // Select ticket to focus on
+                <span class="cov0" title="0">selectedTicket, err := selectTicket(results)
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Selection failed")
+                        return
+                }</span>
+
+                // Update context and recent tickets
+                <span class="cov0" title="0">if err := ctx.UpdateContextAndRecent(selectedTicket.Key, selectedTicket.Type); err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to update context")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">fmt.Printf("Focused on %s (%s)\n", selectedTicket.Key, selectedTicket.Title)</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        focusCmd.Flags().StringVar(&amp;typeFlag, "type", "", "Filter by ticket type (epic|task|subtask)")
+        focusCmd.Flags().BoolVar(&amp;listFlag, "list", false, "List matches without switching focus")
+}</span>
+
+// searchTickets searches for tickets matching the query
+func searchTickets(query string, ctx *CommandContext, ticketType string) ([]utils.SearchResult, error) <span class="cov0" title="0">{
+        // Get all ticket keys
+        ticketKeys, err := ctx.Storage.ListTickets()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to list tickets: %v", err)
+        }</span>
+
+        // Load ticket information
+        <span class="cov0" title="0">var tickets []utils.TicketInfo
+        for _, key := range ticketKeys </span><span class="cov0" title="0">{
+                ticket, err := ctx.Storage.LoadTicket(key)
+                if err != nil </span><span class="cov0" title="0">{
+                        // Skip tickets that can't be loaded
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">tickets = append(tickets, utils.TicketInfo{
+                        Key:   ticket.Key,
+                        Title: ticket.Title,
+                        Type:  ticket.Type,
+                })</span>
+        }
+
+        // Perform fuzzy search
+        <span class="cov0" title="0">results := utils.FuzzySearch(query, tickets)
+
+        // Filter by type if specified
+        if ticketType != "" </span><span class="cov0" title="0">{
+                results = utils.FilterByType(results, ticketType)
+        }</span>
+
+        <span class="cov0" title="0">return results, nil</span>
+}
+
+// displaySearchResults displays search results
+func displaySearchResults(results []utils.SearchResult) <span class="cov0" title="0">{
+        fmt.Printf("Found %d matching tickets:\n\n", len(results))
+
+        for i, result := range results </span><span class="cov0" title="0">{
+                fmt.Printf("%d. %s (%s) - %s\n", i+1, result.Key, result.Type, result.Title)
+                if result.Matched != "" </span><span class="cov0" title="0">{
+                        fmt.Printf("   Matched: %s\n", result.Matched)
+                }</span>
+                <span class="cov0" title="0">fmt.Println()</span>
+        }
+}
+
+// selectTicket prompts user to select a ticket from results
+func selectTicket(results []utils.SearchResult) (*utils.SearchResult, error) <span class="cov0" title="0">{
+        if len(results) == 1 </span><span class="cov0" title="0">{
+                // Auto-select if only one result
+                return &amp;results[0], nil
+        }</span>
+
+        // Display results
+        <span class="cov0" title="0">displaySearchResults(results)
+
+        // Prompt for selection
+        reader := bufio.NewReader(os.Stdin)
+        fmt.Print("Select ticket (1-", len(results), "): ")
+
+        input, err := reader.ReadString('\n')
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read input: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">input = strings.TrimSpace(input)
+        if input == "" </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("no selection made")
+        }</span>
+
+        // Parse selection
+        <span class="cov0" title="0">var selection int
+        if _, err := fmt.Sscanf(input, "%d", &amp;selection); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("invalid selection: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if selection &lt; 1 || selection &gt; len(results) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("selection out of range")
+        }</span>
+
+        <span class="cov0" title="0">return &amp;results[selection-1], nil</span>
+}
+
+// GetFocusCmd returns the focus command
+func GetFocusCmd() *cobra.Command <span class="cov0" title="0">{
+        return focusCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file10" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/lunchboxsushi/jit/internal/config"
+        "github.com/spf13/cobra"
+)
+
+var initCmd = &amp;cobra.Command{
+        Use:   "init",
+        Short: "Initialize jit configuration",
+        Long:  `Create a default configuration file for jit`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                fmt.Println("Initializing jit configuration...")
+
+                // Check if config already exists
+                if !config.IsConfigMissing() </span><span class="cov0" title="0">{
+                        fmt.Println("Warning: Configuration file already exists!")
+                        fmt.Println("Tip: If you want to recreate it, delete the existing file first.")
+                        return
+                }</span>
+
+                // Create default configuration
+                <span class="cov0" title="0">err := config.CreateDefaultConfig()
+                if err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("Error: Failed to create configuration: %v\n", err)
+                        return
+                }</span>
+
+                <span class="cov0" title="0">fmt.Println("Success: Configuration file created successfully!")
+                fmt.Printf("Location: %s\n", config.GetDefaultConfigPath())
+                fmt.Println("\nNext steps:")
+                fmt.Println("1. Edit the configuration file with your Jira and AI settings")
+                fmt.Println("2. Set the required environment variables:")
+                fmt.Println("   - JIRA_API_TOKEN")
+                fmt.Println("   - OPENAI_API_KEY (if using AI features)")
+                fmt.Println("3. Run 'jit test-config' to verify your configuration")</span>
+        },
+}
+
+// GetInitCmd returns the init command
+func GetInitCmd() *cobra.Command <span class="cov0" title="0">{
+        return initCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file11" style="display: none">package commands
+
+import (
+        "fmt"
+        "os/exec"
+        "runtime"
+
+        "github.com/spf13/cobra"
+)
+
+var (
+        linkShortFlag bool
+)
+
+var linkCmd = &amp;cobra.Command{
+        Use:   "link [ticket-key]",
+        Short: "Get Jira URL for ticket",
+        Long: `Output the Jira URL for a ticket. If no ticket is specified, uses current focus.
+        
+Examples:
+  jit link                    # Get URL for current focus
+  jit link SRE-1234          # Get URL for specific ticket
+  jit link -s                # Short format (ticket key only)
+  jit link SRE-1234 -s       # Short format for specific ticket`,
+        Args: cobra.MaximumNArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                // Initialize command context
+                ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">var ticketKey string
+
+                // Get ticket key from args or current focus
+                if len(args) &gt; 0 </span><span class="cov0" title="0">{
+                        ticketKey = args[0]
+                }</span> else<span class="cov0" title="0"> {
+                        // Try to get from current focus
+                        currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+                        currentTask, _ := ctx.ContextManager.GetCurrentTask()
+                        currentSubtask, _ := ctx.ContextManager.GetCurrentSubtask()
+
+                        // Prefer subtask &gt; task &gt; epic
+                        if currentSubtask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentSubtask
+                        }</span> else<span class="cov0" title="0"> if currentTask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentTask
+                        }</span> else<span class="cov0" title="0"> if currentEpic != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentEpic
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Println("No ticket specified and no current focus.")
+                                fmt.Println("Use 'jit focus &lt;ticket&gt;' to set focus or specify a ticket key.")
+                                return
+                        }</span>
+                }
+
+                // Validate ticket exists
+                <span class="cov0" title="0">if !ctx.Storage.Exists(ticketKey) </span><span class="cov0" title="0">{
+                        fmt.Printf("Ticket %s not found in local storage.\n", ticketKey)
+                        fmt.Printf("Use 'jit track %s' to track it first.\n", ticketKey)
+                        return
+                }</span>
+
+                // Generate URL
+                <span class="cov0" title="0">url := fmt.Sprintf("%s/browse/%s", ctx.Config.Jira.URL, ticketKey)
+
+                // Output based on format
+                if linkShortFlag </span><span class="cov0" title="0">{
+                        fmt.Println(ticketKey)
+                }</span> else<span class="cov0" title="0"> {
+                        fmt.Println(url)
+                }</span>
+
+                // Try to copy to clipboard
+                <span class="cov0" title="0">if err := copyToClipboard(url); err != nil </span><span class="cov0" title="0">{
+                        // Non-fatal error, just warn
+                        PrintWarning("Failed to copy to clipboard (URL still displayed)")
+                }</span> else<span class="cov0" title="0"> {
+                        if !linkShortFlag </span><span class="cov0" title="0">{
+                                PrintInfo("URL copied to clipboard")
+                        }</span>
+                }
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        linkCmd.Flags().BoolVarP(&amp;linkShortFlag, "short", "s", false, "Output ticket key only")
+}</span>
+
+// copyToClipboard copies text to clipboard using platform-specific commands
+func copyToClipboard(text string) error <span class="cov0" title="0">{
+        var cmd *exec.Cmd
+
+        switch runtime.GOOS </span>{
+        case "darwin":<span class="cov0" title="0"> // macOS
+                cmd = exec.Command("pbcopy")</span>
+        case "linux":<span class="cov0" title="0">
+                // Try xclip first, then xsel
+                if _, err := exec.LookPath("xclip"); err == nil </span><span class="cov0" title="0">{
+                        cmd = exec.Command("xclip", "-selection", "clipboard")
+                }</span> else<span class="cov0" title="0"> if _, err := exec.LookPath("xsel"); err == nil </span><span class="cov0" title="0">{
+                        cmd = exec.Command("xsel", "--clipboard", "--input")
+                }</span> else<span class="cov0" title="0"> {
+                        return fmt.Errorf("no clipboard tool available (install xclip or xsel)")
+                }</span>
+        case "windows":<span class="cov0" title="0">
+                cmd = exec.Command("clip")</span>
+        default:<span class="cov0" title="0">
+                return fmt.Errorf("unsupported platform: %s", runtime.GOOS)</span>
+        }
+
+        // Set up pipe for input
+        <span class="cov0" title="0">stdin, err := cmd.StdinPipe()
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create stdin pipe: %v", err)
+        }</span>
+
+        // Start command
+        <span class="cov0" title="0">if err := cmd.Start(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to start clipboard command: %v", err)
+        }</span>
+
+        // Write text to stdin
+        <span class="cov0" title="0">if _, err := stdin.Write([]byte(text)); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write to clipboard: %v", err)
+        }</span>
+
+        // Close stdin and wait for command to finish
+        <span class="cov0" title="0">stdin.Close()
+        if err := cmd.Wait(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("clipboard command failed: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// GetLinkCmd returns the link command
+func GetLinkCmd() *cobra.Command <span class="cov0" title="0">{
+        return linkCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file12" style="display: none">package commands
+
+import (
+        "fmt"
+        "sort"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+var (
+        logAllFlag    bool
+        logStatusFlag string
+        logJSONFlag   bool
+)
+
+var logCmd = &amp;cobra.Command{
+        Use:   "log",
+        Short: "Display ticket tree view",
+        Long: `Show a hierarchical view of tracked tickets with current focus highlighted.
+        
+Examples:
+  jit log                    # Show current context tree
+  jit log --all             # Show all tracked tickets
+  jit log --status "In Progress"  # Filter by status
+  jit log --json            # Output as JSON`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                // Initialize command context
+                ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                // Get current focus
+                <span class="cov0" title="0">currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+                currentTask, _ := ctx.ContextManager.GetCurrentTask()
+                currentSubtask, _ := ctx.ContextManager.GetCurrentSubtask()
+
+                // Get all tickets
+                ticketKeys, err := ctx.Storage.ListTickets()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to list tickets")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">if len(ticketKeys) == 0 </span><span class="cov0" title="0">{
+                        if logJSONFlag </span><span class="cov0" title="0">{
+                                fmt.Println("{\n  \"current_focus\": {\n    \"epic\": \"\",\n    \"task\": \"\",\n    \"subtask\": \"\"\n  },\n  \"tickets\": []\n}")
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Println("No tickets found. Use 'jit track &lt;ticket&gt;' to start tracking tickets.")
+                        }</span>
+                        <span class="cov0" title="0">return</span>
+                }
+
+                // Load tickets
+                <span class="cov0" title="0">var tickets []*types.Ticket
+                for _, key := range ticketKeys </span><span class="cov0" title="0">{
+                        ticket, err := ctx.Storage.LoadTicket(key)
+                        if err != nil </span><span class="cov0" title="0">{
+                                continue</span> // Skip tickets that can't be loaded
+                        }
+                        <span class="cov0" title="0">tickets = append(tickets, ticket)</span>
+                }
+
+                // Filter by status if specified
+                <span class="cov0" title="0">if logStatusFlag != "" </span><span class="cov0" title="0">{
+                        tickets = filterTicketsByStatus(tickets, logStatusFlag)
+                }</span>
+
+                // Sort tickets by type and key
+                <span class="cov0" title="0">sortTickets(tickets)
+
+                // Display based on format
+                if logJSONFlag </span><span class="cov0" title="0">{
+                        displayJSON(tickets, currentEpic, currentTask, currentSubtask)
+                }</span> else<span class="cov0" title="0"> {
+                        displayTree(tickets, currentEpic, currentTask, currentSubtask)
+                }</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        logCmd.Flags().BoolVar(&amp;logAllFlag, "all", false, "Show all tickets (not just current context)")
+        logCmd.Flags().StringVar(&amp;logStatusFlag, "status", "", "Filter by status (e.g., 'In Progress', 'Done')")
+        logCmd.Flags().BoolVar(&amp;logJSONFlag, "json", false, "Output as JSON")
+}</span>
+
+// filterTicketsByStatus filters tickets by status
+func filterTicketsByStatus(tickets []*types.Ticket, status string) []*types.Ticket <span class="cov0" title="0">{
+        var filtered []*types.Ticket
+        for _, ticket := range tickets </span><span class="cov0" title="0">{
+                if strings.EqualFold(ticket.Status, status) </span><span class="cov0" title="0">{
+                        filtered = append(filtered, ticket)
+                }</span>
+        }
+        <span class="cov0" title="0">return filtered</span>
+}
+
+// sortTickets sorts tickets by type (epic, task, subtask) and then by key
+func sortTickets(tickets []*types.Ticket) <span class="cov0" title="0">{
+        sort.Slice(tickets, func(i, j int) bool </span><span class="cov0" title="0">{
+                // Sort by type priority: epic &gt; task &gt; subtask
+                typeOrder := map[string]int{
+                        types.TicketTypeEpic:    1,
+                        types.TicketTypeTask:    2,
+                        types.TicketTypeSubtask: 3,
+                }
+
+                orderI := typeOrder[tickets[i].Type]
+                orderJ := typeOrder[tickets[j].Type]
+
+                if orderI != orderJ </span><span class="cov0" title="0">{
+                        return orderI &lt; orderJ
+                }</span>
+
+                // If same type, sort by key
+                <span class="cov0" title="0">return tickets[i].Key &lt; tickets[j].Key</span>
+        })
+}
+
+// displayTree displays tickets in a tree format
+func displayTree(tickets []*types.Ticket, currentEpic, currentTask, currentSubtask string) <span class="cov0" title="0">{
+        fmt.Println("Ticket Tree:")
+        fmt.Println()
+
+        // Group tickets by type
+        epics := filterTicketsByType(tickets, types.TicketTypeEpic)
+        tasks := filterTicketsByType(tickets, types.TicketTypeTask)
+        subtasks := filterTicketsByType(tickets, types.TicketTypeSubtask)
+
+        // Display epics
+        for _, epic := range epics </span><span class="cov0" title="0">{
+                focusMarker := ""
+                if epic.Key == currentEpic </span><span class="cov0" title="0">{
+                        focusMarker = " *"
+                }</span>
+                <span class="cov0" title="0">fmt.Printf("📦 %s (%s)%s\n", epic.Key, epic.Status, focusMarker)
+                fmt.Printf("   %s\n", epic.Title)
+
+                // Show tasks under this epic
+                epicTasks := filterTasksByParent(tasks, epic.Key)
+                for _, task := range epicTasks </span><span class="cov0" title="0">{
+                        focusMarker = ""
+                        if task.Key == currentTask </span><span class="cov0" title="0">{
+                                focusMarker = " *"
+                        }</span>
+                        <span class="cov0" title="0">fmt.Printf("   📋 %s (%s)%s\n", task.Key, task.Status, focusMarker)
+                        fmt.Printf("      %s\n", task.Title)
+
+                        // Show subtasks under this task
+                        taskSubtasks := filterSubtasksByParent(subtasks, task.Key)
+                        for _, subtask := range taskSubtasks </span><span class="cov0" title="0">{
+                                focusMarker = ""
+                                if subtask.Key == currentSubtask </span><span class="cov0" title="0">{
+                                        focusMarker = " *"
+                                }</span>
+                                <span class="cov0" title="0">fmt.Printf("      🔧 %s (%s)%s\n", subtask.Key, subtask.Status, focusMarker)
+                                fmt.Printf("         %s\n", subtask.Title)</span>
+                        }
+                }
+                <span class="cov0" title="0">fmt.Println()</span>
+        }
+
+        // Show orphan tasks (tasks without epic)
+        <span class="cov0" title="0">orphanTasks := filterOrphanTasks(tasks)
+        if len(orphanTasks) &gt; 0 </span><span class="cov0" title="0">{
+                fmt.Println("Orphan Tasks:")
+                for _, task := range orphanTasks </span><span class="cov0" title="0">{
+                        focusMarker := ""
+                        if task.Key == currentTask </span><span class="cov0" title="0">{
+                                focusMarker = " *"
+                        }</span>
+                        <span class="cov0" title="0">fmt.Printf("📋 %s (%s)%s\n", task.Key, task.Status, focusMarker)
+                        fmt.Printf("   %s\n", task.Title)
+
+                        // Show subtasks under this task
+                        taskSubtasks := filterSubtasksByParent(subtasks, task.Key)
+                        for _, subtask := range taskSubtasks </span><span class="cov0" title="0">{
+                                focusMarker = ""
+                                if subtask.Key == currentSubtask </span><span class="cov0" title="0">{
+                                        focusMarker = " *"
+                                }</span>
+                                <span class="cov0" title="0">fmt.Printf("   🔧 %s (%s)%s\n", subtask.Key, subtask.Status, focusMarker)
+                                fmt.Printf("      %s\n", subtask.Title)</span>
+                        }
+                }
+                <span class="cov0" title="0">fmt.Println()</span>
+        }
+
+        // Show current focus summary
+        <span class="cov0" title="0">if currentEpic != "" || currentTask != "" || currentSubtask != "" </span><span class="cov0" title="0">{
+                fmt.Println("Current Focus:")
+                if currentEpic != "" </span><span class="cov0" title="0">{
+                        fmt.Printf("  Epic: %s\n", currentEpic)
+                }</span>
+                <span class="cov0" title="0">if currentTask != "" </span><span class="cov0" title="0">{
+                        fmt.Printf("  Task: %s\n", currentTask)
+                }</span>
+                <span class="cov0" title="0">if currentSubtask != "" </span><span class="cov0" title="0">{
+                        fmt.Printf("  Subtask: %s\n", currentSubtask)
+                }</span>
+        }
+}
+
+// displayJSON displays tickets in JSON format
+func displayJSON(tickets []*types.Ticket, currentEpic, currentTask, currentSubtask string) <span class="cov0" title="0">{
+        // Simple JSON structure for now
+        fmt.Println("{")
+        fmt.Printf("  \"current_focus\": {\n")
+        fmt.Printf("    \"epic\": \"%s\",\n", currentEpic)
+        fmt.Printf("    \"task\": \"%s\",\n", currentTask)
+        fmt.Printf("    \"subtask\": \"%s\"\n", currentSubtask)
+        fmt.Printf("  },\n")
+        fmt.Printf("  \"tickets\": [\n")
+
+        for i, ticket := range tickets </span><span class="cov0" title="0">{
+                fmt.Printf("    {\n")
+                fmt.Printf("      \"key\": \"%s\",\n", ticket.Key)
+                fmt.Printf("      \"type\": \"%s\",\n", ticket.Type)
+                fmt.Printf("      \"title\": \"%s\",\n", ticket.Title)
+                fmt.Printf("      \"status\": \"%s\",\n", ticket.Status)
+                fmt.Printf("      \"parent\": \"%s\"\n", ticket.Relationships.ParentKey)
+                if i &lt; len(tickets)-1 </span><span class="cov0" title="0">{
+                        fmt.Printf("    },\n")
+                }</span> else<span class="cov0" title="0"> {
+                        fmt.Printf("    }\n")
+                }</span>
+        }
+
+        <span class="cov0" title="0">fmt.Printf("  ]\n")
+        fmt.Printf("}\n")</span>
+}
+
+// filterTicketsByType filters tickets by type
+func filterTicketsByType(tickets []*types.Ticket, ticketType string) []*types.Ticket <span class="cov0" title="0">{
+        var filtered []*types.Ticket
+        for _, ticket := range tickets </span><span class="cov0" title="0">{
+                if ticket.Type == ticketType </span><span class="cov0" title="0">{
+                        filtered = append(filtered, ticket)
+                }</span>
+        }
+        <span class="cov0" title="0">return filtered</span>
+}
+
+// filterTasksByParent filters tasks by parent epic
+func filterTasksByParent(tasks []*types.Ticket, parentEpic string) []*types.Ticket <span class="cov0" title="0">{
+        var filtered []*types.Ticket
+        for _, task := range tasks </span><span class="cov0" title="0">{
+                if task.Relationships.ParentKey == parentEpic </span><span class="cov0" title="0">{
+                        filtered = append(filtered, task)
+                }</span>
+        }
+        <span class="cov0" title="0">return filtered</span>
+}
+
+// filterSubtasksByParent filters subtasks by parent task
+func filterSubtasksByParent(subtasks []*types.Ticket, parentTask string) []*types.Ticket <span class="cov0" title="0">{
+        var filtered []*types.Ticket
+        for _, subtask := range subtasks </span><span class="cov0" title="0">{
+                if subtask.Relationships.ParentKey == parentTask </span><span class="cov0" title="0">{
+                        filtered = append(filtered, subtask)
+                }</span>
+        }
+        <span class="cov0" title="0">return filtered</span>
+}
+
+// filterOrphanTasks filters tasks that don't have a parent epic
+func filterOrphanTasks(tasks []*types.Ticket) []*types.Ticket <span class="cov0" title="0">{
+        var filtered []*types.Ticket
+        for _, task := range tasks </span><span class="cov0" title="0">{
+                if task.Relationships.ParentKey == "" </span><span class="cov0" title="0">{
+                        filtered = append(filtered, task)
+                }</span>
+        }
+        <span class="cov0" title="0">return filtered</span>
+}
+
+// GetLogCmd returns the log command
+func GetLogCmd() *cobra.Command <span class="cov0" title="0">{
+        return logCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file13" style="display: none">package commands
+
+import (
+        "fmt"
+        "os/exec"
+        "runtime"
+
+        "github.com/spf13/cobra"
+)
+
+var openCmd = &amp;cobra.Command{
+        Use:   "open [ticket-key]",
+        Short: "Open Jira ticket in browser",
+        Long: `Open a Jira ticket in your default web browser. If no ticket is specified, uses current focus.
+        
+Examples:
+  jit open                    # Open current focus in browser
+  jit open SRE-1234          # Open specific ticket in browser`,
+        Args: cobra.MaximumNArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                // Initialize command context
+                ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">var ticketKey string
+
+                // Get ticket key from args or current focus
+                if len(args) &gt; 0 </span><span class="cov0" title="0">{
+                        ticketKey = args[0]
+                }</span> else<span class="cov0" title="0"> {
+                        // Try to get from current focus
+                        currentEpic, _ := ctx.ContextManager.GetCurrentEpic()
+                        currentTask, _ := ctx.ContextManager.GetCurrentTask()
+                        currentSubtask, _ := ctx.ContextManager.GetCurrentSubtask()
+
+                        // Prefer subtask &gt; task &gt; epic
+                        if currentSubtask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentSubtask
+                        }</span> else<span class="cov0" title="0"> if currentTask != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentTask
+                        }</span> else<span class="cov0" title="0"> if currentEpic != "" </span><span class="cov0" title="0">{
+                                ticketKey = currentEpic
+                        }</span> else<span class="cov0" title="0"> {
+                                fmt.Println("No ticket specified and no current focus.")
+                                fmt.Println("Use 'jit focus &lt;ticket&gt;' to set focus or specify a ticket key.")
+                                return
+                        }</span>
+                }
+
+                // Validate ticket exists
+                <span class="cov0" title="0">if !ctx.Storage.Exists(ticketKey) </span><span class="cov0" title="0">{
+                        fmt.Printf("Ticket %s not found in local storage.\n", ticketKey)
+                        fmt.Printf("Use 'jit track %s' to track it first.\n", ticketKey)
+                        return
+                }</span>
+
+                // Generate URL
+                <span class="cov0" title="0">url := fmt.Sprintf("%s/browse/%s", ctx.Config.Jira.URL, ticketKey)
+
+                // Open in browser
+                if err := openBrowser(url); err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to open browser")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">fmt.Printf("Opened %s in browser\n", ticketKey)</span>
+        },
+}
+
+// openBrowser opens a URL in the default browser
+func openBrowser(url string) error <span class="cov0" title="0">{
+        var cmd *exec.Cmd
+
+        switch runtime.GOOS </span>{
+        case "darwin":<span class="cov0" title="0"> // macOS
+                cmd = exec.Command("open", url)</span>
+        case "linux":<span class="cov0" title="0">
+                // Try xdg-open first, then sensible-browser
+                if _, err := exec.LookPath("xdg-open"); err == nil </span><span class="cov0" title="0">{
+                        cmd = exec.Command("xdg-open", url)
+                }</span> else<span class="cov0" title="0"> if _, err := exec.LookPath("sensible-browser"); err == nil </span><span class="cov0" title="0">{
+                        cmd = exec.Command("sensible-browser", url)
+                }</span> else<span class="cov0" title="0"> {
+                        return fmt.Errorf("no browser opener available (install xdg-utils)")
+                }</span>
+        case "windows":<span class="cov0" title="0">
+                cmd = exec.Command("cmd", "/c", "start", url)</span>
+        default:<span class="cov0" title="0">
+                return fmt.Errorf("unsupported platform: %s", runtime.GOOS)</span>
+        }
+
+        <span class="cov0" title="0">return cmd.Run()</span>
+}
+
+// GetOpenCmd returns the open command
+func GetOpenCmd() *cobra.Command <span class="cov0" title="0">{
+        return openCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file14" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+var (
+        subtaskNoEnrichFlag bool
+        subtaskNoCreateFlag bool
+)
+
+var subtaskCmd = &amp;cobra.Command{
+        Use:   "subtask",
+        Short: "Create a new subtask",
+        Long: `Create a new subtask by opening an editor with a template.
+        
+The command will:
+1. Open an editor with a subtask template
+2. Optionally enhance the content with AI (unless --no-enrich is used)
+3. Create the subtask in Jira (unless --no-create is used)
+4. Save the subtask locally
+5. Set focus to the new subtask
+
+Subtasks must be created under a task context.`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                flags := CreateFlags{
+                        NoEnrich: subtaskNoEnrichFlag,
+                        NoCreate: subtaskNoCreateFlag,
+                }
+
+                options := CreateOptions{
+                        TicketType:       types.TicketTypeSubtask,
+                        TemplateName:     "subtask.md",
+                        ValidateContext:  ValidateSubtaskContext,
+                        SetRelationships: SetSubtaskRelationships,
+                        SuccessMessage:   "Subtask created successfully",
+                }
+
+                if err := CreateTicket(cmd, options, flags); err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("❌ %v\n", err)
+                        return
+                }</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        subtaskCmd.Flags().BoolVar(&amp;subtaskNoEnrichFlag, "no-enrich", false, "Skip AI enrichment")
+        subtaskCmd.Flags().BoolVar(&amp;subtaskNoCreateFlag, "no-create", false, "Save locally only, don't create in Jira")
+}</span>
+
+// GetSubtaskCmd returns the subtask command
+func GetSubtaskCmd() *cobra.Command <span class="cov0" title="0">{
+        return subtaskCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file15" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+        "github.com/spf13/cobra"
+)
+
+var (
+        taskNoEnrichFlag bool
+        taskNoCreateFlag bool
+        taskOrphanFlag   bool
+)
+
+var taskCmd = &amp;cobra.Command{
+        Use:   "task",
+        Short: "Create a new task",
+        Long: `Create a new task by opening an editor with a template.
+        
+The command will:
+1. Open an editor with a task template
+2. Optionally enhance the content with AI (unless --no-enrich is used)
+3. Create the task in Jira (unless --no-create is used)
+4. Save the task locally
+5. Set focus to the new task
+
+By default, tasks are created under the current epic context.
+Use --orphan (-o) to create a task without a parent epic.`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                flags := CreateFlags{
+                        NoEnrich: taskNoEnrichFlag,
+                        NoCreate: taskNoCreateFlag,
+                        Orphan:   taskOrphanFlag,
+                }
+
+                // Override context validation for orphan tasks
+                validateContext := ValidateTaskContext
+                if taskOrphanFlag </span><span class="cov0" title="0">{
+                        validateContext = ValidateEpicContext // No validation needed for orphan tasks
+                }</span>
+
+                <span class="cov0" title="0">options := CreateOptions{
+                        TicketType:       types.TicketTypeTask,
+                        TemplateName:     "task.md",
+                        ValidateContext:  validateContext,
+                        SetRelationships: SetTaskRelationships,
+                        SuccessMessage:   "Task created successfully",
+                }
+
+                if err := CreateTicket(cmd, options, flags); err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("❌ %v\n", err)
+                        return
+                }</span>
+
+                // Add orphan-specific success message
+                <span class="cov0" title="0">if taskOrphanFlag </span><span class="cov0" title="0">{
+                        fmt.Println("📦 Orphan task (no parent epic)")
+                }</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        taskCmd.Flags().BoolVar(&amp;taskNoEnrichFlag, "no-enrich", false, "Skip AI enrichment")
+        taskCmd.Flags().BoolVar(&amp;taskNoCreateFlag, "no-create", false, "Save locally only, don't create in Jira")
+        taskCmd.Flags().BoolVarP(&amp;taskOrphanFlag, "orphan", "o", false, "Create an orphan task (no parent epic)")
+}</span>
+
+// GetTaskCmd returns the task command
+func GetTaskCmd() *cobra.Command <span class="cov0" title="0">{
+        return taskCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file16" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/lunchboxsushi/jit/internal/config"
+        "github.com/spf13/cobra"
+)
+
+var testConfigCmd = &amp;cobra.Command{
+        Use:    "test-config",
+        Short:  "Test configuration loading",
+        Long:   `Test command to verify configuration loading works correctly`,
+        Hidden: true, // Hide from normal users
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                fmt.Println("Testing configuration loading...")
+
+                // Try to load configuration
+                cfg, err := config.Load()
+                if err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("Error: Configuration error: %v\n", err)
+                        fmt.Println("\nTip: Run 'jit init' to create a configuration file")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">fmt.Println("Success: Configuration loaded successfully!")
+                fmt.Printf("Jira URL: %s\n", cfg.Jira.URL)
+                fmt.Printf("Jira Project: %s\n", cfg.Jira.Project)
+                fmt.Printf("AI Provider: %s\n", cfg.AI.Provider)
+                fmt.Printf("Data Directory: %s\n", cfg.App.DataDir)</span>
+        },
+}
+
+// GetTestConfigCmd returns the test config command
+func GetTestConfigCmd() *cobra.Command <span class="cov0" title="0">{
+        return testConfigCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file17" style="display: none">package commands
+
+import (
+        "fmt"
+        "regexp"
+        "strings"
+
+        "github.com/spf13/cobra"
+)
+
+var (
+        noChildrenFlag bool
+)
+
+var trackCmd = &amp;cobra.Command{
+        Use:   "track &lt;ticket-key&gt;",
+        Short: "Track a Jira ticket and its children",
+        Long: `Download a Jira ticket and optionally its entire hierarchy (children) into local storage.
+        
+Examples:
+  jit track SRE-1234          # Track a single ticket
+  jit track SRE-1234 --no-children  # Track without children
+  jit track EPIC-567          # Track epic and all its tasks/subtasks`,
+        Args: cobra.ExactArgs(1),
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                ticketKey := strings.ToUpper(args[0])
+
+                // Validate ticket key format
+                if err := validateTicketKey(ticketKey); err != nil </span><span class="cov0" title="0">{
+                        fmt.Printf("Invalid ticket key: %v\n", err)
+                        return
+                }</span>
+
+                // Initialize command context
+                <span class="cov0" title="0">ctx, err := InitializeCommand()
+                if err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to initialize")
+                        return
+                }</span>
+
+                // Track the ticket using common method
+                <span class="cov0" title="0">if err := ctx.TrackTicketWithChildren(ticketKey, !noChildrenFlag); err != nil </span><span class="cov0" title="0">{
+                        HandleError(err, "Failed to track ticket")
+                        return
+                }</span>
+
+                <span class="cov0" title="0">PrintSuccess(fmt.Sprintf("Successfully tracked %s", ticketKey))</span>
+        },
+}
+
+func init() <span class="cov0" title="0">{
+        trackCmd.Flags().BoolVar(&amp;noChildrenFlag, "no-children", false, "Skip fetching child tickets")
+}</span>
+
+// validateTicketKey validates the format of a Jira ticket key
+func validateTicketKey(key string) error <span class="cov0" title="0">{
+        // Jira ticket keys are typically PROJECT-NUMBER format
+        // e.g., SRE-1234, PROJ-567, etc.
+        pattern := `^[A-Z]+-\d+$`
+        matched, err := regexp.MatchString(pattern, key)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to validate ticket key: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">if !matched </span><span class="cov0" title="0">{
+                return fmt.Errorf("ticket key must be in format PROJECT-NUMBER (e.g., SRE-1234)")
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// GetTrackCmd returns the track command
+func GetTrackCmd() *cobra.Command <span class="cov0" title="0">{
+        return trackCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file18" style="display: none">package commands
+
+import (
+        "fmt"
+
+        "github.com/spf13/cobra"
+)
+
+var versionCmd = &amp;cobra.Command{
+        Use:   "version",
+        Short: "Print the version number of jit",
+        Long:  `Display the current version of the jit CLI tool`,
+        Run: func(cmd *cobra.Command, args []string) <span class="cov0" title="0">{
+                fmt.Printf("jit version %s\n", cmd.Root().Version)
+        }</span>,
+}
+
+// GetVersionCmd returns the version command
+func GetVersionCmd() *cobra.Command <span class="cov0" title="0">{
+        return versionCmd
+}</span>
+</pre>
+		
+		<pre class="file" id="file19" style="display: none">package config
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+        "regexp"
+        "strings"
+        "sync"
+
+        "gopkg.in/yaml.v3"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+var (
+        configInstance *types.Config
+        configOnce     sync.Once
+        configError    error
+)
+
+// Load loads the configuration from the default location
+func Load() (*types.Config, error) <span class="cov0" title="0">{
+        configOnce.Do(func() </span><span class="cov0" title="0">{
+                configInstance, configError = loadConfig()
+        }</span>)
+        <span class="cov0" title="0">return configInstance, configError</span>
+}
+
+// Get returns the loaded configuration instance
+func Get() *types.Config <span class="cov0" title="0">{
+        config, _ := Load()
+        return config
+}</span>
+
+// loadConfig loads and validates the configuration
+func loadConfig() (*types.Config, error) <span class="cov0" title="0">{
+        configPath := GetDefaultConfigPath()
+
+        // Check if config file exists
+        if _, err := os.Stat(configPath); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("configuration file not found: %s. Run 'jit init' to create one", configPath)
+        }</span>
+
+        // Read config file
+        <span class="cov0" title="0">data, err := os.ReadFile(configPath)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read config file %s: %v", configPath, err)
+        }</span>
+
+        // Expand environment variables
+        <span class="cov0" title="0">expandedData := ExpandEnvironmentVariables(string(data))
+
+        // Parse YAML
+        var config types.Config
+        if err := yaml.Unmarshal([]byte(expandedData), &amp;config); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to parse config file %s: %v", configPath, err)
+        }</span>
+
+        // Validate configuration
+        <span class="cov0" title="0">if errors := ValidateConfig(&amp;config); len(errors) &gt; 0 </span><span class="cov0" title="0">{
+                var errorMsgs []string
+                for _, err := range errors </span><span class="cov0" title="0">{
+                        errorMsgs = append(errorMsgs, err.Error())
+                }</span>
+                <span class="cov0" title="0">return nil, fmt.Errorf("configuration validation failed:\n%s", strings.Join(errorMsgs, "\n"))</span>
+        }
+
+        <span class="cov0" title="0">return &amp;config, nil</span>
+}
+
+// expandEnvironmentVariables expands ${VAR} patterns in the config content
+func ExpandEnvironmentVariables(content string) string <span class="cov1" title="1">{
+        // Regex to match ${VAR} patterns
+        re := regexp.MustCompile(`\$\{([^}]+)\}`)
+
+        return re.ReplaceAllStringFunc(content, func(match string) string </span><span class="cov10" title="2">{
+                // Extract variable name from ${VAR}
+                varName := match[2 : len(match)-1]
+
+                // Get environment variable value
+                value := os.Getenv(varName)
+
+                // If not found, return the original match
+                if value == "" </span><span class="cov0" title="0">{
+                        return match
+                }</span>
+
+                <span class="cov10" title="2">return value</span>
+        })
+}
+
+// CreateDefaultConfig creates a default configuration file
+func CreateDefaultConfig() error <span class="cov0" title="0">{
+        configPath := GetDefaultConfigPath()
+
+        // Create directory if it doesn't exist
+        configDir := filepath.Dir(configPath)
+        if err := os.MkdirAll(configDir, 0755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create config directory %s: %v", configDir, err)
+        }</span>
+
+        // Create default config
+        <span class="cov0" title="0">config := types.Config{
+                Jira: types.JiraConfig{
+                        URL:           "https://your-company.atlassian.net",
+                        Username:      "your-email@company.com",
+                        Token:         "${JIRA_API_TOKEN}",
+                        Project:       "PROJ",
+                        EpicLinkField: "customfield_10014",
+                },
+                AI: types.AIConfig{
+                        Provider:  "openai",
+                        APIKey:    "${OPENAI_API_KEY}",
+                        Model:     "gpt-4",
+                        MaxTokens: 1000,
+                },
+                App: types.AppConfig{
+                        DataDir:            GetDefaultDataPath(),
+                        DefaultEditor:      "vim",
+                        ReviewBeforeCreate: true,
+                },
+        }
+
+        // Marshal to YAML
+        data, err := yaml.Marshal(&amp;config)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal default config: %v", err)
+        }</span>
+
+        // Write to file
+        <span class="cov0" title="0">if err := os.WriteFile(configPath, data, 0644); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write config file %s: %v", configPath, err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// SaveConfig saves the configuration to the default location
+func SaveConfig(config *types.Config) error <span class="cov0" title="0">{
+        configPath := GetDefaultConfigPath()
+
+        // Create directory if it doesn't exist
+        configDir := filepath.Dir(configPath)
+        if err := os.MkdirAll(configDir, 0755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create config directory %s: %v", configDir, err)
+        }</span>
+
+        // Marshal to YAML
+        <span class="cov0" title="0">data, err := yaml.Marshal(config)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal config: %v", err)
+        }</span>
+
+        // Write to file
+        <span class="cov0" title="0">if err := os.WriteFile(configPath, data, 0644); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write config file %s: %v", configPath, err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file20" style="display: none">package config
+
+import (
+        "os"
+        "path/filepath"
+)
+
+// GetDefaultConfigPath returns the default configuration file path
+func GetDefaultConfigPath() string <span class="cov10" title="3">{
+        homeDir, err := os.UserHomeDir()
+        if err != nil </span><span class="cov0" title="0">{
+                // Fallback to current directory if we can't get home dir
+                return filepath.Join(".", ".jit", "config.yml")
+        }</span>
+
+        // Check XDG_CONFIG_HOME first
+        <span class="cov10" title="3">if xdgConfig := os.Getenv("XDG_CONFIG_HOME"); xdgConfig != "" </span><span class="cov0" title="0">{
+                return filepath.Join(xdgConfig, "jit", "config.yml")
+        }</span>
+
+        // Fallback to ~/.jit/config.yml
+        <span class="cov10" title="3">return filepath.Join(homeDir, ".jit", "config.yml")</span>
+}
+
+// GetDefaultDataPath returns the default data directory path
+func GetDefaultDataPath() string <span class="cov6" title="2">{
+        homeDir, err := os.UserHomeDir()
+        if err != nil </span><span class="cov0" title="0">{
+                // Fallback to current directory if we can't get home dir
+                return filepath.Join(".", ".local", "share", "jit")
+        }</span>
+
+        // Check XDG_DATA_HOME first
+        <span class="cov6" title="2">if xdgData := os.Getenv("XDG_DATA_HOME"); xdgData != "" </span><span class="cov0" title="0">{
+                return filepath.Join(xdgData, "jit")
+        }</span>
+
+        // Fallback to ~/.local/share/jit
+        <span class="cov6" title="2">return filepath.Join(homeDir, ".local", "share", "jit")</span>
+}
+</pre>
+		
+		<pre class="file" id="file21" style="display: none">package config
+
+import (
+        "fmt"
+        "net/url"
+        "os"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// ValidationError represents a configuration validation error
+type ValidationError struct {
+        Field   string
+        Message string
+}
+
+func (e ValidationError) Error() string <span class="cov0" title="0">{
+        return fmt.Sprintf("config validation error in %s: %s", e.Field, e.Message)
+}</span>
+
+// ValidateConfig validates the configuration and returns any errors
+func ValidateConfig(config *types.Config) []error <span class="cov10" title="4">{
+        var errors []error
+
+        // Validate Jira configuration
+        if err := validateJiraConfig(config.Jira); err != nil </span><span class="cov8" title="3">{
+                errors = append(errors, err)
+        }</span>
+
+        // Validate AI configuration (optional)
+        <span class="cov10" title="4">if err := validateAIConfig(config.AI); err != nil </span><span class="cov0" title="0">{
+                errors = append(errors, err)
+        }</span>
+
+        // Validate App configuration
+        <span class="cov10" title="4">if err := validateAppConfig(config.App); err != nil </span><span class="cov0" title="0">{
+                errors = append(errors, err)
+        }</span>
+
+        <span class="cov10" title="4">return errors</span>
+}
+
+// validateJiraConfig validates Jira-specific configuration
+func validateJiraConfig(jira types.JiraConfig) error <span class="cov10" title="4">{
+        // URL is required
+        if jira.URL == "" </span><span class="cov1" title="1">{
+                return ValidationError{Field: "jira.url", Message: "Jira URL is required"}
+        }</span>
+
+        // Validate URL format
+        <span class="cov8" title="3">if _, err := url.ParseRequestURI(jira.URL); err != nil </span><span class="cov1" title="1">{
+                return ValidationError{Field: "jira.url", Message: fmt.Sprintf("Invalid URL format: %v", err)}
+        }</span>
+
+        // Username is required
+        <span class="cov5" title="2">if jira.Username == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "jira.username", Message: "Jira username is required"}
+        }</span>
+
+        // Token is required
+        <span class="cov5" title="2">if jira.Token == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "jira.token", Message: "Jira API token is required"}
+        }</span>
+
+        // Project is required
+        <span class="cov5" title="2">if jira.Project == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "jira.project", Message: "Jira project key is required"}
+        }</span>
+
+        // Project should be uppercase
+        <span class="cov5" title="2">if jira.Project != strings.ToUpper(jira.Project) </span><span class="cov1" title="1">{
+                return ValidationError{Field: "jira.project", Message: "Project key should be uppercase"}
+        }</span>
+
+        <span class="cov1" title="1">return nil</span>
+}
+
+// validateAIConfig validates AI-specific configuration (optional)
+func validateAIConfig(ai types.AIConfig) error <span class="cov10" title="4">{
+        // If provider is empty, AI is disabled (which is fine)
+        if ai.Provider == "" </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+
+        // Validate provider
+        <span class="cov10" title="4">validProviders := []string{"openai", "anthropic", "local", "mock", "test"}
+        valid := false
+        for _, provider := range validProviders </span><span class="cov10" title="4">{
+                if ai.Provider == provider </span><span class="cov10" title="4">{
+                        valid = true
+                        break</span>
+                }
+        }
+        <span class="cov10" title="4">if !valid </span><span class="cov0" title="0">{
+                return ValidationError{Field: "ai.provider", Message: fmt.Sprintf("Invalid AI provider: %s. Valid providers: %v", ai.Provider, validProviders)}
+        }</span>
+
+        // If provider is set, API key is required
+        <span class="cov10" title="4">if ai.APIKey == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "ai.api_key", Message: "AI API key is required when AI provider is configured"}
+        }</span>
+
+        // Validate model (optional, but if provided should be non-empty)
+        <span class="cov10" title="4">if ai.Model != "" &amp;&amp; strings.TrimSpace(ai.Model) == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "ai.model", Message: "AI model cannot be empty if provided"}
+        }</span>
+
+        // Validate max tokens
+        <span class="cov10" title="4">if ai.MaxTokens &lt;= 0 </span><span class="cov0" title="0">{
+                return ValidationError{Field: "ai.max_tokens", Message: "AI max tokens must be greater than 0"}
+        }</span>
+
+        <span class="cov10" title="4">return nil</span>
+}
+
+// validateAppConfig validates application-specific configuration
+func validateAppConfig(app types.AppConfig) error <span class="cov10" title="4">{
+        // Data directory is required
+        if app.DataDir == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "app.data_dir", Message: "Data directory is required"}
+        }</span>
+
+        // Editor is required
+        <span class="cov10" title="4">if app.DefaultEditor == "" </span><span class="cov0" title="0">{
+                return ValidationError{Field: "app.default_editor", Message: "Default editor is required"}
+        }</span>
+
+        <span class="cov10" title="4">return nil</span>
+}
+
+// IsConfigMissing checks if the configuration file is missing
+func IsConfigMissing() bool <span class="cov1" title="1">{
+        configPath := GetDefaultConfigPath()
+        _, err := os.Stat(configPath)
+        return os.IsNotExist(err)
+}</span>
+</pre>
+		
+		<pre class="file" id="file22" style="display: none">package jira
+
+import (
+        "context"
+        "encoding/base64"
+        "encoding/json"
+        "fmt"
+        "io"
+        "net/http"
+        "net/url"
+        "strconv"
+        "strings"
+        "time"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// Client represents a Jira API client
+type Client struct {
+        baseURL    string
+        username   string
+        token      string
+        httpClient *http.Client
+        config     *types.JiraConfig
+}
+
+// NewClient creates a new Jira client
+func NewClient(config *types.JiraConfig) *Client <span class="cov10" title="16">{
+        return &amp;Client{
+                baseURL:    config.URL,
+                username:   config.Username,
+                token:      config.Token,
+                httpClient: &amp;http.Client{Timeout: 30 * time.Second},
+                config:     config,
+        }
+}</span>
+
+// doRequest performs an HTTP request with authentication and error handling
+func (c *Client) doRequest(ctx context.Context, method, endpoint string, body io.Reader) (*http.Response, error) <span class="cov7" title="8">{
+        // Construct full URL
+        fullURL := c.baseURL + "/rest/api/3" + endpoint
+
+        // Create request
+        req, err := http.NewRequestWithContext(ctx, method, fullURL, body)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create request: %v", err)
+        }</span>
+
+        // Set headers
+        <span class="cov7" title="8">req.Header.Set("Content-Type", "application/json")
+        req.Header.Set("Accept", "application/json")
+
+        // Set authentication
+        auth := base64.StdEncoding.EncodeToString([]byte(c.username + ":" + c.token))
+        req.Header.Set("Authorization", "Basic "+auth)
+
+        // Make request
+        resp, err := c.httpClient.Do(req)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("request failed: %v", err)
+        }</span>
+
+        // Handle rate limiting
+        <span class="cov7" title="8">if resp.StatusCode == 429 </span><span class="cov0" title="0">{
+                retryAfter := resp.Header.Get("Retry-After")
+                if retryAfter != "" </span><span class="cov0" title="0">{
+                        if seconds, err := strconv.Atoi(retryAfter); err == nil </span><span class="cov0" title="0">{
+                                time.Sleep(time.Duration(seconds) * time.Second)
+                                // Retry the request
+                                return c.doRequest(ctx, method, endpoint, body)
+                        }</span>
+                }
+                // Default retry delay
+                <span class="cov0" title="0">time.Sleep(5 * time.Second)
+                return c.doRequest(ctx, method, endpoint, body)</span>
+        }
+
+        <span class="cov7" title="8">return resp, nil</span>
+}
+
+// parseErrorResponse parses Jira error responses
+func (c *Client) parseErrorResponse(resp *http.Response) error <span class="cov4" title="3">{
+        body, err := io.ReadAll(resp.Body)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to read error response: %v", err)
+        }</span>
+
+        // Try to parse as Jira error
+        <span class="cov4" title="3">var jiraError JiraErrorResponse
+        if err := json.Unmarshal(body, &amp;jiraError); err == nil </span><span class="cov4" title="3">{
+                if len(jiraError.ErrorCollection.ErrorMessages) &gt; 0 </span><span class="cov1" title="1">{
+                        return fmt.Errorf("Jira API error: %s", strings.Join(jiraError.ErrorCollection.ErrorMessages, "; "))
+                }</span>
+                <span class="cov3" title="2">if len(jiraError.ErrorCollection.Errors) &gt; 0 </span><span class="cov0" title="0">{
+                        var errors []string
+                        for field, message := range jiraError.ErrorCollection.Errors </span><span class="cov0" title="0">{
+                                errors = append(errors, fmt.Sprintf("%s: %s", field, message))
+                        }</span>
+                        <span class="cov0" title="0">return fmt.Errorf("Jira API error: %s", strings.Join(errors, "; "))</span>
+                }
+        }
+
+        // Fallback to generic error
+        <span class="cov3" title="2">return fmt.Errorf("HTTP %d: %s", resp.StatusCode, string(body))</span>
+}
+
+// GetIssue fetches a single issue by key
+func (c *Client) GetIssue(ctx context.Context, key string) (*JiraIssue, error) <span class="cov3" title="2">{
+        endpoint := fmt.Sprintf("/issue/%s?expand=changelog", key)
+
+        resp, err := c.doRequest(ctx, "GET", endpoint, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov3" title="2">defer resp.Body.Close()
+
+        if resp.StatusCode != 200 </span><span class="cov1" title="1">{
+                return nil, c.parseErrorResponse(resp)
+        }</span>
+
+        <span class="cov1" title="1">var issue JiraIssue
+        if err := json.NewDecoder(resp.Body).Decode(&amp;issue); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to decode response: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">return &amp;issue, nil</span>
+}
+
+// CreateIssue creates a new issue
+func (c *Client) CreateIssue(ctx context.Context, request *JiraCreateIssueRequest) (*JiraCreateIssueResponse, error) <span class="cov1" title="1">{
+        // Marshal request body
+        body, err := json.Marshal(request)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to marshal request: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">resp, err := c.doRequest(ctx, "POST", "/issue", strings.NewReader(string(body)))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov1" title="1">defer resp.Body.Close()
+
+        if resp.StatusCode != 201 </span><span class="cov0" title="0">{
+                return nil, c.parseErrorResponse(resp)
+        }</span>
+
+        <span class="cov1" title="1">var response JiraCreateIssueResponse
+        if err := json.NewDecoder(resp.Body).Decode(&amp;response); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to decode response: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">return &amp;response, nil</span>
+}
+
+// AddComment adds a comment to an issue
+func (c *Client) AddComment(ctx context.Context, issueKey, commentBody string) (*JiraComment, error) <span class="cov1" title="1">{
+        request := JiraCreateCommentRequest{
+                Body: commentBody,
+        }
+
+        // Marshal request body
+        body, err := json.Marshal(request)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to marshal request: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">endpoint := fmt.Sprintf("/issue/%s/comment", issueKey)
+        resp, err := c.doRequest(ctx, "POST", endpoint, strings.NewReader(string(body)))
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov1" title="1">defer resp.Body.Close()
+
+        if resp.StatusCode != 201 </span><span class="cov0" title="0">{
+                return nil, c.parseErrorResponse(resp)
+        }</span>
+
+        <span class="cov1" title="1">var comment JiraComment
+        if err := json.NewDecoder(resp.Body).Decode(&amp;comment); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to decode response: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">return &amp;comment, nil</span>
+}
+
+// SearchIssues performs a JQL search
+func (c *Client) SearchIssues(ctx context.Context, jql string, maxResults int) (*JiraSearchResponse, error) <span class="cov4" title="3">{
+        // Build query parameters
+        params := url.Values{}
+        params.Set("jql", jql)
+        params.Set("maxResults", strconv.Itoa(maxResults))
+        params.Set("fields", "summary,description,status,priority,issuetype,project,assignee,reporter,created,updated,labels")
+
+        endpoint := "/search?" + params.Encode()
+
+        resp, err := c.doRequest(ctx, "GET", endpoint, nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov4" title="3">defer resp.Body.Close()
+
+        if resp.StatusCode != 200 </span><span class="cov3" title="2">{
+                return nil, c.parseErrorResponse(resp)
+        }</span>
+
+        <span class="cov1" title="1">var response JiraSearchResponse
+        if err := json.NewDecoder(resp.Body).Decode(&amp;response); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to decode response: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">return &amp;response, nil</span>
+}
+
+// TestConnection tests the connection to Jira
+func (c *Client) TestConnection(ctx context.Context) error <span class="cov1" title="1">{
+        resp, err := c.doRequest(ctx, "GET", "/myself", nil)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+        <span class="cov1" title="1">defer resp.Body.Close()
+
+        if resp.StatusCode != 200 </span><span class="cov0" title="0">{
+                return c.parseErrorResponse(resp)
+        }</span>
+
+        <span class="cov1" title="1">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file23" style="display: none">package jira
+
+import (
+        "context"
+        "fmt"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// TicketService provides high-level ticket operations
+type TicketService struct {
+        client *Client
+}
+
+// NewTicketService creates a new ticket service
+func NewTicketService(client *Client) *TicketService <span class="cov9" title="9">{
+        return &amp;TicketService{
+                client: client,
+        }
+}</span>
+
+// GetTicket fetches a ticket and converts it to our internal format
+func (ts *TicketService) GetTicket(ctx context.Context, key string) (*types.Ticket, error) <span class="cov0" title="0">{
+        jiraIssue, err := ts.client.GetIssue(ctx, key)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to fetch issue %s: %v", key, err)
+        }</span>
+
+        <span class="cov0" title="0">return ts.convertJiraIssueToTicket(jiraIssue), nil</span>
+}
+
+// CreateTicket creates a new ticket from our internal format
+func (ts *TicketService) CreateTicket(ctx context.Context, ticket *types.Ticket) (*types.Ticket, error) <span class="cov0" title="0">{
+        // Determine issue type ID based on ticket type
+        issueTypeID, err := ts.getIssueTypeID(ticket.Type)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        // Build create request
+        <span class="cov0" title="0">request := &amp;JiraCreateIssueRequest{
+                Fields: JiraCreateIssueFields{
+                        Project: JiraProjectReference{
+                                Key: ticket.Metadata.Project,
+                        },
+                        Summary:     ticket.Title,
+                        Description: ticket.Description,
+                        IssueType: JiraIssueTypeRef{
+                                ID: issueTypeID,
+                        },
+                        Labels: ticket.Metadata.Labels,
+                },
+        }
+
+        // Add priority if specified
+        if ticket.Priority != "" </span><span class="cov0" title="0">{
+                priorityID, err := ts.getPriorityID(ticket.Priority)
+                if err == nil </span><span class="cov0" title="0">{
+                        request.Fields.Priority = &amp;JiraPriorityRef{ID: priorityID}
+                }</span>
+        }
+
+        // Add assignee if specified
+        <span class="cov0" title="0">if ticket.Metadata.Assignee != "" </span><span class="cov0" title="0">{
+                request.Fields.Assignee = &amp;JiraUserRef{AccountID: ticket.Metadata.Assignee}
+        }</span>
+
+        // Add parent for subtasks
+        <span class="cov0" title="0">if ticket.Type == types.TicketTypeSubtask &amp;&amp; ticket.Relationships.ParentKey != "" </span><span class="cov0" title="0">{
+                request.Fields.Parent = &amp;JiraParentRef{Key: ticket.Relationships.ParentKey}
+        }</span>
+
+        // Create the issue
+        <span class="cov0" title="0">response, err := ts.client.CreateIssue(ctx, request)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create issue: %v", err)
+        }</span>
+
+        // Fetch the created issue to get full details
+        <span class="cov0" title="0">return ts.GetTicket(ctx, response.Key)</span>
+}
+
+// AddComment adds a comment to a ticket
+func (ts *TicketService) AddComment(ctx context.Context, ticketKey, commentBody string) error <span class="cov0" title="0">{
+        _, err := ts.client.AddComment(ctx, ticketKey, commentBody)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to add comment: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return nil</span>
+}
+
+// SearchTickets performs a JQL search and returns tickets
+func (ts *TicketService) SearchTickets(ctx context.Context, jql string, maxResults int) ([]*types.Ticket, error) <span class="cov3" title="2">{
+        response, err := ts.client.SearchIssues(ctx, jql, maxResults)
+        if err != nil </span><span class="cov3" title="2">{
+                return nil, fmt.Errorf("failed to search issues: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">var tickets []*types.Ticket
+        for _, issue := range response.Issues </span><span class="cov0" title="0">{
+                ticket := ts.convertJiraIssueToTicket(&amp;issue)
+                tickets = append(tickets, ticket)
+        }</span>
+
+        <span class="cov0" title="0">return tickets, nil</span>
+}
+
+// convertJiraIssueToTicket converts a Jira API issue to our internal ticket format
+func (ts *TicketService) convertJiraIssueToTicket(jiraIssue *JiraIssue) *types.Ticket <span class="cov5" title="3">{
+        ticket := &amp;types.Ticket{
+                Key:         jiraIssue.Key,
+                Title:       jiraIssue.Fields.Summary,
+                Type:        ts.convertIssueType(jiraIssue.Fields.IssueType.Name),
+                Status:      jiraIssue.Fields.Status.Name,
+                Priority:    jiraIssue.Fields.Priority.Name,
+                Description: jiraIssue.Fields.Description,
+                Metadata: types.TicketMetadata{
+                        Project: jiraIssue.Fields.Project.Key,
+                        Created: jiraIssue.Fields.Created,
+                        Updated: jiraIssue.Fields.Updated,
+                        Labels:  jiraIssue.Fields.Labels,
+                },
+                Relationships: types.TicketRelationships{
+                        Children: []string{},
+                },
+                JiraData: types.JiraData{
+                        URL:          fmt.Sprintf("%s/browse/%s", ts.client.baseURL, jiraIssue.Key),
+                        CustomFields: make(map[string]interface{}),
+                },
+                LocalData: types.LocalData{
+                        LastSync:     jiraIssue.Fields.Updated,
+                        LocalChanges: false,
+                        AIEnhanced:   false,
+                },
+        }
+
+        // Set assignee if available
+        if jiraIssue.Fields.Assignee != nil </span><span class="cov1" title="1">{
+                ticket.Metadata.Assignee = jiraIssue.Fields.Assignee.Email
+        }</span>
+
+        // Extract parent relationships from changelog
+        <span class="cov5" title="3">if jiraIssue.Changelog != nil </span><span class="cov0" title="0">{
+                ts.extractParentRelationships(ticket, jiraIssue.Changelog)
+        }</span>
+
+        <span class="cov5" title="3">return ticket</span>
+}
+
+// convertIssueType converts Jira issue type names to our internal types
+func (ts *TicketService) convertIssueType(jiraType string) string <span class="cov10" title="11">{
+        switch strings.ToLower(jiraType) </span>{
+        case "epic":<span class="cov5" title="3">
+                return types.TicketTypeEpic</span>
+        case "story", "task":<span class="cov5" title="3">
+                return types.TicketTypeTask</span>
+        case "sub-task", "subtask":<span class="cov5" title="3">
+                return types.TicketTypeSubtask</span>
+        default:<span class="cov3" title="2">
+                return types.TicketTypeTask</span> // Default to task
+        }
+}
+
+// extractParentRelationships extracts parent/child relationships from changelog
+func (ts *TicketService) extractParentRelationships(ticket *types.Ticket, changelog *JiraChangelog) {<span class="cov0" title="0">
+        // This is a simplified implementation
+        // In a real implementation, you'd parse the changelog to find parent/child relationships
+        // For now, we'll leave this empty and let the calling code handle relationships
+}</span>
+
+// getIssueTypeID returns the Jira issue type ID for our ticket type
+func (ts *TicketService) getIssueTypeID(ticketType string) (string, error) <span class="cov6" title="4">{
+        // This is a simplified implementation
+        // In a real implementation, you'd fetch issue types from Jira and cache them
+        switch ticketType </span>{
+        case types.TicketTypeEpic:<span class="cov1" title="1">
+                return "10000", nil</span> // Epic issue type ID
+        case types.TicketTypeTask:<span class="cov1" title="1">
+                return "10001", nil</span> // Story/Task issue type ID
+        case types.TicketTypeSubtask:<span class="cov1" title="1">
+                return "10003", nil</span> // Sub-task issue type ID
+        default:<span class="cov1" title="1">
+                return "", fmt.Errorf("unknown ticket type: %s", ticketType)</span>
+        }
+}
+
+// getPriorityID returns the Jira priority ID for our priority name
+func (ts *TicketService) getPriorityID(priority string) (string, error) <span class="cov8" title="7">{
+        // This is a simplified implementation
+        // In a real implementation, you'd fetch priorities from Jira and cache them
+        switch strings.ToLower(priority) </span>{
+        case "highest":<span class="cov1" title="1">
+                return "1", nil</span>
+        case "high":<span class="cov1" title="1">
+                return "2", nil</span>
+        case "medium":<span class="cov1" title="1">
+                return "3", nil</span>
+        case "low":<span class="cov1" title="1">
+                return "4", nil</span>
+        case "lowest":<span class="cov1" title="1">
+                return "5", nil</span>
+        default:<span class="cov3" title="2">
+                return "3", nil</span> // Default to medium
+        }
+}
+
+// GetEpicChildren fetches all children of an epic
+func (ts *TicketService) GetEpicChildren(ctx context.Context, epicKey string) ([]*types.Ticket, error) <span class="cov1" title="1">{
+        // Search for issues that are linked to this epic
+        jql := fmt.Sprintf("'Epic Link' = %s ORDER BY created DESC", epicKey)
+        return ts.SearchTickets(ctx, jql, 100)
+}</span>
+
+// GetTaskSubtasks fetches all subtasks of a task
+func (ts *TicketService) GetTaskSubtasks(ctx context.Context, taskKey string) ([]*types.Ticket, error) <span class="cov1" title="1">{
+        // Search for subtasks that have this task as parent
+        jql := fmt.Sprintf("parent = %s ORDER BY created DESC", taskKey)
+        return ts.SearchTickets(ctx, jql, 100)
+}</span>
+</pre>
+		
+		<pre class="file" id="file24" style="display: none">package storage
+
+import (
+        "fmt"
+        "time"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// ContextManager provides high-level context management operations
+type ContextManager struct {
+        storage Storage
+}
+
+// NewContextManager creates a new context manager
+func NewContextManager(storage Storage) *ContextManager <span class="cov1" title="1">{
+        return &amp;ContextManager{
+                storage: storage,
+        }
+}</span>
+
+// GetCurrentContext loads the current context or creates a new one
+func (cm *ContextManager) GetCurrentContext() (*types.Context, error) <span class="cov10" title="5">{
+        context, err := cm.storage.LoadContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to load context: %v", err)
+        }</span>
+        <span class="cov10" title="5">return context, nil</span>
+}
+
+// SetFocus updates the context focus and saves it
+func (cm *ContextManager) SetFocus(ticketKey, ticketType string) error <span class="cov1" title="1">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        // Update focus
+        <span class="cov1" title="1">context.SetFocus(ticketKey, ticketType)
+
+        // Save context
+        return cm.storage.SaveContext(context)</span>
+}
+
+// GetCurrentFocus returns the current focus ticket key
+func (cm *ContextManager) GetCurrentFocus() (string, error) <span class="cov4" title="2">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov4" title="2">return context.GetCurrentFocus(), nil</span>
+}
+
+// GetCurrentEpic returns the current epic key
+func (cm *ContextManager) GetCurrentEpic() (string, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentEpic, nil</span>
+}
+
+// GetCurrentTask returns the current task key
+func (cm *ContextManager) GetCurrentTask() (string, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentTask, nil</span>
+}
+
+// GetCurrentSubtask returns the current subtask key
+func (cm *ContextManager) GetCurrentSubtask() (string, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return "", err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentSubtask, nil</span>
+}
+
+// AddToRecent adds a ticket to the recent list
+func (cm *ContextManager) AddToRecent(ticketKey string) error <span class="cov1" title="1">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        // Add to recent tickets
+        <span class="cov1" title="1">context.LastUpdated = time.Now()
+
+        // Remove if already present
+        for i, key := range context.RecentTickets </span><span class="cov1" title="1">{
+                if key == ticketKey </span><span class="cov0" title="0">{
+                        context.RecentTickets = append(context.RecentTickets[:i], context.RecentTickets[i+1:]...)
+                        break</span>
+                }
+        }
+
+        // Add to beginning
+        <span class="cov1" title="1">context.RecentTickets = append([]string{ticketKey}, context.RecentTickets...)
+
+        // Keep only last 10
+        if len(context.RecentTickets) &gt; 10 </span><span class="cov0" title="0">{
+                context.RecentTickets = context.RecentTickets[:10]
+        }</span>
+
+        // Save context
+        <span class="cov1" title="1">return cm.storage.SaveContext(context)</span>
+}
+
+// GetRecentTickets returns the list of recent tickets
+func (cm *ContextManager) GetRecentTickets() ([]string, error) <span class="cov1" title="1">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+
+        <span class="cov1" title="1">return context.RecentTickets, nil</span>
+}
+
+// ClearContext clears the current context
+func (cm *ContextManager) ClearContext() error <span class="cov0" title="0">{
+        context := types.NewContext()
+        return cm.storage.SaveContext(context)
+}</span>
+
+// IsInEpic checks if we're currently focused on an epic
+func (cm *ContextManager) IsInEpic() (bool, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentEpic != "", nil</span>
+}
+
+// IsInTask checks if we're currently focused on a task
+func (cm *ContextManager) IsInTask() (bool, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentTask != "", nil</span>
+}
+
+// IsInSubtask checks if we're currently focused on a subtask
+func (cm *ContextManager) IsInSubtask() (bool, error) <span class="cov0" title="0">{
+        context, err := cm.GetCurrentContext()
+        if err != nil </span><span class="cov0" title="0">{
+                return false, err
+        }</span>
+
+        <span class="cov0" title="0">return context.CurrentSubtask != "", nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file25" style="display: none">package storage
+
+import (
+        "encoding/json"
+        "fmt"
+        "os"
+        "path/filepath"
+        "strings"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// SaveTicket saves a ticket to JSON file
+func (s *JSONStorage) SaveTicket(ticket *types.Ticket) error <span class="cov7" title="6">{
+        s.mu.Lock()
+        defer s.mu.Unlock()
+
+        if ticket == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("ticket cannot be nil")
+        }</span>
+
+        <span class="cov7" title="6">if ticket.Key == "" </span><span class="cov0" title="0">{
+                return fmt.Errorf("ticket key cannot be empty")
+        }</span>
+
+        <span class="cov7" title="6">path := s.GetTicketPath(ticket.Key)
+
+        // Marshal ticket to JSON
+        data, err := json.MarshalIndent(ticket, "", "  ")
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal ticket: %v", err)
+        }</span>
+
+        // Write atomically
+        <span class="cov7" title="6">if err := s.atomicWrite(path, data); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write ticket: %v", err)
+        }</span>
+
+        <span class="cov7" title="6">return nil</span>
+}
+
+// LoadTicket loads a ticket from JSON file
+func (s *JSONStorage) LoadTicket(key string) (*types.Ticket, error) <span class="cov10" title="13">{
+        s.mu.RLock()
+        defer s.mu.RUnlock()
+
+        if key == "" </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("ticket key cannot be empty")
+        }</span>
+
+        <span class="cov10" title="13">path := s.GetTicketPath(key)
+
+        // Check if file exists
+        if _, err := os.Stat(path); os.IsNotExist(err) </span><span class="cov1" title="1">{
+                return nil, fmt.Errorf("ticket %s not found", key)
+        }</span>
+
+        // Read file
+        <span class="cov9" title="12">data, err := os.ReadFile(path)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read ticket: %v", err)
+        }</span>
+
+        // Unmarshal JSON
+        <span class="cov9" title="12">var ticket types.Ticket
+        if err := json.Unmarshal(data, &amp;ticket); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to unmarshal ticket: %v", err)
+        }</span>
+
+        <span class="cov9" title="12">return &amp;ticket, nil</span>
+}
+
+// DeleteTicket deletes a ticket file
+func (s *JSONStorage) DeleteTicket(key string) error <span class="cov1" title="1">{
+        s.mu.Lock()
+        defer s.mu.Unlock()
+
+        if key == "" </span><span class="cov0" title="0">{
+                return fmt.Errorf("ticket key cannot be empty")
+        }</span>
+
+        <span class="cov1" title="1">path := s.GetTicketPath(key)
+
+        // Check if file exists
+        if _, err := os.Stat(path); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                return fmt.Errorf("ticket %s not found", key)
+        }</span>
+
+        // Delete file
+        <span class="cov1" title="1">if err := os.Remove(path); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to delete ticket: %v", err)
+        }</span>
+
+        <span class="cov1" title="1">return nil</span>
+}
+
+// ListTickets returns a list of all ticket keys
+func (s *JSONStorage) ListTickets() ([]string, error) <span class="cov3" title="2">{
+        s.mu.RLock()
+        defer s.mu.RUnlock()
+
+        ticketsDir := filepath.Join(s.dataDir, "tickets")
+
+        // Check if directory exists
+        if _, err := os.Stat(ticketsDir); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                return []string{}, nil // Return empty list if directory doesn't exist
+        }</span>
+
+        // Read directory
+        <span class="cov3" title="2">entries, err := os.ReadDir(ticketsDir)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read tickets directory: %v", err)
+        }</span>
+
+        <span class="cov3" title="2">var keys []string
+        for _, entry := range entries </span><span class="cov4" title="3">{
+                if !entry.IsDir() &amp;&amp; strings.HasSuffix(entry.Name(), ".json") </span><span class="cov4" title="3">{
+                        // Remove .json extension to get the key
+                        key := strings.TrimSuffix(entry.Name(), ".json")
+                        keys = append(keys, key)
+                }</span>
+        }
+
+        <span class="cov3" title="2">return keys, nil</span>
+}
+
+// SaveContext saves context to JSON file
+func (s *JSONStorage) SaveContext(context *types.Context) error <span class="cov4" title="3">{
+        s.mu.Lock()
+        defer s.mu.Unlock()
+
+        if context == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("context cannot be nil")
+        }</span>
+
+        <span class="cov4" title="3">path := s.GetContextPath()
+
+        // Marshal context to JSON
+        data, err := json.MarshalIndent(context, "", "  ")
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to marshal context: %v", err)
+        }</span>
+
+        // Write atomically
+        <span class="cov4" title="3">if err := s.atomicWrite(path, data); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write context: %v", err)
+        }</span>
+
+        <span class="cov4" title="3">return nil</span>
+}
+
+// LoadContext loads context from JSON file
+func (s *JSONStorage) LoadContext() (*types.Context, error) <span class="cov7" title="7">{
+        s.mu.RLock()
+        defer s.mu.RUnlock()
+
+        path := s.GetContextPath()
+
+        // Check if file exists
+        if _, err := os.Stat(path); os.IsNotExist(err) </span><span class="cov4" title="3">{
+                // Return default context if file doesn't exist
+                return types.NewContext(), nil
+        }</span>
+
+        // Read file
+        <span class="cov5" title="4">data, err := os.ReadFile(path)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to read context: %v", err)
+        }</span>
+
+        // Unmarshal JSON
+        <span class="cov5" title="4">var context types.Context
+        if err := json.Unmarshal(data, &amp;context); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to unmarshal context: %v", err)
+        }</span>
+
+        <span class="cov5" title="4">return &amp;context, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file26" style="display: none">package storage
+
+import (
+        "fmt"
+        "os"
+        "path/filepath"
+        "sync"
+
+        "github.com/lunchboxsushi/jit/pkg/types"
+)
+
+// Storage defines the interface for ticket and context storage
+type Storage interface {
+        // Ticket operations
+        SaveTicket(ticket *types.Ticket) error
+        LoadTicket(key string) (*types.Ticket, error)
+        DeleteTicket(key string) error
+        ListTickets() ([]string, error)
+
+        // Context operations
+        SaveContext(context *types.Context) error
+        LoadContext() (*types.Context, error)
+
+        // Utility operations
+        Exists(key string) bool
+        GetTicketPath(key string) string
+}
+
+// JSONStorage implements Storage interface using JSON files
+type JSONStorage struct {
+        dataDir string
+        mu      sync.RWMutex
+}
+
+// NewJSONStorage creates a new JSON storage instance
+func NewJSONStorage(dataDir string) (*JSONStorage, error) <span class="cov7" title="9">{
+        // Create data directory if it doesn't exist
+        if err := os.MkdirAll(dataDir, 0755); err != nil </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("failed to create data directory %s: %v", dataDir, err)
+        }</span>
+
+        // Create subdirectories
+        <span class="cov7" title="9">subdirs := []string{"tickets", "cache"}
+        for _, subdir := range subdirs </span><span class="cov9" title="18">{
+                subdirPath := filepath.Join(dataDir, subdir)
+                if err := os.MkdirAll(subdirPath, 0755); err != nil </span><span class="cov0" title="0">{
+                        return nil, fmt.Errorf("failed to create subdirectory %s: %v", subdirPath, err)
+                }</span>
+        }
+
+        <span class="cov7" title="9">return &amp;JSONStorage{
+                dataDir: dataDir,
+        }, nil</span>
+}
+
+// GetTicketPath returns the file path for a ticket
+func (s *JSONStorage) GetTicketPath(key string) string <span class="cov10" title="24">{
+        return filepath.Join(s.dataDir, "tickets", key+".json")
+}</span>
+
+// GetContextPath returns the file path for context
+func (s *JSONStorage) GetContextPath() string <span class="cov7" title="10">{
+        return filepath.Join(s.dataDir, "context.json")
+}</span>
+
+// Exists checks if a ticket exists
+func (s *JSONStorage) Exists(key string) bool <span class="cov4" title="4">{
+        path := s.GetTicketPath(key)
+        _, err := os.Stat(path)
+        return !os.IsNotExist(err)
+}</span>
+
+// atomicWrite writes data to a file atomically using a temporary file
+func (s *JSONStorage) atomicWrite(path string, data []byte) error <span class="cov7" title="9">{
+        // Create temporary file in the same directory
+        dir := filepath.Dir(path)
+        tmpFile, err := os.CreateTemp(dir, "*.tmp")
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create temp file: %v", err)
+        }</span>
+        <span class="cov7" title="9">defer os.Remove(tmpFile.Name()) // Clean up temp file on error
+
+        // Write data to temp file
+        if _, err := tmpFile.Write(data); err != nil </span><span class="cov0" title="0">{
+                tmpFile.Close()
+                return fmt.Errorf("failed to write to temp file: %v", err)
+        }</span>
+
+        // Sync to disk
+        <span class="cov7" title="9">if err := tmpFile.Sync(); err != nil </span><span class="cov0" title="0">{
+                tmpFile.Close()
+                return fmt.Errorf("failed to sync temp file: %v", err)
+        }</span>
+
+        // Close temp file
+        <span class="cov7" title="9">if err := tmpFile.Close(); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to close temp file: %v", err)
+        }</span>
+
+        // Atomic rename
+        <span class="cov7" title="9">if err := os.Rename(tmpFile.Name(), path); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to rename temp file: %v", err)
+        }</span>
+
+        <span class="cov7" title="9">return nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file27" style="display: none">package ui
+
+import (
+        "fmt"
+        "os"
+        "os/exec"
+        "path/filepath"
+        "strings"
+)
+
+// Editor provides functionality to open and edit files
+type Editor struct {
+        editor string
+}
+
+// NewEditor creates a new editor instance
+func NewEditor() *Editor <span class="cov0" title="0">{
+        editor := os.Getenv("EDITOR")
+        if editor == "" </span><span class="cov0" title="0">{
+                editor = "vim" // Default fallback
+        }</span>
+
+        <span class="cov0" title="0">return &amp;Editor{
+                editor: editor,
+        }</span>
+}
+
+// EditFile opens a file in the user's preferred editor
+func (e *Editor) EditFile(filePath string) error <span class="cov0" title="0">{
+        // Ensure the directory exists
+        dir := filepath.Dir(filePath)
+        if err := os.MkdirAll(dir, 0755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create directory: %v", err)
+        }</span>
+
+        // Create the file if it doesn't exist
+        <span class="cov0" title="0">if _, err := os.Stat(filePath); os.IsNotExist(err) </span><span class="cov0" title="0">{
+                if err := os.WriteFile(filePath, []byte(""), 0644); err != nil </span><span class="cov0" title="0">{
+                        return fmt.Errorf("failed to create file: %v", err)
+                }</span>
+        }
+
+        // Open the editor
+        <span class="cov0" title="0">cmd := exec.Command(e.editor, filePath)
+        cmd.Stdin = os.Stdin
+        cmd.Stdout = os.Stdout
+        cmd.Stderr = os.Stderr
+
+        return cmd.Run()</span>
+}
+
+// EditTemplate opens a template file for editing
+func (e *Editor) EditTemplate(templatePath, outputPath string) error <span class="cov0" title="0">{
+        // Read the template
+        templateContent, err := os.ReadFile(templatePath)
+        if err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to read template: %v", err)
+        }</span>
+
+        // Ensure the output directory exists
+        <span class="cov0" title="0">dir := filepath.Dir(outputPath)
+        if err := os.MkdirAll(dir, 0755); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to create directory: %v", err)
+        }</span>
+
+        // Write template content to output file
+        <span class="cov0" title="0">if err := os.WriteFile(outputPath, templateContent, 0644); err != nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("failed to write template: %v", err)
+        }</span>
+
+        // Open the file in editor
+        <span class="cov0" title="0">return e.EditFile(outputPath)</span>
+}
+
+// ReadFile reads the content of a file
+func (e *Editor) ReadFile(filePath string) (string, error) <span class="cov0" title="0">{
+        content, err := os.ReadFile(filePath)
+        if err != nil </span><span class="cov0" title="0">{
+                return "", fmt.Errorf("failed to read file: %v", err)
+        }</span>
+
+        <span class="cov0" title="0">return string(content), nil</span>
+}
+
+// ParseMarkdownTicket parses markdown content into ticket fields
+func (e *Editor) ParseMarkdownTicket(content string) (string, string, error) <span class="cov0" title="0">{
+        lines := strings.Split(content, "\n")
+
+        var title string
+        var description strings.Builder
+
+        inDescription := false
+        skipNext := false
+
+        for i, line := range lines </span><span class="cov0" title="0">{
+                if skipNext </span><span class="cov0" title="0">{
+                        skipNext = false
+                        continue</span>
+                }
+
+                <span class="cov0" title="0">line = strings.TrimSpace(line)
+
+                // Skip empty lines at the beginning
+                if title == "" &amp;&amp; line == "" </span><span class="cov0" title="0">{
+                        continue</span>
+                }
+
+                // Extract title (first non-empty line after #)
+                <span class="cov0" title="0">if title == "" &amp;&amp; strings.HasPrefix(line, "# ") </span><span class="cov0" title="0">{
+                        title = strings.TrimPrefix(line, "# ")
+                        continue</span>
+                }
+
+                // Start description after title
+                <span class="cov0" title="0">if title != "" &amp;&amp; !inDescription </span><span class="cov0" title="0">{
+                        inDescription = true
+                }</span>
+
+                // Add to description
+                <span class="cov0" title="0">if inDescription </span><span class="cov0" title="0">{
+                        // Skip section headers
+                        if strings.HasPrefix(line, "## ") </span><span class="cov0" title="0">{
+                                description.WriteString("\n\n")
+                                description.WriteString(line)
+                                description.WriteString("\n")
+                                continue</span>
+                        }
+
+                        // Skip template placeholders
+                        <span class="cov0" title="0">if strings.Contains(line, "[Enter") || strings.Contains(line, "[Describe") ||
+                                strings.Contains(line, "[List") || strings.Contains(line, "[Additional") ||
+                                strings.Contains(line, "[Criterion") || strings.Contains(line, "[Technical") ||
+                                strings.Contains(line, "[Testing") || strings.Contains(line, "[Specific") </span><span class="cov0" title="0">{
+                                continue</span>
+                        }
+
+                        // Add the line to description
+                        <span class="cov0" title="0">if line != "" || (i &lt; len(lines)-1 &amp;&amp; strings.TrimSpace(lines[i+1]) != "") </span><span class="cov0" title="0">{
+                                description.WriteString(line)
+                                description.WriteString("\n")
+                        }</span>
+                }
+        }
+
+        // Clean up description
+        <span class="cov0" title="0">desc := strings.TrimSpace(description.String())
+
+        // Validate
+        if title == "" </span><span class="cov0" title="0">{
+                return "", "", fmt.Errorf("title is required")
+        }</span>
+
+        <span class="cov0" title="0">if desc == "" </span><span class="cov0" title="0">{
+                return "", "", fmt.Errorf("description is required")
+        }</span>
+
+        <span class="cov0" title="0">return title, desc, nil</span>
+}
+</pre>
+		
+		<pre class="file" id="file28" style="display: none">package utils
+
+import (
+        "strings"
+        "unicode"
+)
+
+// SearchResult represents a search result with score
+type SearchResult struct {
+        Key     string
+        Title   string
+        Type    string
+        Score   int
+        Matched string // What part matched
+}
+
+// TicketInfo represents basic ticket information for search
+type TicketInfo struct {
+        Key   string
+        Title string
+        Type  string
+}
+
+// FuzzySearch performs fuzzy search on tickets
+func FuzzySearch(query string, tickets []TicketInfo) []SearchResult <span class="cov0" title="0">{
+        query = strings.ToLower(strings.TrimSpace(query))
+        if query == "" </span><span class="cov0" title="0">{
+                return []SearchResult{}
+        }</span>
+
+        <span class="cov0" title="0">var results []SearchResult
+
+        for _, ticket := range tickets </span><span class="cov0" title="0">{
+                score, matched := calculateScore(query, ticket.Key, ticket.Title)
+                if score &gt; 0 </span><span class="cov0" title="0">{
+                        results = append(results, SearchResult{
+                                Key:     ticket.Key,
+                                Title:   ticket.Title,
+                                Type:    ticket.Type,
+                                Score:   score,
+                                Matched: matched,
+                        })
+                }</span>
+        }
+
+        // Sort by score (higher is better)
+        <span class="cov0" title="0">sortSearchResults(results)
+
+        return results</span>
+}
+
+// calculateScore calculates a fuzzy match score
+func calculateScore(query, key, title string) (int, string) <span class="cov0" title="0">{
+        keyLower := strings.ToLower(key)
+        titleLower := strings.ToLower(title)
+
+        // Exact key match gets highest score
+        if keyLower == query </span><span class="cov0" title="0">{
+                return 1000, key
+        }</span>
+
+        // Key starts with query
+        <span class="cov0" title="0">if strings.HasPrefix(keyLower, query) </span><span class="cov0" title="0">{
+                return 800, key
+        }</span>
+
+        // Key contains query
+        <span class="cov0" title="0">if strings.Contains(keyLower, query) </span><span class="cov0" title="0">{
+                return 600, key
+        }</span>
+
+        // Title contains query
+        <span class="cov0" title="0">if strings.Contains(titleLower, query) </span><span class="cov0" title="0">{
+                return 400, title
+        }</span>
+
+        // Fuzzy match on key
+        <span class="cov0" title="0">if fuzzyMatch(query, keyLower) </span><span class="cov0" title="0">{
+                return 300, key
+        }</span>
+
+        // Fuzzy match on title
+        <span class="cov0" title="0">if fuzzyMatch(query, titleLower) </span><span class="cov0" title="0">{
+                return 200, title
+        }</span>
+
+        <span class="cov0" title="0">return 0, ""</span>
+}
+
+// fuzzyMatch performs a simple fuzzy match
+func fuzzyMatch(query, text string) bool <span class="cov0" title="0">{
+        if len(query) == 0 </span><span class="cov0" title="0">{
+                return true
+        }</span>
+
+        <span class="cov0" title="0">queryIdx := 0
+        for _, char := range text </span><span class="cov0" title="0">{
+                if queryIdx &lt; len(query) &amp;&amp; unicode.ToLower(char) == unicode.ToLower(rune(query[queryIdx])) </span><span class="cov0" title="0">{
+                        queryIdx++
+                }</span>
+        }
+
+        <span class="cov0" title="0">return queryIdx == len(query)</span>
+}
+
+// sortSearchResults sorts results by score (descending)
+func sortSearchResults(results []SearchResult) <span class="cov0" title="0">{
+        for i := 0; i &lt; len(results)-1; i++ </span><span class="cov0" title="0">{
+                for j := i + 1; j &lt; len(results); j++ </span><span class="cov0" title="0">{
+                        if results[i].Score &lt; results[j].Score </span><span class="cov0" title="0">{
+                                results[i], results[j] = results[j], results[i]
+                        }</span>
+                }
+        }
+}
+
+// FilterByType filters search results by ticket type
+func FilterByType(results []SearchResult, ticketType string) []SearchResult <span class="cov0" title="0">{
+        if ticketType == "" </span><span class="cov0" title="0">{
+                return results
+        }</span>
+
+        <span class="cov0" title="0">var filtered []SearchResult
+        for _, result := range results </span><span class="cov0" title="0">{
+                if result.Type == ticketType </span><span class="cov0" title="0">{
+                        filtered = append(filtered, result)
+                }</span>
+        }
+
+        <span class="cov0" title="0">return filtered</span>
+}
+</pre>
+		
+		<pre class="file" id="file29" style="display: none">package types
+
+// Config represents the application configuration
+type Config struct {
+        Jira JiraConfig `yaml:"jira" json:"jira"`
+        AI   AIConfig   `yaml:"ai" json:"ai"`
+        App  AppConfig  `yaml:"app" json:"app"`
+}
+
+// JiraConfig contains Jira connection settings
+type JiraConfig struct {
+        URL           string `yaml:"url" json:"url"`
+        Username      string `yaml:"username" json:"username"`
+        Token         string `yaml:"token" json:"token"`
+        Project       string `yaml:"project" json:"project"`
+        EpicLinkField string `yaml:"epic_link_field" json:"epic_link_field"`
+}
+
+// AIConfig contains AI provider settings
+type AIConfig struct {
+        Provider  string `yaml:"provider" json:"provider"`
+        APIKey    string `yaml:"api_key" json:"api_key"`
+        Model     string `yaml:"model" json:"model"`
+        MaxTokens int    `yaml:"max_tokens" json:"max_tokens"`
+}
+
+// AppConfig contains application settings
+type AppConfig struct {
+        DataDir            string `yaml:"data_dir" json:"data_dir"`
+        DefaultEditor      string `yaml:"default_editor" json:"default_editor"`
+        ReviewBeforeCreate bool   `yaml:"review_before_create" json:"review_before_create"`
+}
+
+// NewConfig creates a new config with default values
+func NewConfig() *Config <span class="cov0" title="0">{
+        return &amp;Config{
+                Jira: JiraConfig{
+                        EpicLinkField: "customfield_10014",
+                },
+                AI: AIConfig{
+                        Provider:  "openai",
+                        Model:     "gpt-4",
+                        MaxTokens: 1000,
+                },
+                App: AppConfig{
+                        DataDir:            "~/.local/share/jit",
+                        DefaultEditor:      "vim",
+                        ReviewBeforeCreate: true,
+                },
+        }
+}</span>
+</pre>
+		
+		<pre class="file" id="file30" style="display: none">package types
+
+import "time"
+
+// Context represents the current working context
+type Context struct {
+        CurrentEpic    string    `json:"current_epic"`
+        CurrentTask    string    `json:"current_task"`
+        CurrentSubtask string    `json:"current_subtask"`
+        LastUpdated    time.Time `json:"last_updated"`
+        RecentTickets  []string  `json:"recent_tickets"`
+}
+
+// NewContext creates a new context with default values
+func NewContext() *Context <span class="cov8" title="3">{
+        return &amp;Context{
+                CurrentEpic:    "",
+                CurrentTask:    "",
+                CurrentSubtask: "",
+                LastUpdated:    time.Now(),
+                RecentTickets:  []string{},
+        }
+}</span>
+
+// SetFocus updates the context focus based on ticket type
+func (c *Context) SetFocus(ticketKey, ticketType string) <span class="cov8" title="3">{
+        c.LastUpdated = time.Now()
+
+        switch ticketType </span>{
+        case TicketTypeEpic:<span class="cov1" title="1">
+                c.CurrentEpic = ticketKey
+                c.CurrentTask = ""
+                c.CurrentSubtask = ""</span>
+        case TicketTypeTask:<span class="cov1" title="1">
+                c.CurrentTask = ticketKey
+                c.CurrentSubtask = ""</span>
+        case TicketTypeSubtask:<span class="cov1" title="1">
+                c.CurrentSubtask = ticketKey</span>
+        }
+
+        // Add to recent tickets if not already present
+        <span class="cov8" title="3">c.addToRecent(ticketKey)</span>
+}
+
+// GetCurrentFocus returns the most specific current focus
+func (c *Context) GetCurrentFocus() string <span class="cov10" title="4">{
+        if c.CurrentSubtask != "" </span><span class="cov1" title="1">{
+                return c.CurrentSubtask
+        }</span>
+        <span class="cov8" title="3">if c.CurrentTask != "" </span><span class="cov1" title="1">{
+                return c.CurrentTask
+        }</span>
+        <span class="cov5" title="2">return c.CurrentEpic</span>
+}
+
+// addToRecent adds a ticket to recent tickets list
+func (c *Context) addToRecent(ticketKey string) <span class="cov8" title="3">{
+        // Remove if already present
+        for i, key := range c.RecentTickets </span><span class="cov8" title="3">{
+                if key == ticketKey </span><span class="cov0" title="0">{
+                        c.RecentTickets = append(c.RecentTickets[:i], c.RecentTickets[i+1:]...)
+                        break</span>
+                }
+        }
+
+        // Add to beginning
+        <span class="cov8" title="3">c.RecentTickets = append([]string{ticketKey}, c.RecentTickets...)
+
+        // Keep only last 10
+        if len(c.RecentTickets) &gt; 10 </span><span class="cov0" title="0">{
+                c.RecentTickets = c.RecentTickets[:10]
+        }</span>
+}
+</pre>
+		
+		<pre class="file" id="file31" style="display: none">package types
+
+import "time"
+
+// Ticket types as constants
+const (
+        TicketTypeEpic    = "Epic"
+        TicketTypeTask    = "Task"
+        TicketTypeSubtask = "Subtask"
+)
+
+// Ticket represents a Jira ticket (Epic, Task, or Subtask)
+type Ticket struct {
+        Key           string              `json:"key"`
+        Title         string              `json:"title"`
+        Type          string              `json:"type"` // Use constants: TicketTypeEpic, TicketTypeTask, TicketTypeSubtask
+        Status        string              `json:"status"`
+        Priority      string              `json:"priority"`
+        Description   string              `json:"description"`
+        Metadata      TicketMetadata      `json:"metadata"`
+        Relationships TicketRelationships `json:"relationships"`
+        JiraData      JiraData            `json:"jira_data"`
+        LocalData     LocalData           `json:"local_data"`
+}
+
+// TicketMetadata contains metadata about the ticket
+type TicketMetadata struct {
+        Project  string    `json:"project"`
+        Assignee string    `json:"assignee"`
+        Created  time.Time `json:"created"`
+        Updated  time.Time `json:"updated"`
+        Labels   []string  `json:"labels"`
+}
+
+// TicketRelationships defines parent/child relationships
+type TicketRelationships struct {
+        ParentKey string   `json:"parent_key"` // Parent task for subtasks, empty for epics and orphan tasks
+        Children  []string `json:"children"`   // Child tickets
+}
+
+// JiraData contains Jira-specific information
+type JiraData struct {
+        URL          string                 `json:"url"`
+        CustomFields map[string]interface{} `json:"custom_fields"`
+}
+
+// LocalData contains local-only information
+type LocalData struct {
+        LastSync     time.Time `json:"last_sync"`
+        LocalChanges bool      `json:"local_changes"`
+        AIEnhanced   bool      `json:"ai_enhanced"`
+}
+
+// NewTicket creates a new ticket with default values
+func NewTicket(key, title, ticketType string) *Ticket <span class="cov10" title="6">{
+        now := time.Now()
+        return &amp;Ticket{
+                Key:         key,
+                Title:       title,
+                Type:        ticketType,
+                Status:      "To Do",
+                Priority:    "Medium",
+                Description: "",
+                Metadata: TicketMetadata{
+                        Created: now,
+                        Updated: now,
+                        Labels:  []string{},
+                },
+                Relationships: TicketRelationships{
+                        Children: []string{},
+                },
+                JiraData: JiraData{
+                        CustomFields: make(map[string]interface{}),
+                },
+                LocalData: LocalData{
+                        LastSync:     now,
+                        LocalChanges: false,
+                        AIEnhanced:   false,
+                },
+        }
+}</span>
+
+// IsEpic returns true if the ticket is an epic
+func (t *Ticket) IsEpic() bool <span class="cov6" title="3">{
+        return t.Type == TicketTypeEpic
+}</span>
+
+// IsTask returns true if the ticket is a task
+func (t *Ticket) IsTask() bool <span class="cov6" title="3">{
+        return t.Type == TicketTypeTask
+}</span>
+
+// IsSubtask returns true if the ticket is a subtask
+func (t *Ticket) IsSubtask() bool <span class="cov6" title="3">{
+        return t.Type == TicketTypeSubtask
+}</span>
+
+// IsOrphanTask returns true if the task has no parent (not a subtask)
+func (t *Ticket) IsOrphanTask() bool <span class="cov7" title="4">{
+        return t.Type == TicketTypeTask &amp;&amp; t.Relationships.ParentKey == ""
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

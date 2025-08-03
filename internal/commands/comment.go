@@ -137,7 +137,7 @@ func getCommentFromEditor(ticket *types.Ticket) (string, error) {
 Add your comment below this line:
 ---
 
-`)
+`, ticket.Key, ticket.Title)
 
 	// Write template to temp file
 	if err := os.WriteFile(tempFile.Name(), []byte(template), 0644); err != nil {

@@ -1,0 +1,24 @@
+run:
+  timeout: 5m
+  go: "1.21"
+  build-tags: []
+
+linters:
+  enable:
+    - gofmt
+    - govet
+    - gosimple
+    - errcheck
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+  govet:
+    check-shadowing: true
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - gosec 
